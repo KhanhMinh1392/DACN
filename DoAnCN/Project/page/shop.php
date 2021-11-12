@@ -201,11 +201,16 @@ include ('../layout/header.php')
         							<h3>Danh Sách Các Loại</h3>
         						</div>
         						<ul class="list_style">
-        							<li><a href="#">Cupcake (17)</a></li>
-        							<li><a href="#">Chocolate (15)</a></li>
-        							<li><a href="#">Celebration (14)</a></li>
-        							<li><a href="#">Wedding Cake (8)</a></li>
-        							<li><a href="#">Desserts (11)</a></li>
+        							<?php
+										$conn = new mysqli('localhost','root','','cakeshop2');
+										$sql = "SELECT Typename FROM typeproducts";
+										$result = $conn->query($sql);
+
+										while($row = $result ->fetch_assoc()){
+											print_r($row);
+											;
+										}	
+									?>
         						</ul>
         					</aside>
         					<aside class="left_sidebar p_price_widget">
