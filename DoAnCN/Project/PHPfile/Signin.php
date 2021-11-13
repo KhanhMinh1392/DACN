@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include('../connectPHP/connectPHPadmin.php');
+    include ('../page/connect.php');
     $username = $_POST["username"];
     $password = $_POST["password"];
     $callback = $_POST["callbackSignin"];

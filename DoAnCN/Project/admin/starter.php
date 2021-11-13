@@ -1,3 +1,6 @@
+<?php
+    include ('../page/connect.php')
+?>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -258,7 +261,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="listUser.html" class="nav-link">
+                <a href="../admin/listUser.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Danh sách khách hàng</p>
                 </a>

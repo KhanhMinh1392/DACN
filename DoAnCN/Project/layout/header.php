@@ -1,5 +1,5 @@
 <?php
-    include ('../connectPHP/connectPHPadmin.php')
+    include ('../page/connect.php')
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +49,7 @@
             unset($_SESSION["username"]);
             echo "<script>location='index.php';</script>";
         }
+
     ?>
 </head>
 <body>
@@ -68,8 +69,17 @@
                     <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
                     <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                 </ul>
+                <?php
+                $number=0;
+                if(isset($_SESSION["giohang"])){
+                    $giohang=$_SESSION["giohang"];
+                    foreach ($giohang as $key => $value){
+                        $number+=(int)$value["number"];
+                    }
+                }
+                ?>
                 <ul class="h_search list_style">
-                    <li class="shop_cart"><a href="../page/cart.php"><i class="lnr lnr-cart"></i></a></li>
+                    <li class="shopcart"><a href="../page/cart.php" class="lnr lnr-cart" id="numcart"><?php echo $number?></a></li>
                     <li><a class="popup-with-zoom-anim" href="#test-search"><i class="fa fa-search"></i></a></li>
                 </ul>
                 <?php
@@ -81,7 +91,10 @@
                 <?php } else {?>
                     <ul class="h_search list_style">
                         <li>
-                            <a href="../page/infocustomer.php"><?php echo$_SESSION["username"]?></a>
+                            <a href="../page/infocustomer.php">
+                                <i class="fa fa-user-circle"></i>
+                                <?php echo$_SESSION["username"]?>
+                            </a>
                             <a href="<?php echo $_SERVER["PHP_SELF"]?>?LogOut=0" class="pink_btn">
                                 <i class="revicon-logout"></i>LogOut
                             </a>

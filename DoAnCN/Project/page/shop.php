@@ -1,6 +1,18 @@
 <?php
 include ('../layout/header.php')
 ?>
+<?php
+    $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 9;
+    $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
+    $offset = ($current_page-1) * $item_per_page;
+    $dbdata = "SELECT * FROM products ORDER BY IdProducts DESC LIMIT ".$item_per_page." OFFSET ".$offset;
+    $query = mysqli_query($conn,$dbdata);
+
+    $total = mysqli_query($conn,"SELECT * FROM products");
+    $total = $total->num_rows;
+    $totalpage = ceil($total / $item_per_page);
+?>
+
         <!--================End Main Header Area =================-->
         
         <!--================End Main Header Area =================-->
@@ -41,172 +53,64 @@ include ('../layout/header.php')
 							</div>
         				</div>
         				<div class="row product_item_inner">
+                            <?php
+                                 while ($row = mysqli_fetch_array($query)){
+                            ?>
         					<div class="col-lg-4 col-md-4 col-6">
         						<div class="cake_feature_item">
-                                    <a href="../page/product-details.php">
+                                    <a href="../page/product-details.php?Masp=<?php echo $row["IdProducts"]?>">
 									    <div class="cake_img">
-										    <img src="../img/cake-feature/c-feature-1.jpg" alt="">
+										    <img src="../img/cake-feature/<?php echo $row["Images"]?>" alt="">
 									    </div>
 									    <div class="cake_text">
-										    <h4>500.000VNĐ</h4>
-										    <h3>Strawberry Cupcakes</h3>
-										    <a class="pest_btn" href="#">Thêm vào giỏ</a>
+                                            <input type="number" value="1" id="quantity" min="1" max="10" hidden>
+										    <h4 style="width: 160px"><?=number_format($row["Price"],0,",",".")?> VNĐ</h4>
+										    <h3><?php echo $row["Nameproducts"]?></h3>
+										    <a class="pest_btn" href="" onclick="AddCart(<?php echo $row["IdProducts"];?>)">Thêm vào giỏ</a>
 									    </div>
                                     </a>
 								</div>
         					</div>
-        					<div class="col-lg-4 col-md-4 col-6">
-        						<div class="cake_feature_item">
-                                    <a href="../page/product-details.php">
-                                        <div class="cake_img">
-                                                <img src="../img/cake-feature/c-feature-2.jpg" alt="">
-                                        </div>
-                                        <div class="cake_text">
-                                            <h4>500.000VNĐ</h4>
-                                            <h3>Strawberry Cupcakes</h3>
-                                            <a class="pest_btn" href="#">Thêm vào giỏ</a>
-                                        </div>
-                                    </a>
-								</div>
-        					</div>
-        					<div class="col-lg-4 col-md-4 col-6">
-        						<div class="cake_feature_item">
-                                    <a href="../page/product-details.php">
-                                        <div class="cake_img">
-                                            <img src="../img/cake-feature/c-feature-3.jpg" alt="">
-                                        </div>
-                                        <div class="cake_text">
-                                            <h4>500.000VNĐ</h4>
-                                            <h3>Strawberry Cupcakes</h3>
-                                            <a class="pest_btn" href="#">Thêm vào giỏ</a>
-                                        </div>
-                                    </a>
-								</div>
-        					</div>
-        					<div class="col-lg-4 col-md-4 col-6">
-        						<div class="cake_feature_item">
-                                    <a href="../page/product-details.php">
-                                        <div class="cake_img">
-                                             <img src="../img/cake-feature/c-feature-4.jpg" alt="">
-                                        </div>
-                                        <div class="cake_text">
-                                            <h4>500.000VNĐ</h4>
-                                            <h3>Strawberry Cupcakes</h3>
-                                            <a class="pest_btn" href="#">Thêm vào giỏ</a>
-                                        </div>
-                                    </a>
-								</div>
-        					</div>
-        					<div class="col-lg-4 col-md-4 col-6">
-        						<div class="cake_feature_item">
-                                    <a href="../page/product-details.php">
-									    <div class="cake_img">
-										    <img src="../img/cake-feature/c-feature-5.jpg" alt="">
-									    </div>
-									    <div class="cake_text">
-										    <h4>500.000VNĐ</h4>
-										    <h3>Strawberry Cupcakes</h3>
-										    <a class="pest_btn" href="#">Thêm vào giỏ</a>
-									    </div>
-                                    </a>
-								</div>
-        					</div>
-        					<div class="col-lg-4 col-md-4 col-6">
-        						<div class="cake_feature_item">
-                                    <a href="../page/product-details.php">
-									    <div class="cake_img">
-    										<img src="../img/cake-feature/c-feature-6.jpg" alt="">
-									    </div>
-									    <div class="cake_text">
-										    <h4>500.000VNĐ</h4>
-										    <h3>Strawberry Cupcakes</h3>
-										    <a class="pest_btn" href="#">Thêm vào giỏ</a>
-									    </div>
-                                    </a>
-								</div>
-        					</div>
-        					<div class="col-lg-4 col-md-4 col-6">
-        						<div class="cake_feature_item">
-                                    <a href="../page/product-details.php">
-									    <div class="cake_img">
-									    	<img src="../img/cake-feature/c-feature-7.jpg" alt="">
-									    </div>
-									    <div class="cake_text">
-										    <h4>500.000VNĐ</h4>
-										    <h3>Strawberry Cupcakes</h3>
-										    <a class="pest_btn" href="#">Thêm vào giỏ</a>
-									    </div>
-                                    </a>
-								</div>
-        					</div>
-        					<div class="col-lg-4 col-md-4 col-6">
-        						<div class="cake_feature_item">
-                                    <a href="../page/product-details.php">
-									    <div class="cake_img">
-										    <img src="../img/cake-feature/c-feature-8.jpg" alt="">
-									    </div>
-									    <div class="cake_text">
-										    <h4>500.000VNĐ</h4>
-										    <h3>Strawberry Cupcakes</h3>
-										    <a class="pest_btn" href="#">Thêm vào giỏ</a>
-									    </div>
-                                    </a>
-								</div>
-        					</div>
-        					<div class="col-lg-4 col-md-4 col-6">
-        						<div class="cake_feature_item">
-                                    <a href="../page/product-details.php">
-									    <div class="cake_img">
-										    <img src="../img/cake-feature/c-feature-9.jpg" alt="">
-									    </div>
-									    <div class="cake_text">
-										    <h4>500.000VNĐ</h4>
-										    <h3>Strawberry Cupcakes</h3>
-										    <a class="pest_btn" href="#">Thêm vào giỏ</a>
-									    </div>
-                                    </a>
-								</div>
-        					</div>
+                             <?php
+                                 }
+                            ?>
         				</div>
-        				<div class="product_pagination">
-        					<div class="left_btn">
-        						<a href="#"><i class="lnr lnr-arrow-left"></i> New posts</a>
-        					</div>
-        					<div class="middle_list">
-								<nav aria-label="Page navigation example">
-									<ul class="pagination">
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item active"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#">...</a></li>
-									<li class="page-item"><a class="page-link" href="#">12</a></li>
-									</ul>
-								</nav>
-        					</div>
-        					<div class="right_btn"><a href="#">Older posts <i class="lnr lnr-arrow-right"></i></a></div>
-        				</div>
+                        <?php
+                            include("../PHPfile/Pagination.php");
+                        ?>
         			</div>
         			<div class="col-lg-3">
         				<div class="product_left_sidebar">
         					<aside class="left_sidebar search_widget">
         						<div class="input-group">
-									<input type="text" class="form-control" placeholder="Enter Search Keywords">
-									<div class="input-group-append">
-										<button class="btn" type="button"><i class="icon icon-Search"></i></button>
-									</div>
+                                    <form action="../PHPfile/Search.php" method="post">
+                                        <input type="text" class="form-control" name="search" placeholder="Enter Search Keywords">
+                                        <div class="input-group-append">
+                                            <button class="btn" type="submit"><i class="icon icon-Search"></i></button>
+                                        </div>
+                                    </form>
 								</div>
         					</aside>
         					<aside class="left_sidebar p_catgories_widget">
         						<div class="p_w_title">
         							<h3>Danh Sách Các Loại</h3>
         						</div>
-        						<ul class="list_style">
-        							<li><a href="#">Cupcake (17)</a></li>
-        							<li><a href="#">Chocolate (15)</a></li>
-        							<li><a href="#">Celebration (14)</a></li>
-        							<li><a href="#">Wedding Cake (8)</a></li>
-        							<li><a href="#">Desserts (11)</a></li>
-        						</ul>
+                                <?php
+                                    $getType = 'SELECT * FROM genres';
+                                    $dbdata = mysqli_query($conn,$getType);
+
+                                    while ($row = mysqli_fetch_array($dbdata)){
+                                        //count SL sp
+                                        $getcount = "SELECT * FROM products WHERE idType = '".$row["idType"]."'";
+                                        $db = mysqli_query($conn,$getcount);
+                                        $count = mysqli_num_rows($db);
+                                ?>
+                                    <ul class="list_style">
+                                        <li><a href="../PHPfile/ListGenres.php?loaisp=<?php echo $row["idType"]?>"><?php echo $row["Typename"]?> (<?php echo $count?>)</a></li>
+                                    </ul>
+                                <?php
+                                    }
+                                ?>
         					</aside>
         					<aside class="left_sidebar p_price_widget">
         						<div class="p_w_title">

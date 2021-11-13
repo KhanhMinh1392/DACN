@@ -132,60 +132,37 @@
         				</div>
         			</div>
         		</div>
+                <?php
+                $sql2 = "SELECT * FROM products ORDER BY IdProducts DESC LIMIT 6";
+                $query2 = mysqli_query($conn,$sql2);
+                ?>
         		<div class="cake_feature_inner">
         			<div class="main_title">
 						<h2>Bánh đặc trưng của chúng tôi</h2>
 						<h5>Các chiếc bánh đẹp nhất</h5>
 					</div>
        				<div class="cake_feature_slider owl-carousel">
+                        <?php
+                        while ($dbdata2 = mysqli_fetch_array($query2)) {
+                        ?>
        					<div class="item">
        						<div class="cake_feature_item">
-       							<div class="cake_img">
-       								<img src="../img/cake-feature/c-feature-1.jpg" alt="">
-       							</div>
-       							<div class="cake_text">
-       								<h4>300.000 VNĐ</h4>
-       								<h3>Strawberry Cupcakes</h3>
-       								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-       							</div>
+                                <a href="../page/product-details.php?Masp=<?php echo $dbdata2["IdProducts"]?>">
+                                    <div class="cake_img">
+                                        <img src="../img/cake-feature/<?php echo $dbdata2["Images"]?>" alt="">
+                                    </div>
+                                    <div class="cake_text">
+                                        <input type="number" value="1" id="quantity" min="1" max="10" hidden>
+                                        <h4 style="width: 160px"><?=number_format($dbdata2["Price"],0,",",".")?> VNĐ</h4>
+                                        <h3><?php echo $dbdata2["Nameproducts"]?></h3>
+                                        <a class="pest_btn" href="#" onclick="AddCart(<?php echo $dbdata2["IdProducts"];?>)">Thêm vào giỏ</a>
+                                    </div>
+                                </a>
        						</div>
        					</div>
-       					<div class="item">
-       						<div class="cake_feature_item">
-       							<div class="cake_img">
-       								<img src="../img/cake-feature/c-feature-2.jpg" alt="">
-       							</div>
-       							<div class="cake_text">
-       								<h4>300.000 VNĐ</h4>
-       								<h3>Strawberry Cupcakes</h3>
-       								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-       							</div>
-       						</div>
-       					</div>
-       					<div class="item">
-       						<div class="cake_feature_item">
-       							<div class="cake_img">
-       								<img src="../img/cake-feature/c-feature-3.jpg" alt="">
-       							</div>
-       							<div class="cake_text">
-       								<h4>300.000 VNĐ</h4>
-       								<h3>Strawberry Cupcakes</h3>
-       								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-       							</div>
-       						</div>
-       					</div>
-       					<div class="item">
-       						<div class="cake_feature_item">
-       							<div class="cake_img">
-       								<img src="../img/cake-feature/c-feature-4.jpg" alt="">
-       							</div>
-       							<div class="cake_text">
-       								<h4>300.000 VNĐ</h4>
-       								<h3>Strawberry Cupcakes</h3>
-       								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-       							</div>
-       						</div>
-       					</div>
+                            <?php
+                        }
+                        ?>
        				</div>
         		</div>
         	</div>

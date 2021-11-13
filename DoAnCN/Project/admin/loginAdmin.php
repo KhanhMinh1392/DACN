@@ -1,5 +1,5 @@
 <?php
-include ('../connectPHP/connectPHPadmin.php')
+include ('../page/connect.php')
 ?>
 <?php
 if($_SERVER["REQUEST_METHOD"] == "POST"){

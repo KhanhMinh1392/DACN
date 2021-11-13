@@ -1,5 +1,5 @@
 <?php
-include ('../connectPHP/connectPHPadmin.php')
+    include ('../page/connect.php');
 ?>
 
 <!DOCTYPE html>

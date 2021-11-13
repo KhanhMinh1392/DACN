@@ -97,18 +97,17 @@
     <div class="search_box_inner">
         <h3>Search</h3>
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search for...">
-            <span class="input-group-btn">
-                        <button class="btn btn-default" type="button"><i class="icon icon-Search"></i></button>
-                    </span>
+            <form action="../PHPfile/Search.php" method="post">
+                <input type="text" class="form-control" name="search" placeholder="Search for..." style="color: white">
+                <span class="input-group-btn">
+                      <button class="btn btn-default" type="submit"><i class="icon icon-Search"></i></button>
+                </span>
+            </form>
         </div>
     </div>
 </div>
 <!--================End Search Box Area =================-->
-
-
-
-
+<script src="../js/webuser.js"></script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="../js/jquery-3.2.1.min.js"></script>

@@ -1,6 +1,17 @@
 <?php
 include ('../layout/header.php')
 ?>
+<?php
+    $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 12;
+    $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
+    $offset = ($current_page-1) * $item_per_page;
+    $dbdata = "SELECT * FROM products ORDER BY IdProducts ASC LIMIT ".$item_per_page." OFFSET ".$offset;
+    $query = mysqli_query($conn,$dbdata);
+
+    $total = mysqli_query($conn,"SELECT * FROM products");
+    $total = $total->num_rows;
+    $totalpage = ceil($total / $item_per_page);
+?>
         <!--================End Main Header Area =================-->
         
         <!--================End Main Header Area =================-->
@@ -25,150 +36,27 @@ include ('../layout/header.php')
         			<h5>Các chiếc bánh được yêu thích nhất</h5>
         		</div>
         		<div class="cake_feature_row row">
+                    <?php
+                        while ($row = mysqli_fetch_array($query)){
+                    ?>
 					<div class="col-lg-3 col-md-4 col-6">
 						<div class="cake_feature_item">
-							<div class="cake_img">
-								<img src="../img/cake-feature/c-feature-1.jpg" alt="">
-							</div>
-							<div class="cake_text">
-								<h4>300.000 VNĐ</h4>
-								<h3>Strawberry Cupcakes</h3>
-								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-							</div>
+                            <a href="../page/product-details.php?Masp=<?php echo $row["IdProducts"]?>">
+                                <div class="cake_img">
+                                    <img src="../img/cake-feature/<?php echo $row["Images"]?>" alt="">
+                                </div>
+                                <div class="cake_text">
+                                    <input type="number" value="1" id="quantity" min="1" max="10" hidden>
+                                    <h4 style="width: 160px"><?=number_format($row["Price"],0,",",".")?> VNĐ</h4>
+                                    <h3><?php echo $row["Nameproducts"]?></h3>
+                                    <a class="pest_btn" href="" onclick="AddCart(<?php echo $row["IdProducts"];?>)">Thêm vào giỏ</a>
+                                </div>
+                            </a>
 						</div>
 					</div>
-					<div class="col-lg-3 col-md-4 col-6">
-						<div class="cake_feature_item">
-							<div class="cake_img">
-								<img src="../img/cake-feature/c-feature-2.jpg" alt="">
-							</div>
-							<div class="cake_text">
-								<h4>300.000 VNĐ</h4>
-								<h3>Strawberry Cupcakes</h3>
-								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-4 col-6">
-						<div class="cake_feature_item">
-							<div class="cake_img">
-								<img src="../img/cake-feature/c-feature-3.jpg" alt="">
-							</div>
-							<div class="cake_text">
-								<h4>300.000 VNĐ</h4>
-								<h3>Strawberry Cupcakes</h3>
-								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-4 col-6">
-						<div class="cake_feature_item">
-							<div class="cake_img">
-								<img src="../img/cake-feature/c-feature-9.jpg" alt="">
-							</div>
-							<div class="cake_text">
-								<h4>300.000 VNĐ</h4>
-								<h3>Strawberry Cupcakes</h3>
-								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-4 col-6">
-						<div class="cake_feature_item">
-							<div class="cake_img">
-								<img src="../img/cake-feature/c-feature-4.jpg" alt="">
-							</div>
-							<div class="cake_text">
-								<h4>300.000 VNĐ</h4>
-								<h3>Strawberry Cupcakes</h3>
-								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-4 col-6">
-						<div class="cake_feature_item">
-							<div class="cake_img">
-								<img src="../img/cake-feature/c-feature-5.jpg" alt="">
-							</div>
-							<div class="cake_text">
-								<h4>300.000 VNĐ</h4>
-								<h3>Strawberry Cupcakes</h3>
-								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-4 col-6">
-						<div class="cake_feature_item">
-							<div class="cake_img">
-								<img src="../img/cake-feature/c-feature-6.jpg" alt="">
-							</div>
-							<div class="cake_text">
-								<h4>300.000 VNĐ</h4>
-								<h3>Strawberry Cupcakes</h3>
-								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-4 col-6">
-						<div class="cake_feature_item">
-							<div class="cake_img">
-								<img src="../img/cake-feature/c-feature-7.jpg" alt="">
-							</div>
-							<div class="cake_text">
-								<h4>300.000 VNĐ</h4>
-								<h3>Strawberry Cupcakes</h3>
-								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-4 col-6">
-						<div class="cake_feature_item">
-							<div class="cake_img">
-								<img src="../img/cake-feature/c-feature-8.jpg" alt="">
-							</div>
-							<div class="cake_text">
-								<h4>300.000 VNĐ</h4>
-								<h3>Strawberry Cupcakes</h3>
-								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-4 col-6">
-						<div class="cake_feature_item">
-							<div class="cake_img">
-								<img src="../img/cake-feature/c-feature-9.jpg" alt="">
-							</div>
-							<div class="cake_text">
-								<h4>300.000 VNĐ</h4>
-								<h3>Strawberry Cupcakes</h3>
-								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-4 col-6">
-						<div class="cake_feature_item">
-							<div class="cake_img">
-								<img src="../img/cake-feature/c-feature-3.jpg" alt="">
-							</div>
-							<div class="cake_text">
-								<h4>300.000 VNĐ</h4>
-								<h3>Strawberry Cupcakes</h3>
-								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-md-4 col-6">
-						<div class="cake_feature_item">
-							<div class="cake_img">
-								<img src="../img/cake-feature/c-feature-5.jpg" alt="">
-							</div>
-							<div class="cake_text">
-								<h4>300.000 VNĐ</h4>
-								<h3>Strawberry Cupcakes</h3>
-								<a class="pest_btn" href="#">Thêm vào giỏ</a>
-							</div>
-						</div>
-					</div>
+                    <?php
+                        }
+                    ?>
 				</div>
         	</div>
         </section>

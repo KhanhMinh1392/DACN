@@ -1,5 +1,5 @@
 <?php
-    include ('../connectPHP/connectPHPadmin.php')
+    include ('../page/connect.php')
 ?>
 <!DOCTYPE html>
 <!--
@@ -18,13 +18,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="../admin/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../admin/dist/css/adminlte.min.css">
-    <?php
-        session_start();
-//        if(isset($_GET["LogOut"])) {
-//            unset($_SESSION["admin"]);
-//            echo "<script>location='index4.php';</script>";
-//      }
-    ?>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
   <div class="wrapper">

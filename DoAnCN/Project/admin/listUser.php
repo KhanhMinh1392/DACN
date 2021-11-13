@@ -1,3 +1,17 @@
+<?php
+    include ('../page/connect.php')
+?>
+<?php
+    $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 7;
+    $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
+    $offset = ($current_page-1) * $item_per_page;
+    $dbdata = "SELECT * FROM accounts ORDER BY idAccounts ASC LIMIT ".$item_per_page." OFFSET ".$offset;
+    $query = mysqli_query($conn,$dbdata);
+
+    $total = mysqli_query($conn,"SELECT * FROM accounts");
+    $total = $total->num_rows;
+    $totalpage = ceil($total / $item_per_page);
+?>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -306,17 +320,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th style="width: 120px">Mã KH</th>
                   <th style="width: 190px">Tên khách hàng</th>
                   <th style="width: 150px">Số điện thoại</th>
-                  <th style="width: 190px">Nhóm khách hàng</th>
+                  <th style="width: 190px">Email</th>
                   <th style="width: 120px">Tổng SL đơn hàng</th>
                   <th style="width: 120px"></th>
                 </tr>
               </thead>
               <tbody>
+              <?php
+                while ($row = mysqli_fetch_array($query)){
+              ?>
                 <tr>
-                  <td>1.</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td><?php echo $row["idAccounts"]?></td>
+                  <td><?php echo $row["NameCustomer"]?></td>
+                  <td><?php echo $row["Phone"]?></td>
+                  <td><?php echo $row["Email"]?></td>
                   <td></td>
                   <td>
                     <div class = "btn btn-primary">
@@ -327,51 +344,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td>1.</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <div class = "btn btn-primary">
-                      <i class="fas fa-edit"></i>
-                    </div>
-                    <div class = "btn btn-danger">
-                      <i class="fas fa-trash-alt"></i>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1.</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <div class = "btn btn-primary">
-                      <i class="fas fa-edit"></i>
-                    </div>
-                    <div class = "btn btn-danger">
-                      <i class="fas fa-trash-alt"></i>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1.</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <div class = "btn btn-primary">
-                      <i class="fas fa-edit"></i>
-                    </div>
-                    <div class = "btn btn-danger">
-                      <i class="fas fa-trash-alt"></i>
-                    </div>
-                  </td>
-                </tr>
+              <?php }?>
               </tbody>
             </table>
             <div class="card-footer clearfix">
