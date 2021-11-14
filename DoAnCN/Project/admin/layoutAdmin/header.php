@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Starter</title>
+  <title>Cake Shop</title>
    <link rel="icon" href="../img/fav-icon.png" type="image/x-icon" />
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -199,7 +199,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
               <li class="nav-item">
-              <a href="#" class="nav-link active">
+              <a href="../admin/index4.php" class="nav-link active">
                 <i class="nav-icon fas fa-home"></i>
                 <p>
                   Trang Chủ
@@ -207,7 +207,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </a>
             </li>
             <li class="nav-item menu-close">
-              <a href="#" class="nav-link">
+              <a href="" class="nav-link">
                 <i class="nav-icon fas fa-file-invoice-dollar"></i>
                 <p>
                   Đơn hàng
@@ -216,7 +216,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item active">
-                  <a href="../admin/starter.php" class="nav-link">
+                  <a href="../admin/listBill.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Đơn Hàng</p>
                   </a>
@@ -280,7 +280,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </ul>
             </li>
               <li class="nav-item">
-                  <a href="../page/login.php" class="nav-link">
+                  <a href="../admin/loginAdmin.php" class="nav-link">
                       <i class="nav-icon fas fa-sign-out-alt"></i>
                       <p>
                           Đăng xuất

@@ -11,9 +11,9 @@
         if (!isset($_SESSION["giohang"])) {
             $giohang[$id] = array(
                 'masp' => $row[0],
-                'name' => $row[1],
-                'image' => $row[3],
-                'price' => $row[4],
+                'name' => $row[2],
+                'image' => $row[4],
+                'price' => $row[5],
                 'number' => $num
             );
 
@@ -22,17 +22,17 @@
             if (array_key_exists($id, $giohang)) {
                 $giohang[$id] = array(
                     'masp' => $row[0],
-                    'name' => $row[1],
-                    'image' => $row[3],
-                    'price' => $row[4],
+                    'name' => $row[2],
+                    'image' => $row[4],
+                    'price' => $row[5],
                     'number' => $giohang[$id]["number"] + $num
                 );
             } else {
                 $giohang[$id] = array(
                     'masp' => $row[0],
-                    'name' => $row[1],
-                    'image' => $row[3],
-                    'price' => $row[4],
+                    'name' => $row[2],
+                    'image' => $row[4],
+                    'price' => $row[5],
                     'number' => $num
                 );
             }

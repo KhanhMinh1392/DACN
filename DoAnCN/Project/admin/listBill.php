@@ -1,6 +1,18 @@
 <?php
     include ('../page/connect.php')
 ?>
+<?php
+    $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 7;
+    $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
+    $offset = ($current_page-1) * $item_per_page;
+    $dbdata = "SELECT * FROM orders ORDER BY idOrders ASC LIMIT ".$item_per_page." OFFSET ".$offset;
+    $query = mysqli_query($conn,$dbdata);
+
+    $total = mysqli_query($conn,"SELECT * FROM orders");
+    $total = $total->num_rows;
+    $totalpage = ceil($total / $item_per_page);
+
+?>
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -10,8 +22,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Starter</title>
-
+  <title>Cake Shop</title>
+    <link rel="icon" href="../img/fav-icon.png" type="image/x-icon" />
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
@@ -213,7 +225,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="../admin/starter.php" class="nav-link active">
+                <a href="listBill.php" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Danh sách đơn hàng</p>
                 </a>
@@ -304,88 +316,49 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <table class="table">
               <thead>
                 <tr>
-                  <th style="width: 10px">ID</th>
-                  <th>Tên khách hàng</th>
-                  <th style="width: 180px">Trạng thái đơn hàng</th>
-                  <th style="width: 150px">Thanh toán</th>
-                  <th style="width: 150px">Khách phải trả</th>
-                  <th style="width: 180px">Ngày khởi tạo</th>
-                  <th style="width: 130px"></th>
+                  <th style="width: 150px">Mã đơn hàng</th>
+                  <th style="width: 150px">Ngày tạo đơn</th>
+                  <th style="width: 150px">Tên khách hàng</th>
+                  <th style="width: 150px;text-align: center">Trạng thái đơn hàng</th>
+                  <th style="width: 150px;text-align: center">Khách phải trả</th>
+                  <th style="width: 70px"></th>
                 </tr>
               </thead>
               <tbody>
+              <?php
+                while ($row = mysqli_fetch_array($query)){
+              ?>
                 <tr>
-                  <td>1.</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td><?php echo $row["idOrders"]?></td>
                   <td>
-                    <div class = "btn btn-primary">
+                      <?php
+                      $date=date_create($row["Dateorders"]);
+                      echo date_format($date,"d/m/Y"); ?>
+                  </td>
+                  <td><?php echo $row["NameCustomer"]?></td>
+                    <?php if($row["Status"] == "Đã tiếp nhận") {?>
+                        <td ><p class="badge bg-danger" style="margin-left: 90px;font-size: 15px"><?php echo $row["Status"]?></p></td>
+                    <?php } else {?>
+                        <td ><p style="background: #E7FBE3;width: 110px; color: #0DB473; border-radius: 20px; padding-left: 16px;margin-left: 85px"><?php echo $row["Status"]?></p></td>
+                    <?php }?>
+                  <td style="text-align: center"><?=number_format($row["Total"],0,",",".")?></td>
+                  <td>
+                    <a href="editOrder.php?idOrder=<?php echo $row["idOrders"]?>&idAccount=<?php echo $row["idAccounts"]?>&idStaff=<?php echo $row["idStaffs"]?>" class ="btn btn-primary">
                       <i class="fas fa-edit"></i>
-                    </div>
-                    <div class = "btn btn-danger">
-                      <i class="fas fa-trash-alt"></i>
-                    </div>
+                    </a>
                   </td>
                 </tr>
-                <tr>
-                  <td>2.</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <div class = "btn btn-primary">
-                      <i class="fas fa-edit"></i>
-                    </div>
-                    <div class = "btn btn-danger">
-                      <i class="fas fa-trash-alt"></i>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>3.</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <div class = "btn btn-primary">
-                      <i class="fas fa-edit"></i>
-                    </div>
-                    <div class = "btn btn-danger">
-                      <i class="fas fa-trash-alt"></i>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>4.</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td>
-                    <div class = "btn btn-primary">
-                      <i class="fas fa-edit"></i>
-                    </div>
-                    <div class = "btn btn-danger">
-                      <i class="fas fa-trash-alt"></i>
-                    </div>
-                  </td>
-                </tr>
+                    <?php
+                }
+              ?>
               </tbody>
             </table>
             <div class="card-footer clearfix">
               <ul class="pagination pagination-sm m-0 float-right">
                 <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <?php for($num = 1 ; $num <= $totalpage; $num++){ ?>
+                      <li class="page-item"><a class="page-link" href="?per_page=<?=$item_per_page?>&page=<?=$num?>"><?=$num?></a></li>
+                  <?php } ?>
                 <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
               </ul>
             </div>

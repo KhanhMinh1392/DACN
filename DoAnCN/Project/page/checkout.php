@@ -2,6 +2,11 @@
 include ('../layout/header.php')
 ?>
 <?php
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception;
+    use PHPMailer\PHPMailer\SMTP;
+?>
+<?php
     $getid = "SELECT idAccounts FROM accounts WHERE Username = '".$_SESSION["username"]."'";
     $data = mysqli_query($conn,$getid);
     $sql = mysqli_fetch_array($data);
@@ -64,24 +69,26 @@ include ('../layout/header.php')
 								    <label for="address">Địa chỉ *</label>
 									<input type="text" class="form-control" id="address" name="address" value="<?php echo $cottv["Address"]?>" placeholder="Địa chỉ" style="color: black">
 								</div>
+                                <?php
+                                    $sql_thanhpho = mysqli_query($conn,"SELECT * FROM pvs_tinhthanhpho ORDER BY matp ASC");
+                                ?>
+                                <div class="form-group col-md-6">
+                                    <label for="state1">Tỉnh/ Thành phố</label>
+                                    <select class="product_select city" id="state1" name="city">
+                                        <?php
+                                            while ($rows_thanhpho = mysqli_fetch_array($sql_thanhpho)){
+                                                ?>
+                                                <option style="height: 100px" value="<?php echo $rows_thanhpho["matp"]?>"><?php echo $rows_thanhpho["name_city"]?></option>
+                                        <?php }?>
+                                    </select>
+                                </div>
 								<div class="form-group col-md-6">
 								    <label for="city">Quận/ Huyện</label>
-                                    <select class="product_select" id="state1" name="districts" style="color: black">
-                                        <option data-display="--Chọn--"></option>
-                                        <option value="Quận 1">Quận 1</option>
-                                        <option value="Quận 2">Quận 2</option>
-                                        <option value="Quận 3">Quận 3</option>
+                                    <select class=" tinh" id="state1" name="districts" style="color: black;border: solid 1px #e8e8e8;line-height: 40px; width: 320px; height: 40px; color: #cccc;font-size: 15px">
+
                                     </select>
 								</div>
-								<div class="form-group col-md-6">
-								    <label for="state1">Tỉnh/ Thành phố</label>
-									<select class="product_select" id="state1" name="city">
-                                        <option data-display="--Chọn--"></option>
-                                        <option value="TP. Nha Trang">TP. Nha Trang</option>
-                                        <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
-                                        <option value="TP. Bình Dương">TP. Bình Dương</option>
-                                    </select>
-								</div>
+
                                 <div class="form-group col-md-12">
                                     <label for="">Ghi chú</label>
                                     <textarea class="form-control" name="message" rows="1" placeholder="Wrtie message" style="height: 100px; color: black"></textarea>
@@ -184,7 +191,7 @@ include ('../layout/header.php')
     if(isset($_POST["order"])){
         if(isset($_SESSION["giohang"])){
             $idAccounts = $sql["idAccounts"];
-            $trangthai = "Đang giao";
+            $trangthai = "Đã tiếp nhận";
             $hoten = $_POST["name"];
             $noigiao = $_POST["address"];
             $ngaydat = date("Y-m-d");
@@ -200,14 +207,49 @@ include ('../layout/header.php')
                 while ($cotDD = mysqli_fetch_array($truyvanlaydondat)) {
                     $madondat = $cotDD["idOrders"];
                 }
+                date_default_timezone_set('Asia/Ho_Chi_Minh');
+                $ngaydat = date("d-m-Y H:i:s");
+                $content.="<h4 style='margin: 10px 0;font-size: 18px;color: black'>Đơn Hàng Của Bạn($ngaydat)</h4>";
+
+                $content.="<table width='500px' >";
+                $content.="<tr><th>#</th><th>Tên sản phẩm</th><th>Đơn giá</th><th>Số lượng</th><th>Tổng</th></tr>";
+                $i=0;
                 foreach ($_SESSION["giohang"] as $key=> $value) {
                     $masp = $value["masp"];
                     $number = $value["number"];
+                    $price = $value["price"];
                     $total = $value["number"] * $value["price"];
+                    $price_mail = number_format($price,0,",",".");
+                    $total_mail = number_format($total,0,",",".");
+                    $ngaydat = date("d-m-Y H:i:s");
+                    $i++;
 
                     $themctdd = "INSERT INTO detailorders VALUES ('".$madondat."','".$masp."','".$number."','".$total."')";
                     mysqli_query($conn, $themctdd);
+                    //==========================Trừ số lượng tồn ==========================================
+                    $getcount = "SELECT * FROM detailorders WHERE IdProducts = '".$masp."'";
+                    $get_db = mysqli_fetch_array(mysqli_query($conn, $getcount));
+
+                    $product = "SELECT * FROM products WHERE IdProducts = '".$masp."'";
+                    $getsl = mysqli_fetch_array(mysqli_query($conn, $product));
+
+                    $soluongton = $getsl["Quantity"] - $get_db["Quantitydetail"];
+                    if($soluongton==0) {
+                        $soldout = "UPDATE products SET idStatus = '2',Quantity = '".$soluongton."' WHERE IdProducts = '".$masp."'";
+                        $query_soldout=mysqli_query($conn,$soldout);
+                    } else {
+                        $query = "UPDATE products SET Quantity = '".$soluongton."' WHERE IdProducts = '".$masp."'";
+                        $queryupdate=mysqli_query($conn,$query);
+                    }
+                    //=======================================================================================
+
+                    $content.="<tr><td>$i</td><td style='text-align: center'>".$value["name"]."</td><td style='text-align: center'>$price_mail</td><td style='text-align: center'>$number</td><td style='text-align: right'>$total_mail VNĐ</td></tr>";
                 }
+                $sum_price = number_format($tongtien,0,",",".");
+                $content.="<tr><th></th><th></th><th></th><th><hr></th><th><hr></th></tr>";
+                $content.="<tr><th></th><th></th><th></th><th>Tổng tiền: </th><th style='text-align: right'>$sum_price VNĐ</th></tr>";
+                $content.="<table>";
+
                 unset($_SESSION["giohang"]);
                 echo "<script>alert('Đặt hàng thành công');location='shop.php';</script>";
             }
@@ -217,6 +259,33 @@ include ('../layout/header.php')
         }
         else {
             echo "<script>alert('Giỏ hàng trống');</script>";
+        }
+        include ('../PHPMAILER/lib/PHPMailer.php');
+        include ('../PHPMAILER/lib/SMTP.php');
+        include ('../PHPMAILER/lib/Exception.php');
+
+        $mail = new PHPMailer(true);
+        try{
+            $mail->isSMTP();
+            $mail->Host       = 'smtp.gmail.com';
+            $mail->SMTPAuth   = true;
+            $mail->Username   = 'minhkhanh99312@gmail.com'; //SMTP username
+            $mail->Password   = 'minhkhanh1392';
+            $mail->SMTPSecure = 'tls';
+            $mail->CharSet = 'UTF-8';
+            $mail->Port       = 587;
+            $sendmail= $_POST["email"];
+            $fullname=$_POST["hoten"];
+
+            $mail->setFrom('minhkhanh99312@gmail.com', 'Shop Cake');
+            $mail->addAddress($sendmail, $fullname);
+            $mail->isHTML(true);  //Set email format to HTML
+            $mail->Subject = 'Xác nhận thông tin đơn hàng Shop Cake';
+            $mail->Body    = $content;
+            $mail->send();
+            echo 'Đã gửi đơn hàng';
+        } catch (Exception $e) {
+            echo "Lỗi gửi mail: {$mail->ErrorInfo}";
         }
     }
     ?>

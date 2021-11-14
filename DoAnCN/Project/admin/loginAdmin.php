@@ -10,7 +10,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     if(mysqli_num_rows($query) > 0) {
         echo "<script>alert('Đăng nhập thành công')</script>";
-        $_SESSION['admin'] = $email;
+        $_SESSION["admin"] = $email;
         echo "<script>location='../admin/index4.php'</script>";
     } else {
         echo "<script>alert('Đăng nhập thất bại')</script>";
@@ -41,7 +41,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 	<link rel="stylesheet" type="text/css" href="../admin/assest/css/main.css">
 
     <?php
-    session_start();
+        session_start();
     ?>
 <!--===============================================================================================-->
 </head>

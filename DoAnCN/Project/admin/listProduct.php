@@ -22,7 +22,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Starter</title>
+  <title>Cake Shop</title>
+    <link rel="icon" href="../img/fav-icon.png" type="image/x-icon" />
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -230,7 +231,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="../admin/starter.php" class="nav-link">
+                    <a href="listBill.php" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Đơn Hàng</p>
                     </a>
@@ -326,7 +327,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <th style="width: 10px">ID</th>
                       <th style="width: 90px">Ảnh</th>
                       <th style="width: 180px">Sản phẩm</th>
-                      <th style="width: 150px">Loại</th>
+                      <th style="width: 150px">Trạng thái</th>
                       <th style="width: 120px">Giá</th>
                       <th style="width: 100px">Có thể bán</th>
                       <th style="width: 150px">Ngày khởi tạo</th>
@@ -336,12 +337,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <tbody>
                   <?php
                   while ($row = mysqli_fetch_array($query)){
+                      $idstatus = "SELECT * FROM status_product WHERE idStatus='".$row["idStatus"]."'";
+                      $getstatus = mysqli_query($conn,$idstatus);
+                      $status = mysqli_fetch_array($getstatus);
                   ?>
                     <tr>
                       <td><?php echo $row["IdProducts"]?></td>
                       <td><img src="../img/cake-feature/<?php echo $row["Images"]?>" style="width: 50px"></td>
                       <td><?php echo $row["Nameproducts"]?></td>
-                      <td><?php echo $row["Status"]?></td>
+                      <td><?php echo $status["NameStatus"]?></td>
                       <td><?=number_format($row["Price"],0,",",".")?> VNĐ</td>
                       <td><?php echo $row["Quantity"]?></td>
                       <td>
@@ -361,12 +365,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </tbody>
                 </table>
               </div>
-                <hr>
-                <div class="card-tools">
-                    <ul class="pagination pagination-sm float-right">
+<!--                <hr> -->
+                <div class="card-footer clearfix">
+                    <ul class="pagination pagination-sm m-0 float-right">
+                        <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
                         <?php for($num = 1 ; $num <= $totalpage; $num++){ ?>
                             <li class="page-item"><a class="page-link" href="?per_page=<?=$item_per_page?>&page=<?=$num?>"><?=$num?></a></li>
                         <?php } ?>
+                        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
                     </ul>
                 </div>
               <!-- /.card-body -->

@@ -224,7 +224,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="../admin/starter.php" class="nav-link">
+                <a href="listBill.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Đơn Hàng</p>
                 </a>
@@ -318,23 +318,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <thead>
                 <tr>
                   <th style="width: 120px">Mã KH</th>
-                  <th style="width: 190px">Tên khách hàng</th>
-                  <th style="width: 150px">Số điện thoại</th>
-                  <th style="width: 190px">Email</th>
-                  <th style="width: 120px">Tổng SL đơn hàng</th>
+                  <th style="width: 220px">Tên khách hàng</th>
+                  <th style="width: 140px">Số điện thoại</th>
+                  <th style="width: 200px">Email</th>
+                  <th style="width: 150px;text-align: center">Tổng SL đơn hàng</th>
                   <th style="width: 120px"></th>
                 </tr>
               </thead>
               <tbody>
               <?php
                 while ($row = mysqli_fetch_array($query)){
+                    $getcount = "SELECT idOrders FROM orders WHERE idAccounts = '".$row["idAccounts"]."'";
+                    $db = mysqli_query($conn,$getcount);
+                    $count = mysqli_num_rows($db);
               ?>
                 <tr>
                   <td><?php echo $row["idAccounts"]?></td>
                   <td><?php echo $row["NameCustomer"]?></td>
                   <td><?php echo $row["Phone"]?></td>
                   <td><?php echo $row["Email"]?></td>
-                  <td></td>
+                  <td style="text-align: center"><?php echo $count ?></td>
                   <td>
                     <div class = "btn btn-primary">
                       <i class="fas fa-edit"></i>
@@ -350,9 +353,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="card-footer clearfix">
               <ul class="pagination pagination-sm m-0 float-right">
                 <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <?php for($num = 1 ; $num <= $totalpage; $num++){ ?>
+                      <li class="page-item"><a class="page-link" href="?per_page=<?=$item_per_page?>&page=<?=$num?>"><?=$num?></a></li>
+                  <?php } ?>
                 <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
               </ul>
             </div>
@@ -362,6 +365,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
   </div>
 </div>
+
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

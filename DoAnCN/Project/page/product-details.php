@@ -73,11 +73,12 @@ include ('../layout/header.php')
                         ?>
 						<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" >
                             <?php
+                            if(mysqli_num_rows($cotbl) > 0) {
                             while ($result = mysqli_fetch_array($cotbl)) {
                                 ?>
                                 <div class="media" style="max-height: 100px; margin-bottom: 30px">
                                     <div class="d-flex">
-                                        <img src="../img/client/client-1.png" alt="">
+                                        <img src="../img/userimg/<?php echo $result["Image"]?>" alt="" style="width: 100px;height: 110px;margin-bottom: 30px;border-radius: 50%;">
                                     </div>
                                     <div class="media-body" style="margin-left: 20px; max-width: 500px"">
                                         <h5>
@@ -103,7 +104,9 @@ include ('../layout/header.php')
                                     <?php }?>
                                     </div>
                                 </div>
-                            <?php } ?>
+                            <?php } } else {?>
+                                <h5>Chưa có bình luận</h5>
+                            <?php }?>
                             <?php
                                 if(isset($_SESSION["username"])) {
                             ?>

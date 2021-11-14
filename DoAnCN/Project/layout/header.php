@@ -37,6 +37,9 @@
     <link href="../css/style.css" rel="stylesheet">
     <link href="../css/responsive.css" rel="stylesheet">
 
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -49,7 +52,6 @@
             unset($_SESSION["username"]);
             echo "<script>location='index.php';</script>";
         }
-
     ?>
 </head>
 <body>

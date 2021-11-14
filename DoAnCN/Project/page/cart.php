@@ -54,7 +54,7 @@ include ('../layout/header.php')
                                         <td><?php echo $value["name"]?></td>
                                         <td><?=number_format($value["price"],0,",",".")?> VNĐ</td>
                                         <td>
-                                            <input type="number" id="num_<?php echo $key?>" min="1" max="50" value="<?php echo $value["number"]?>" onclick="UpdateCart(<?php echo $key?>)">
+                                            <input type="number" id="num_<?php echo $key?>" min="1" max="200" value="<?php echo $value["number"]?>" onclick="UpdateCart(<?php echo $key?>)">
                                         </td>
                                         <td><?php
                                             $total = $value["number"] * $value["price"];

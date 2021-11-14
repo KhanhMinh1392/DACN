@@ -19,9 +19,10 @@
         $detail = $_POST["detail"];
         $message = $_POST["message"];
         $genres = $_POST["genres"];
+        $getstatus = $_POST["status"];
         $date = $_POST["date"];
         echo "<script>alert($name,$quantity,$price)</script>";
-        $sql = "UPDATE products SET Nameproducts = '".$name."',Quantity = '".$quantity."',Price = '".$price."', Info = '".$detail."',Detailinfo = '".$message."', DateCreate = '".$date."',idType = '".$genres."' WHERE IdProducts = '".$_GET["Masp"]."'";
+        $sql = "UPDATE products SET idStatus = '".$getstatus."',Nameproducts = '".$name."',Quantity = '".$quantity."',Price = '".$price."', Info = '".$detail."',Detailinfo = '".$message."', DateCreate = '".$date."',idType = '".$genres."' WHERE IdProducts = '".$_GET["Masp"]."'";
         $queryupdate=mysqli_query($conn,$sql);
         if($queryupdate) {
             echo "<script>alert('Cập nhật thành công')</script>";
@@ -34,6 +35,10 @@
     //loai sản phẩm
     $getgenres = "SELECT * FROM genres";
     $getgen=mysqli_query($conn,$getgenres);
+    //status
+    $getstatus = "SELECT * FROM status_product";
+    $status=mysqli_query($conn,$getstatus);
+
 ?>
 
     <!-- Content Wrapper. Contains page content -->
@@ -99,9 +104,23 @@
                         </div>
                         <!-- /.form-group -->
                         <div class="form-group">
-                          <label for="exampleInputPassword1">Ngày chỉnh sửa</label>
+                          <label for="exampleInputPassword1">Ngày tạo</label>
                           <input type="date" name="date" value="<?php echo empty($_POST["date"]) ? $dbdata["DateCreate"] : $_POST["date"]?>" class="form-control col-sm-8">
-                        </div class="form-group">
+                        </div>
+                          <div class="form-group">
+                              <label for="exampleInputPassword1">Trạng thái</label>
+                              <select class="form-control select2 select2-danger col-md-8" name="status" id="" data-dropdown-css-class="select2-danger" style="width: 100%;">
+                                  <?php
+                                  while ($namest = mysqli_fetch_array($status)) {
+                                      if($namest["idStatus"] == $dbdata["idStatus"]) {
+                                          ?>
+                                          <option selected="selected" value="<?php echo $namest["idStatus"]?>"><?php echo $namest["NameStatus"]?></option>
+                                      <?php } else {?>
+                                          <option value="<?php echo $namest["idStatus"]?>"><?php echo $namest["NameStatus"]?></option>
+                                      <?php } }?>
+                              </select>
+                          </div>
+                        <div class="form-group">
                           <label for="exampleInputPassword1">Hình ảnh</label>
                           <div>
                               <img src="../img/cake-feature/<?php echo $dbdata["Images"]?>" style="width: 200px" class="avatar img-circle img-thumbnail" alt="avatar">

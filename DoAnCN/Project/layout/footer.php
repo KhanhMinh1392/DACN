@@ -107,6 +107,24 @@
     </div>
 </div>
 <!--================End Search Box Area =================-->
+<script>
+    $(document).ready(function() {
+        var readURL = function(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.avatar').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        $(".file-upload").on('change', function(){
+            readURL(this);
+        });
+    });
+</script>
 <script src="../js/webuser.js"></script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -132,6 +150,8 @@
 <script src="../vendors/lightbox/simpleLightbox.min.js"></script>
 
 <script src="../js/theme.js"></script>
+<script src="../js/district.js"></script>
+
 </body>
 
 </html>
