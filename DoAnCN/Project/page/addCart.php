@@ -39,8 +39,6 @@
 
         }
         $_SESSION["giohang"] = $giohang;
-        //echo "<prE>";
-        //print_r($_SESSION["giohang"]);
         $number = 0;
         foreach ($giohang as $key => $value) {
             $number += (int)$value["number"];

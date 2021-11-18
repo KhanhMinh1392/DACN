@@ -2,16 +2,15 @@
     include ('../page/connect.php')
 ?>
 <?php
-    $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 7;
+    $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 5;
     $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
     $offset = ($current_page-1) * $item_per_page;
-    $dbdata = "SELECT * FROM orders ORDER BY idOrders DESC LIMIT ".$item_per_page." OFFSET ".$offset;
+    $dbdata = "SELECT * FROM blog ORDER BY IdBlog DESC LIMIT ".$item_per_page." OFFSET ".$offset;
     $query = mysqli_query($conn,$dbdata);
 
-    $total = mysqli_query($conn,"SELECT * FROM orders");
+    $total = mysqli_query($conn,"SELECT * FROM blog");
     $total = $total->num_rows;
     $totalpage = ceil($total / $item_per_page);
-
 ?>
 <!DOCTYPE html>
 <!--
@@ -216,7 +215,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item menu-close">
-            <a href="#" class="nav-link active">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-file-invoice-dollar"></i>
               <p>
                 Đơn hàng
@@ -289,7 +288,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
             <li class="nav-item menu-close">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link active">
                     <i class="nav-icon fas fa-blog"></i>
                     <p>
                         Blog Web
@@ -298,7 +297,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="../admin/listUser.php" class="nav-link">
+                        <a href="../admin/listBlog.php" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Quản lí Blog</p>
                         </a>
@@ -327,47 +326,51 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Danh sách đơn hàng </h1>
+            <h1 class="m-0">Quản lí blog web</h1>
           </div><!-- /.col -->
+            <div class="col-sm-6">
+                <a href="" class="btn btn-success float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
+            </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
       <div class="col-md-12">
         <div class="card">
           <div class="card-header" style="background-color: #007bff;">
-            <h3 class="card-title" style="color:#fff;" >Danh sách đơn hàng</h3>
+            <h3 class="card-title" style="color:#fff;" >Danh sách blog</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body p-0">
             <table class="table">
               <thead>
                 <tr>
-                  <th style="width: 150px">Mã đơn hàng</th>
-                  <th style="width: 150px">Ngày tạo đơn</th>
-                  <th style="width: 150px">Tên khách hàng</th>
-                  <th style="width: 150px;text-align: center">Trạng thái đơn hàng</th>
-                  <th style="width: 150px;text-align: center">Khách phải trả</th>
+                  <th style="width: 30px">#</th>
+                  <th style="width: 130px;text-align: center">Ảnh</th>
+                  <th style="width: 130px;text-align: center">Thời gian</th>
+                  <th style="width: 150px;text-align: center">Nhân viên tạo</th>
                   <th style="width: 70px"></th>
                 </tr>
               </thead>
               <tbody>
               <?php
                 while ($row = mysqli_fetch_array($query)){
+                $getStaff = "SELECT * FROM staffs WHERE idStaffs = '".$row["idStaffs"]."'";
+                $query_staff = mysqli_query($conn,$getStaff);
+                $nameStaff = mysqli_fetch_array($query_staff)
               ?>
                 <tr>
-                  <td><?php echo $row["idOrders"]?></td>
-                  <td>
-                      <?php
-                      $date=date_create($row["Dateorders"]);
-                      echo date_format($date,"d/m/Y"); ?>
+                  <td><?php echo $row["IdBlog"]?></td>
+                  <td style="text-align: center">
+                      <img class="img-fluid" src="../img/blog/column/<?php echo $row["Images"]?>" alt="" style="width: 100px">
                   </td>
-                  <td><?php echo $row["NameCustomer"]?></td>
-                    <?php if($row["Status"] == "Đã tiếp nhận") {?>
-                        <td ><p class="badge bg-danger" style="margin-left: 90px;font-size: 15px"><?php echo $row["Status"]?></p></td>
-                    <?php } else {?>
-                        <td ><p style="background: #E7FBE3;width: 110px; color: #0DB473; border-radius: 20px; padding-left: 16px;margin-left: 85px"><?php echo $row["Status"]?></p></td>
-                    <?php }?>
-                  <td style="text-align: center"><?=number_format($row["Total"],0,",",".")?></td>
-                  <td>
+                  <td style="text-align: center">
+                      <?php
+                      $date=date_create($row["Date"]);
+                      echo date_format($date,"d/m/Y");?>
+                  </td>
+                  <td style="text-align: center">
+                      <p><?php echo $nameStaff["Name"]?></p>
+                  </td>
+                  <td style="text-align: center">
                     <a href="editOrder.php?idOrder=<?php echo $row["idOrders"]?>&idAccount=<?php echo $row["idAccounts"]?>&idStaff=<?php echo $row["idStaffs"]?>" class ="btn btn-primary">
                       <i class="fas fa-edit"></i>
                     </a>

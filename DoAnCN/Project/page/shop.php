@@ -66,7 +66,11 @@ include ('../layout/header.php')
                                             <input type="number" value="1" id="quantity" min="1" max="10" hidden>
 										    <h4 style="width: 160px"><?=number_format($row["Price"],0,",",".")?> VNĐ</h4>
 										    <h3><?php echo $row["Nameproducts"]?></h3>
-										    <a class="pest_btn" href="" onclick="AddCart(<?php echo $row["IdProducts"];?>)">Thêm vào giỏ</a>
+                                            <?php if($row["Quantity"] == 0) {?>
+                                                <button class="pest_btn" href="" disabled style="border: none">Hết hàng</button>
+                                            <?php } else {?>
+                                                <a class="pest_btn" href="" onclick="AddCart(<?php echo $row["IdProducts"];?>)" >Thêm vào giỏ</a>
+                                            <?php } ?>
 									    </div>
                                     </a>
 								</div>
@@ -127,69 +131,29 @@ include ('../layout/header.php')
         						<div class="p_w_title">
         							<h3>Sản Phẩm Bán Chạy</h3>
         						</div>
-        						<div class="media">
-        							<div class="d-flex">
-        								<img src="../img/product/sale-product/s-product-1.jpg" alt="">
-        							</div>
-        							<div class="media-body">
-        								<a href="#"><h4>Brown Cake</h4></a>
-        								<ul class="list_style">
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        								</ul>
-        								<h5>350.000VNĐ</h5>
-        							</div>
-        						</div>
-        						<div class="media">
-        							<div class="d-flex">
-        								<img src="../img/product/sale-product/s-product-2.jpg" alt="">
-        							</div>
-        							<div class="media-body">
-        								<a href="#"><h4>Brown Cake</h4></a>
-        								<ul class="list_style">
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        								</ul>
-        								<h5>350.000VNĐ</h5>
-        							</div>
-        						</div>
-        						<div class="media">
-        							<div class="d-flex">
-        								<img src="../img/product/sale-product/s-product-3.jpg" alt="">
-        							</div>
-        							<div class="media-body">
-        								<a href="#"><h4>Brown Cake</h4></a>
-        								<ul class="list_style">
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        								</ul>
-        								<h5>350.000VNĐ</h5>
-        							</div>
-        						</div>
-        						<div class="media">
-        							<div class="d-flex">
-        								<img src="../img/product/sale-product/s-product-4.jpg" alt="">
-        							</div>
-        							<div class="media-body">
-        								<a href="#"><h4>Brown Cake</h4></a>
-        								<ul class="list_style">
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        									<li><a href="#"><i class="fa fa-star-o"></i></a></li>
-        								</ul>
-        								<h5>350.000VNĐ</h5>
-        							</div>
+                                <?php
+                                $sort = "SELECT * FROM detailorders INNER JOIN products ON detailorders.IdProducts = products.IdProducts GROUP BY detailorders.IdProducts ORDER BY SUM(detailorders.Quantitydetail) DESC LIMIT 4";
+                                $query_sort = mysqli_query($conn,$sort);
+
+                                while ($row_sort = mysqli_fetch_array($query_sort)){
+                                ?>
+                                    <div class="media">
+                                        <div class="d-flex">
+                                            <img style="width: 100px" src="../img/cake-feature/<?php echo $row_sort["Images"]?>" alt="">
+                                        </div>
+                                        <div class="media-body">
+                                            <a href="#"><h4><?php echo $row_sort["Nameproducts"]?></h4></a>
+                                            <ul class="list_style">
+                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>
+                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>
+                                            </ul>
+                                            <h5><?=number_format($row_sort["Price"],0,",",".")?> VNĐ</h5>
+                                        </div>
+                                    </div>
+                                <?php }?>
         						</div>
         					</aside>
         				</div>

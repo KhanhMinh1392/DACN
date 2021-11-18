@@ -22,10 +22,15 @@
             <div class="info-box">
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-money-check-alt"></i></span>
               <div class="info-box-content">
+                  <?php
+                  $total = "SELECT SUM(Total) FROM `orders`";
+                  $query_total = mysqli_query($conn,$total);
+                  $result_total = mysqli_fetch_row($query_total);
+                  ?>
                 <span class="info-box-text">Doanh Thu</span>
                 <span class="info-box-number">
-                  10
-                  <small>%</small>
+                  <?php echo number_format($result_total[0],0,",",".")?>
+                  <small>VNĐ</small>
                 </span>
               </div>
               <!-- /.info-box-content -->
@@ -38,8 +43,13 @@
             <div class="info-box mb-3">
               <span class="info-box-icon bg-danger elevation-1"><i class="fab fa-product-hunt"></i></span>
               <div class="info-box-content">
+                  <?php
+                      $getcount = "SELECT * FROM products";
+                      $db = mysqli_query($conn,$getcount);
+                      $count = mysqli_num_rows($db);
+                  ?>
                 <span class="info-box-text">Tổng sản phẩm</span>
-                <span class="info-box-number">48</span>
+                <span class="info-box-number"><?php echo $count?></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -53,8 +63,13 @@
               <div class="info-box mb-3">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
                 <div class="info-box-content">
+                    <?php
+                        $getbill = "SELECT * FROM orders";
+                        $db_bill = mysqli_query($conn,$getbill);
+                        $count_bill = mysqli_num_rows($db_bill);
+                    ?>
                   <span class="info-box-text">Tổng đơn hàng</span>
-                  <span class="info-box-number">760</span>
+                  <span class="info-box-number"><?php echo $count_bill?></span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
@@ -64,10 +79,14 @@
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
               <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-
               <div class="info-box-content">
+                  <?php
+                      $getaccount = "SELECT * FROM accounts";
+                      $db_accounts = mysqli_query($conn,$getaccount);
+                      $count_accounts = mysqli_num_rows($db_accounts);
+                  ?>
                 <span class="info-box-text">Members</span>
-                <span class="info-box-number">3,000</span>
+                <span class="info-box-number"><?php echo $count_accounts?></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -129,7 +148,7 @@
             <div class="card-body">
               <div class="d-flex">
                 <p class="d-flex flex-column">
-                  <span class="text-bold text-lg">$18,230.00</span>
+                  <span class="text-bold text-lg"> <?php echo number_format($result_total[0],0,",",".")?> VNĐ</span>
                   <span>Sales Over Time</span>
                 </p>
                 <p class="ml-auto d-flex flex-column text-right">

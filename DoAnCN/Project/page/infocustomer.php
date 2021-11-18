@@ -13,7 +13,14 @@ include ('../layout/header.php')
         $nameCustomer = $_POST["nameCustomer"];
         $number = $_POST["number"];
         $birthday = $_POST["birthday"];
-        $img = $_POST["img"];
+        $img = $information["Image"];
+
+        if(($_FILES["img"]["name"]!="")) {
+            unlink("../img/userimg/".$img);
+            $img = $_FILES["img"]['name'];
+            move_uploaded_file($_FILES["img"]['tmp_name'],'../img/userimg/'.$img);
+        }
+
         $query = "UPDATE accounts SET NameCustomer = '".$nameCustomer."',Birthday = '".$birthday."',Image = '".$img."', Phone = '".$number."' WHERE Username = '".$_SESSION["username"]."'";
         $queryupdate=mysqli_query($conn,$query);
         if($queryupdate)
@@ -45,7 +52,7 @@ include ('../layout/header.php')
 				</div>
        			<div class="row">
        				<div class="col-lg-12">
-       					<form class="row contact_us_form" action="<?php echo $_SERVER["PHP_SELF"]?>" method="post" id="contactForm" novalidate="novalidate">
+       					<form class="row contact_us_form" action="<?php echo $_SERVER["PHP_SELF"]?>" method="post" id="contactForm" novalidate="novalidate" enctype="multipart/form-data">
                             <div class="form-group col-md-12" style="text-align: center">
                                 <?php if(empty($information["Image"])) {?>
                                     <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style="width: 200px;" class="avatar img-circle img-thumbnail" alt="avatar">
@@ -94,7 +101,7 @@ include ('../layout/header.php')
                                 <h2>Đơn hàng</h2>
                             </div>
                             <?php
-                                $getorders = "SELECT * FROM orders WHERE idAccounts = '".$information["idAccounts"]."'";
+                                $getorders = "SELECT * FROM orders WHERE idAccounts = '".$information["idAccounts"]."' ORDER BY idOrders DESC";
                                 $orders = mysqli_query($conn,$getorders);
                             ?>
                             <div class="table-responsive">

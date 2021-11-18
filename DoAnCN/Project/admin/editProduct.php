@@ -21,10 +21,16 @@
         $genres = $_POST["genres"];
         $getstatus = $_POST["status"];
         $date = $_POST["date"];
-        echo "<script>alert($name,$quantity,$price)</script>";
-        $sql = "UPDATE products SET idStatus = '".$getstatus."',Nameproducts = '".$name."',Quantity = '".$quantity."',Price = '".$price."', Info = '".$detail."',Detailinfo = '".$message."', DateCreate = '".$date."',idType = '".$genres."' WHERE IdProducts = '".$_GET["Masp"]."'";
+        $img = $dbdata["Images"];
+        if(($_FILES["image"]["name"]!="")) {
+            unlink("../img/cake-feature/".$img);
+            $img = $_FILES["image"]['name'];
+            move_uploaded_file($_FILES["image"]['tmp_name'],'../img/cake-feature/'.$img);
+        }
+
+        $sql = "UPDATE products SET idStatus = '".$getstatus."',Nameproducts = '".$name."',Quantity = '".$quantity."',Images = '".$img."',Price = '".$price."', Info = '".$detail."',Detailinfo = '".$message."', DateCreate = '".$date."',idType = '".$genres."' WHERE IdProducts = '".$_GET["Masp"]."'";
         $queryupdate=mysqli_query($conn,$sql);
-        if($queryupdate) {
+        if($queryupdate > 0) {
             echo "<script>alert('Cập nhật thành công')</script>";
         echo "<script>location='listProduct.php'</script>";
         } else {
@@ -60,13 +66,13 @@
               <div class="card-header" style="background-color: #007bff;">
                   <h3 class="card-title" style="color:#fff;" >Chỉnh sửa sản phẩm</h3>
               </div>
-              <form action="" method="post">
+              <form action="" method="post" enctype="multipart/form-data">
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="exampleInputEmail1">Tên sản phẩm</label>
-                          <input type="text" class="form-control col-md-8" name="namepro" value="<?php echo empty($_POST["name"])? $dbdata["Nameproducts"] : $_POST["name"]?>" placeholder="Tên sản phẩm">
+                          <input type="text" class="form-control col-md-8" name="namepro" value="<?php echo empty($_POST["namepro"])? $dbdata["Nameproducts"] : $_POST["namepro"]?>" placeholder="Tên sản phẩm">
                         </div>
                           <div class="form-group">
                               <label for="exampleInputEmail1">Số lượng bán</label>
@@ -125,7 +131,7 @@
                           <div>
                               <img src="../img/cake-feature/<?php echo $dbdata["Images"]?>" style="width: 200px" class="avatar img-circle img-thumbnail" alt="avatar">
                               <h6>Upload a different photo...</h6>
-                              <input type="file" name="img" class="text-center center-block file-upload">
+                              <input type="file" name="image" class="text-center center-block file-upload">
                           </div>
                         </div>
                       </div>

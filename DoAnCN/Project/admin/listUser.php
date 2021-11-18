@@ -5,7 +5,7 @@
     $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 7;
     $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
     $offset = ($current_page-1) * $item_per_page;
-    $dbdata = "SELECT * FROM accounts ORDER BY idAccounts ASC LIMIT ".$item_per_page." OFFSET ".$offset;
+    $dbdata = "SELECT * FROM accounts ORDER BY idAccounts DESC LIMIT ".$item_per_page." OFFSET ".$offset;
     $query = mysqli_query($conn,$dbdata);
 
     $total = mysqli_query($conn,"SELECT * FROM accounts");
@@ -257,7 +257,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Quản lý kho</p>
+                  <p>Quản lý bình luận</p>
                 </a>
               </li>
             </ul>
@@ -287,6 +287,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+            <li class="nav-item menu-close">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-blog"></i>
+                    <p>
+                        Blog Web
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="../admin/listBlog.php" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Quản lí Blog</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="../admin/loginAdmin.php" class="nav-link">
+                    <i class="nav-icon fas fa-sign-out-alt"></i>
+                    <p>
+                        Đăng xuất
+                    </p>
+                </a>
+            </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -321,8 +346,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <th style="width: 220px">Tên khách hàng</th>
                   <th style="width: 140px">Số điện thoại</th>
                   <th style="width: 200px">Email</th>
+                  <th style="width: 150px;text-align: center">Tổng chi tiêu</th>
                   <th style="width: 150px;text-align: center">Tổng SL đơn hàng</th>
-                  <th style="width: 120px"></th>
+                  <th style="width: 50px"></th>
                 </tr>
               </thead>
               <tbody>
@@ -331,20 +357,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     $getcount = "SELECT idOrders FROM orders WHERE idAccounts = '".$row["idAccounts"]."'";
                     $db = mysqli_query($conn,$getcount);
                     $count = mysqli_num_rows($db);
-              ?>
+
+                    $total = "SELECT SUM(Total) FROM `orders` WHERE idAccounts = '".$row["idAccounts"]."'";
+                    $query_total = mysqli_query($conn, $total);
+                    $result_total = mysqli_fetch_row($query_total);
+                    ?>
                 <tr>
                   <td><?php echo $row["idAccounts"]?></td>
                   <td><?php echo $row["NameCustomer"]?></td>
                   <td><?php echo $row["Phone"]?></td>
                   <td><?php echo $row["Email"]?></td>
+                  <td style="text-align: center"><?php echo number_format($result_total[0],0,",",".") ?></td>
                   <td style="text-align: center"><?php echo $count ?></td>
                   <td>
-                    <div class = "btn btn-primary">
-                      <i class="fas fa-edit"></i>
-                    </div>
-                    <div class = "btn btn-danger">
-                      <i class="fas fa-trash-alt"></i>
-                    </div>
+                    <a href="../admin/detailUser.php?idUser=<?php echo $row["idAccounts"]?>">
+                        <div class = "btn btn-primary">
+                            <i class="fas fa-edit"></i>
+                        </div>
+                    </a>
                   </td>
                 </tr>
               <?php }?>

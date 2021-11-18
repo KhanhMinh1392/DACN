@@ -1,6 +1,17 @@
 <?php
 include ('../layout/header.php')
 ?>
+<?php
+    $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 6;
+    $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
+    $offset = ($current_page-1) * $item_per_page;
+    $dbdata = "SELECT * FROM blog ORDER BY IdBlog DESC LIMIT ".$item_per_page." OFFSET ".$offset;
+    $query = mysqli_query($conn,$dbdata);
+
+    $total = mysqli_query($conn,"SELECT * FROM blog");
+    $total = $total->num_rows;
+    $totalpage = ceil($total / $item_per_page);
+?>
         <!--================End Main Header Area =================-->
         
         <!--================End Main Header Area =================-->
@@ -22,204 +33,47 @@ include ('../layout/header.php')
         	<div class="container">
         		<div class="blog_area_inner">
 					<div class="main_blog_column row">
-						<div class="col-lg-6">
+						<?php
+                            while ($row = mysqli_fetch_array($query)){
+                                $getstaff = "SELECT * FROM staffs WHERE idStaffs = '".$row["idStaffs"]."'";
+                                $stf = mysqli_query($conn,$getstaff);
+                                $namestf = mysqli_fetch_array($stf);
+                        ?>
+                        <div class="col-lg-6">
 							<div class="blog_item">
 								<div class="blog_img">
-									<img class="img-fluid" src="../img/blog/column/blog-c-1.jpg" alt="">
+									<img class="img-fluid" src="../img/blog/column/<?php echo $row["Images"]?>" alt="">
 								</div>
 								<div class="blog_text">
 									<div class="blog_time">
 										<div class="float-left">
-											<a href="#">08 Feb. 2018</a>
+											<a href="#">
+                                                <?php
+                                                $date=date_create($row["Date"]);
+                                                echo date_format($date,"d/m/Y");?>
+                                            </a>
 										</div>
 										<div class="float-right">
 											<ul class="list_style">
-												<li><a href="#">By :  Admin</a></li>
+												<li><a href="#">By :  <?php echo $namestf["Name"]?></a></li>
 												<li><a href="#">bekery, sweet</a></li>
 												<li><a href="#">Comments: 8</a></li>
 											</ul>
 										</div>
 									</div>
-									<a href="#"><h4>This mistaken idea of denouncing pleasure and praising pain</h4></a>
-									<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione volup tatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia ...</p>
+									<a href="#"><h4><?php echo $row["Content"]?></h4></a>
+									<p><?php echo $row["DetailContent"]?></p>
 									<a class="pink_more" href="#">Read more</a>
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-6">
-							<div class="blog_item">
-								<div class="blog_img">
-									<img class="img-fluid" src="../img/blog/column/blog-c-2.jpg" alt="">
-								</div>
-								<div class="blog_text">
-									<div class="blog_time">
-										<div class="float-left">
-											<a href="#">08 Feb. 2018</a>
-										</div>
-										<div class="float-right">
-											<ul class="list_style">
-												<li><a href="#">By :  Admin</a></li>
-												<li><a href="#">bekery, sweet</a></li>
-												<li><a href="#">Comments: 8</a></li>
-											</ul>
-										</div>
-									</div>
-									<a href="#"><h4>This mistaken idea of denouncing pleasure and praising pain</h4></a>
-									<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione volup tatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia ...</p>
-									<a class="pink_more" href="#">Read more</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="blog_item">
-								<div class="blog_img">
-									<img class="img-fluid" src="../img/blog/column/blog-c-3.jpg" alt="">
-								</div>
-								<div class="blog_text">
-									<div class="blog_time">
-										<div class="float-left">
-											<a href="#">08 Feb. 2018</a>
-										</div>
-										<div class="float-right">
-											<ul class="list_style">
-												<li><a href="#">By :  Admin</a></li>
-												<li><a href="#">bekery, sweet</a></li>
-												<li><a href="#">Comments: 8</a></li>
-											</ul>
-										</div>
-									</div>
-									<a href="#"><h4>This mistaken idea of denouncing pleasure and praising pain</h4></a>
-									<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione volup tatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia ...</p>
-									<a class="pink_more" href="#">Read more</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="blog_item">
-								<div class="blog_img">
-									<img class="img-fluid" src="../img/blog/column/blog-c-4.jpg" alt="">
-								</div>
-								<div class="blog_text">
-									<div class="blog_time">
-										<div class="float-left">
-											<a href="#">08 Feb. 2018</a>
-										</div>
-										<div class="float-right">
-											<ul class="list_style">
-												<li><a href="#">By :  Admin</a></li>
-												<li><a href="#">bekery, sweet</a></li>
-												<li><a href="#">Comments: 8</a></li>
-											</ul>
-										</div>
-									</div>
-									<a href="#"><h4>This mistaken idea of denouncing pleasure and praising pain</h4></a>
-									<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione volup tatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia ...</p>
-									<a class="pink_more" href="#">Read more</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="blog_item">
-								<div class="blog_img">
-									<img class="img-fluid" src="../img/blog/column/blog-c-5.jpg" alt="">
-								</div>
-								<div class="blog_text">
-									<div class="blog_time">
-										<div class="float-left">
-											<a href="#">08 Feb. 2018</a>
-										</div>
-										<div class="float-right">
-											<ul class="list_style">
-												<li><a href="#">By :  Admin</a></li>
-												<li><a href="#">bekery, sweet</a></li>
-												<li><a href="#">Comments: 8</a></li>
-											</ul>
-										</div>
-									</div>
-									<a href="#"><h4>This mistaken idea of denouncing pleasure and praising pain</h4></a>
-									<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione volup tatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia ...</p>
-									<a class="pink_more" href="#">Read more</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="blog_item">
-								<div class="blog_img">
-									<img class="img-fluid" src="../img/blog/column/blog-c-6.jpg" alt="">
-								</div>
-								<div class="blog_text">
-									<div class="blog_time">
-										<div class="float-left">
-											<a href="#">08 Feb. 2018</a>
-										</div>
-										<div class="float-right">
-											<ul class="list_style">
-												<li><a href="#">By :  Admin</a></li>
-												<li><a href="#">bekery, sweet</a></li>
-												<li><a href="#">Comments: 8</a></li>
-											</ul>
-										</div>
-									</div>
-									<a href="#"><h4>This mistaken idea of denouncing pleasure and praising pain</h4></a>
-									<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione volup tatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia ...</p>
-									<a class="pink_more" href="#">Read more</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="blog_item">
-								<div class="blog_img">
-									<img class="img-fluid" src="../img/blog/column/blog-c-7.jpg" alt="">
-								</div>
-								<div class="blog_text">
-									<div class="blog_time">
-										<div class="float-left">
-											<a href="#">08 Feb. 2018</a>
-										</div>
-										<div class="float-right">
-											<ul class="list_style">
-												<li><a href="#">By :  Admin</a></li>
-												<li><a href="#">bekery, sweet</a></li>
-												<li><a href="#">Comments: 8</a></li>
-											</ul>
-										</div>
-									</div>
-									<a href="#"><h4>This mistaken idea of denouncing pleasure and praising pain</h4></a>
-									<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione volup tatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia ...</p>
-									<a class="pink_more" href="#">Read more</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="blog_item">
-								<div class="blog_img">
-									<img class="img-fluid" src="../img/blog/column/blog-c-8.jpg" alt="">
-								</div>
-								<div class="blog_text">
-									<div class="blog_time">
-										<div class="float-left">
-											<a href="#">08 Feb. 2018</a>
-										</div>
-										<div class="float-right">
-											<ul class="list_style">
-												<li><a href="#">By :  Admin</a></li>
-												<li><a href="#">bekery, sweet</a></li>
-												<li><a href="#">Comments: 8</a></li>
-											</ul>
-										</div>
-									</div>
-									<a href="#"><h4>This mistaken idea of denouncing pleasure and praising pain</h4></a>
-									<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione volup tatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia ...</p>
-									<a class="pink_more" href="#">Read more</a>
-								</div>
-							</div>
-						</div>
+                        <?php }?>
 					</div>
 					<nav aria-label="Page navigation example" class="blog_pagination">
 						<ul class="pagination">
-							<li class="page-item active"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <?php for($num = 1 ; $num<= $totalpage; $num++){ ?>
+                                <li class="page-item"><a class="page-link active" href="?per_page=<?=$item_per_page?>&page=<?=$num?>"><?=$num?></a></li>
+                            <?php } ?>
 						</ul>
 					</nav>
         		</div>

@@ -32,3 +32,19 @@ function DeleteCart(id) {
         location.reload();
     });
 }
+
+function DanhGiaSao(masanpham, idaccount, noidung) {
+    $.ajax({
+        url:"ajax/danhgiasaoajax.php",
+        type:"POST",
+        data:{
+            masanpham: masanpham,
+            idaccount: idaccount,
+            noidung: noidung
+        },
+        success:function (giatri) {
+            alert(giatri);
+            window.location='product-details.php?Masp='+masanpham;
+        }
+    });
+}

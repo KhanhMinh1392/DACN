@@ -133,17 +133,17 @@
         			</div>
         		</div>
                 <?php
-                $sql2 = "SELECT * FROM products ORDER BY IdProducts DESC LIMIT 6";
-                $query2 = mysqli_query($conn,$sql2);
+                $sort = "SELECT * FROM detailorders INNER JOIN products ON detailorders.IdProducts = products.IdProducts GROUP BY detailorders.IdProducts ORDER BY SUM(detailorders.Quantitydetail) DESC LIMIT 7";
+                $query_sort = mysqli_query($conn,$sort);
                 ?>
         		<div class="cake_feature_inner">
         			<div class="main_title">
-						<h2>Bánh đặc trưng của chúng tôi</h2>
+						<h2>Sản phẩm bán chạy</h2>
 						<h5>Các chiếc bánh đẹp nhất</h5>
 					</div>
        				<div class="cake_feature_slider owl-carousel">
                         <?php
-                        while ($dbdata2 = mysqli_fetch_array($query2)) {
+                        while ($dbdata2 = mysqli_fetch_array($query_sort)) {
                         ?>
        					<div class="item">
        						<div class="cake_feature_item">
@@ -168,7 +168,7 @@
         	</div>
         </section>
         <!--================End Welcome Area =================-->
-        
+
         <!--================Special Recipe Area =================-->
         <section class="special_recipe_area">
         	<div class="container">
@@ -313,7 +313,13 @@
         	</div>
         </section>
         <!--================End Discover Menu Area =================-->
-        
+        <?php
+        $cmt = "SELECT * FROM comments";
+        $query_cmt = mysqli_query($conn,$cmt);
+
+        $laybl="SELECT * FROM comments INNER JOIN accounts ON comments.idAccounts = accounts.idAccounts ORDER BY id_Comment DESC LIMIT 6 ";
+        $cotbl=mysqli_query($conn,$laybl);
+        ?>
         <!--================Client Says Area =================-->
         <section class="client_says_area p_100">
         	<div class="container">
@@ -321,43 +327,25 @@
         			<div class="c_says_title">
         				<h2>Feedback của khách hàng</h2>
         			</div>
+
         			<div class="client_says_slider owl-carousel">
+                        <?php
+                        while ($comment = mysqli_fetch_array($cotbl)) {
+                        ?>
         				<div class="item">
         					<div class="media">
         						<div class="d-flex">
-        							<img src="../img/client/client-1.png" alt="">
+        							<img src="../img/userimg/<?php echo $comment["Image"]?>" alt="" style="width: 100px;border-radius: 50%">
         							<h3>“</h3>
         						</div>
         						<div class="media-body">
-        							<p>Với SoChaud thì 1 tiệm cafe có thể chỉ cần thật thật là đẹp, đồ ăn uống vừa phải là đủ để thích và có lý do để quay lại. Nhưng một hàng bánh thì bánh nhất định phải ngon, không thì xin chào tạm biệt và không bao giờ hẹn gặp lại =)) 
-										Thị trường bánh ở HN hiện nay chia ra thì có bánh của các ksan 4-5 sao, một số chuỗi bánh lớn, đa phần là của Hàn hoặc Đài Loan, các cửa hàng bánh nổi tiếng của Việt Nam, và một số hàng bánh nhỏ lẻ. Trong số này thì Artisee về nguồn gốc tương tự như các chuỗi bánh nước ngoài, nhưng chất lượng (và giá tiền) thì ở mức khách sạn 5 sao. </p>
-        							<h5>- Robert joe</h5>
+        							<p><?php echo $comment["Title"]?></p>
+        							<h5><?php echo $comment["NameCustomer"]?></h5>
         						</div>
         					</div>
         				</div>
-        				<div class="item">
-        					<div class="media">
-        						<div class="d-flex">
-        							<img src="../img/client/client-1.png" alt="">
-        						</div>
-        						<div class="media-body">
-        							<p>Với SoChaud thì 1 tiệm cafe có thể chỉ cần thật thật là đẹp, đồ ăn uống vừa phải là đủ để thích và có lý do để quay lại. Nhưng một hàng bánh thì bánh nhất định phải ngon, không thì xin chào tạm biệt và không bao giờ hẹn gặp lại =)) </p>
-        							<h5>- Robert joe</h5>
-        						</div>
-        					</div>
-        				</div>
-        				<div class="item">
-        					<div class="media">
-        						<div class="d-flex">
-        							<img src="../img/client/client-1.png" alt="">
-        						</div>
-        						<div class="media-body">
-        							<p>Thị trường bánh ở HN hiện nay chia ra thì có bánh của các ksan 4-5 sao, một số chuỗi bánh lớn, đa phần là của Hàn hoặc Đài Loan, các cửa hàng bánh nổi tiếng của Việt Nam, và một số hàng bánh nhỏ lẻ. Trong số này thì Artisee về nguồn gốc tương tự như các chuỗi bánh nước ngoài, nhưng chất lượng (và giá tiền) thì ở mức khách sạn 5 sao. </p>
-        							<h5>- Robert joe</h5>
-        						</div>
-        					</div>
-        				</div>
-        			</div>
+                        <?php }?>
+                    </div>
         		</div>
         	</div>
         </section>

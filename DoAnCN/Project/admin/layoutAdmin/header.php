@@ -249,7 +249,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <li class="nav-item">
                   <a href="#" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Quản lý kho</p>
+                    <p>Quản lý bình luận</p>
                   </a>
                 </li>
               </ul>
@@ -279,6 +279,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </li>
               </ul>
             </li>
+              <li class="nav-item menu-close">
+                  <a href="#" class="nav-link">
+                      <i class="nav-icon fas fa-blog"></i>
+                      <p>
+                          Blog Web
+                          <i class="right fas fa-angle-left"></i>
+                      </p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                      <li class="nav-item">
+                          <a href="../admin/listBlog.php" class="nav-link">
+                              <i class="far fa-circle nav-icon"></i>
+                              <p>Quản lí Blog</p>
+                          </a>
+                      </li>
+                  </ul>
+              </li>
               <li class="nav-item">
                   <a href="../admin/loginAdmin.php" class="nav-link">
                       <i class="nav-icon fas fa-sign-out-alt"></i>

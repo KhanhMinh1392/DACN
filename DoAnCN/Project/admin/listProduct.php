@@ -5,14 +5,29 @@ include ('../page/connect.php')
     $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 7;
     $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
     $offset = ($current_page-1) * $item_per_page;
-    $dbdata = "SELECT * FROM products ORDER BY IdProducts ASC LIMIT ".$item_per_page." OFFSET ".$offset;
+    $dbdata = "SELECT * FROM products ORDER BY IdProducts DESC LIMIT ".$item_per_page." OFFSET ".$offset;
     $query = mysqli_query($conn,$dbdata);
 
     $total = mysqli_query($conn,"SELECT * FROM products");
     $total = $total->num_rows;
     $totalpage = ceil($total / $item_per_page);
 
+    if(isset($_GET["MaSanPham"]))
+    {
+        $delete="DELETE FROM products WHERE IdProducts='".$_GET["MaSanPham"]."'";
+        if(mysqli_query($conn,$delete))
+        {
+            echo "<script>alert('Xóa thành công')</script>";
+            echo "<script>location='listProduct.php'</script>";
+        }
+        else
+        {
+            echo "<script>alert('Xảy ra lỗi')</script>";
+        }
+
+    }
 ?>
+
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -264,7 +279,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <li class="nav-item">
                     <a href="#" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
-                      <p>Quản lý kho</p>
+                      <p>Quản lý bình luận</p>
                     </a>
                   </li>
                 </ul>
@@ -294,6 +309,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </li>
                 </ul>
               </li>
+                <li class="nav-item menu-close">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-blog"></i>
+                        <p>
+                            Blog Web
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="../admin/listBlog.php" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Quản lí Blog</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="../admin/loginAdmin.php" class="nav-link">
+                        <i class="nav-icon fas fa-sign-out-alt"></i>
+                        <p>
+                            Đăng xuất
+                        </p>
+                    </a>
+                </li>
             </ul>
           </nav>
           <!-- /.sidebar-menu -->
@@ -311,13 +351,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <h1 class="m-0">Danh sách sản phẩm </h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
+                  <a href="addProduct.php" class="btn btn-success float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
               </div><!-- /.col -->
             </div><!-- /.row -->
           </div><!-- /.container-fluid -->
           <div class="col-md-12">
             <div class="card">
               <div class="card-header" style="background-color: #007bff;">
-                <h3 class="card-title" style="color:#fff;" >Danh sách sản phẩm</h3>
+                <h3 class="card-title" style="color:#fff; padding: 5px" >Danh sách sản phẩm</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
@@ -345,7 +386,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <td><?php echo $row["IdProducts"]?></td>
                       <td><img src="../img/cake-feature/<?php echo $row["Images"]?>" style="width: 50px"></td>
                       <td><?php echo $row["Nameproducts"]?></td>
-                      <td><?php echo $status["NameStatus"]?></td>
+                        <?php if($status["idStatus"] == 1) {?>
+                            <td ><span style="background: #E7FBE3;width: 160px; color: #0DB473; border-radius: 20px; padding: 3px;"><?php echo $status["NameStatus"]?></span></td>
+                        <?php } else {?>
+                            <td ><span class="badge bg-danger" style="font-size: 14px"><?php echo $status["NameStatus"]?></span></td>
+                        <?php }?>
                       <td><?=number_format($row["Price"],0,",",".")?> VNĐ</td>
                       <td><?php echo $row["Quantity"]?></td>
                       <td>
@@ -356,7 +401,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       </td>
                       <td>
                         <a href="../admin/editProduct.php?Masp=<?php echo $row["IdProducts"]?>&loaisp=<?php echo $row["idType"]?>" class="btn btn-primary icons"><i class="fas fa-edit"></i></a>
-                        <a href="" class="btn btn-danger icons"><i class="fas fa-trash-alt"></i></a>
+                        <a onclick="return Delete('<?php echo $row["Nameproducts"];?>')" href="<?php echo $_SERVER["PHP_SELF"];?>?MaSanPham=<?php echo $row["IdProducts"];?>" class="btn btn-danger icons"><i class="fas fa-trash-alt"></i></a>
                       </td>
                     </tr>
                       <?php
@@ -381,6 +426,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
       </div>
     </div>
+    <script>
+        function Delete(name) {
+            return confirm("Bạn có chắc muốn xóa sản phẩm: " + name + "?");
+        }
+    </script>
 <script src="../admin/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

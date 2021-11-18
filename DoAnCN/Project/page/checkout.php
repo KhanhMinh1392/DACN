@@ -131,8 +131,9 @@ include ('../layout/header.php')
                                     </h5>
                                     <?php }?>
                                     <hr>
-									<h4>Tổng bill <span><?php echo number_format($tongtien,0,",",".")?> VNĐ</span></h4>
-									<h3>Tổng tiền: <span><?php echo number_format($tongtien,0,",",".")?> VNĐ</span></h3>
+									<h4 style="text-transform: none">Tạm tính: <span><?php echo number_format($tongtien,0,",",".")?> VNĐ</span></h4>
+									<h4 style="text-transform: none">Phí ship: <span class="ship"></span></h4>
+                                    <h3>Tổng tiền: <span class="tong"></span></h3>
 								</div>
 <!--								<div id="accordion" class="accordion_area">-->
 <!--									<div class="card">-->
@@ -199,7 +200,8 @@ include ('../layout/header.php')
             $ghichu=$_POST["message"];
             $district = $_POST["districts"];
             $city = $_POST["city"];
-            $themdondat = "INSERT INTO orders(idAccounts,idStaffs,Status,Address,Districts,City,Dateorders,Phone,Notes,NameCustomer,Total) VALUES ('" .$idAccounts . "','5','" . $trangthai . "','" . $noigiao . "','" .$district. "','" .$city. "','" . $ngaydat . "','".$dienthoai."','".$ghichu."','".$hoten."','".$tongtien."')";
+            $tongbill = $_SESSION["tongbill"];
+            $themdondat = "INSERT INTO orders(idAccounts,idStaffs,Status,Address,Districts,City,Dateorders,Phone,Notes,NameCustomer,Total_Product,Total) VALUES ('" .$idAccounts . "','5','" . $trangthai . "','" . $noigiao . "','" .$district. "','" .$city. "','" . $ngaydat . "','".$dienthoai."','".$ghichu."','".$hoten."','".$tongtien."','".$tongbill."')";
             if (mysqli_query($conn, $themdondat)) {
                 $madondat = 0;
                 $laydon = "SELECT * FROM orders ORDER BY idOrders";
@@ -209,7 +211,11 @@ include ('../layout/header.php')
                 }
                 date_default_timezone_set('Asia/Ho_Chi_Minh');
                 $ngaydat = date("d-m-Y H:i:s");
-                $content.="<h4 style='margin: 10px 0;font-size: 18px;color: black'>Đơn Hàng Của Bạn($ngaydat)</h4>";
+                $content.="<h4 style='margin: 10px 0;font-size: 16px;color: black'>Xin chào, $hoten</h4>";
+                $content.="<h4 style='margin: 10px 0;font-size: 13px;color: black'>- Cửa hàng: Cherry Cake Berry</h4>";
+                $content.="<h4 style='margin: 10px 0;font-size: 13px;color: black'>- Thời gian: $ngaydat</h4>";
+                $content.="<hr>";
+                $content.="<h4 style='margin: 10px 0;font-size: 16px;color: black'>Đơn Hàng Của Bạn</h4>";
 
                 $content.="<table width='500px' >";
                 $content.="<tr><th>#</th><th>Tên sản phẩm</th><th>Đơn giá</th><th>Số lượng</th><th>Tổng</th></tr>";
@@ -227,7 +233,7 @@ include ('../layout/header.php')
                     $themctdd = "INSERT INTO detailorders VALUES ('".$madondat."','".$masp."','".$number."','".$total."')";
                     mysqli_query($conn, $themctdd);
                     //==========================Trừ số lượng tồn ==========================================
-                    $getcount = "SELECT * FROM detailorders WHERE IdProducts = '".$masp."'";
+                    $getcount = "SELECT * FROM detailorders WHERE IdProducts = '".$masp."' AND IdOrders = '".$madondat."'";
                     $get_db = mysqli_fetch_array(mysqli_query($conn, $getcount));
 
                     $product = "SELECT * FROM products WHERE IdProducts = '".$masp."'";
@@ -246,8 +252,12 @@ include ('../layout/header.php')
                     $content.="<tr><td>$i</td><td style='text-align: center'>".$value["name"]."</td><td style='text-align: center'>$price_mail</td><td style='text-align: center'>$number</td><td style='text-align: right'>$total_mail VNĐ</td></tr>";
                 }
                 $sum_price = number_format($tongtien,0,",",".");
+                $ship = number_format($_SESSION["ship"],0,",",".");
+                $sum_total = number_format($tongbill,0,",",".");
                 $content.="<tr><th></th><th></th><th></th><th><hr></th><th><hr></th></tr>";
-                $content.="<tr><th></th><th></th><th></th><th>Tổng tiền: </th><th style='text-align: right'>$sum_price VNĐ</th></tr>";
+                $content.="<tr><th></th><th></th><th></th><th>Thành tiền: </th><th style='text-align: right'>$sum_price VNĐ</th></tr>";
+                $content.="<tr><th></th><th></th><th></th><th>Phí ship: </th><th style='text-align: right'>$ship VNĐ</th></tr>";
+                $content.="<tr><th></th><th></th><th></th><th>Tổng tiền: </th><th style='text-align: right'>$sum_total VNĐ</th></tr>";
                 $content.="<table>";
 
                 unset($_SESSION["giohang"]);

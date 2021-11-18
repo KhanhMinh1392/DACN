@@ -16,6 +16,23 @@ include ('../layout/header.php')
     $db = mysqli_query($conn,$getcount);
     $count = mysqli_num_rows($db);
 ?>
+<?php
+    $dbdanhgia = "SELECT * FROM reviews WHERE IdProducts = '".$dbdata["IdProducts"]."'";
+    $truyvandanhgia = mysqli_query($conn, $dbdanhgia);
+
+    $idaccounts = "";
+    $sosao = "0";
+    if(isset($_SESSION["username"]))
+    {
+        $idaccounts = $sql["idAccounts"];
+        $layDG_ND = "SELECT * FROM reviews WHERE IdProducts='".$dbdata["IdProducts"]."' and idAccounts='".$idaccounts."'";
+        $truyvanND = mysqli_query($conn, $layDG_ND);
+        if(mysqli_num_rows($truyvanND) > 0){
+            $cotDG = mysqli_fetch_array($truyvanND);
+            $sosao = $cotDG["Star"];
+        }
+    }
+?>
         <!--================End Main Header Area =================-->
         <section class="banner_area">
         	<div class="container">
@@ -29,27 +46,52 @@ include ('../layout/header.php')
         	</div>
         </section>
         <!--================End Main Header Area =================-->
-        
         <!--================Product Details Area =================-->
         <section class="product_details_area p_100">
         	<div class="container">
+                <?php
+                    if($dbdata["Quantity"] == 0 && $dbdata["idStatus"] == 2) {
+                ?>
         		<div class="row product_d_price">
-        			<div class="col-lg-6">
-        				<div class="product_img"><img class="img-fluid" style="width: 1500px" src="../img/cake-feature/<?php echo $dbdata["Images"]?>" alt=""></div>
+        			<div class="col-lg-6" style="position: relative">
+        				<div class="product_img"><img class="img-fluid" style="width: 1500px;opacity: 0.5" src="../img/cake-feature/<?php echo $dbdata["Images"]?>" alt=""></div>
+                        <div class="product_img" style="position: absolute;top: 200px;width: 100%;text-align: center;color: white;font-size: 35px;font-weight: 600"><p style="background: #f195b2;width: 525px;padding: 10px">Hết hàng</p></div>
         			</div>
         			<div class="col-lg-6">
         				<div class="product_details_text">
         					<h4><?php echo $dbdata["Nameproducts"]?></h4>
         					<p style="text-align: justify"><?php echo $dbdata["Detailinfo"]?></p>
         					<h5>Giá : <span><?=number_format($dbdata["Price"],0,",",".")?> VNĐ</span></h5>
-        					<div class="quantity_box">
-        						<label for="quantity">Số lượng :</label>
-        						<input type="number" value="1" id="quantity" min="1" max="10">
-        					</div>
-        					<a class="pink_more" href="#" onclick="AddCart(<?php echo $dbdata["IdProducts"];?>)">Thêm vào giỏ</a>
-        				</div>
+                        </div>
         			</div>
         		</div>
+                <?php } else {?>
+                    <div class="row product_d_price">
+                        <div class="col-lg-6" style="position: relative">
+                            <div class="product_img"><img class="img-fluid" style="width: 1500px;" src="../img/cake-feature/<?php echo $dbdata["Images"]?>" alt=""></div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="product_details_text">
+                                <h4><?php echo $dbdata["Nameproducts"]?></h4>
+                                <ul class="list_style" style="display: flex;width: 400px">
+                                    <li onclick="DanhGiaSao(<?php echo $dbdata["IdProducts"];?>, '<?php echo $sql["idAccounts"] ?>', 1)"><a href="#"><i class="fa fa-star sao sao1" data-sao="1"></i></a></li>
+                                    <li onclick="DanhGiaSao(<?php echo $dbdata["IdProducts"];?>, '<?php echo $sql["idAccounts"] ?>', 2)"><a href="#"><i class="fa fa-star sao sao2" data-sao="2"></i></a></li>
+                                    <li onclick="DanhGiaSao(<?php echo $dbdata["IdProducts"];?>, '<?php echo $sql["idAccounts"] ?>', 3)"><a href="#"><i class="fa fa-star sao sao3" data-sao="3"></i></a></li>
+                                    <li onclick="DanhGiaSao(<?php echo $dbdata["IdProducts"];?>, '<?php echo $sql["idAccounts"] ?>', 4)"><a href="#"><i class="fa fa-star sao sao4" data-sao="4"></i></a></li>
+                                    <li onclick="DanhGiaSao(<?php echo $dbdata["IdProducts"];?>, '<?php echo $sql["idAccounts"] ?>', 5)"><a href="#"><i class="fa fa-star sao sao5" data-sao="5"></i></a></li>
+                                    <span style="margin-left: 10px;margin-top: 2px">(<?php echo mysqli_num_rows($truyvandanhgia)?> Đánh giá)</span>
+                                </ul>
+                                <p style="text-align: justify"><?php echo $dbdata["Detailinfo"]?></p>
+                                <h5>Giá : <span><?=number_format($dbdata["Price"],0,",",".")?> VNĐ</span></h5>
+                                <div class="quantity_box">
+                                    <label for="quantity">Số lượng :</label>
+                                    <input type="number" value="1" id="quantity" min="1" max="10">
+                                </div>
+                                <a class="pink_more" href="#" onclick="AddCart(<?php echo $dbdata["IdProducts"];?>)">Thêm vào giỏ</a>
+                            </div>
+                        </div>
+                    </div>
+                <?php }?>
         		<div class="product_tab_area">
 					<nav>
 						<div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -135,29 +177,37 @@ include ('../layout/header.php')
         <section class="similar_product_area p_100">
         	<div class="container">
         		<div class="main_title">
-        			<h2>Similar Products</h2>
+        			<h2>Đề xuất sản phẩm</h2>
         		</div>
-                <div class="row similar_product_inner">
-                    <?php
-                        while ($dbdata2 = mysqli_fetch_array($query2)) {
-                    ?>
-                    <div class="col-lg-3 col-md-4 col-6">
-                        <div class="cake_feature_item">
-                            <a href="../page/product-details.php?Masp=<?php echo $dbdata2["IdProducts"]?>">
-                                <div class="cake_img">
-                                    <img src="../img/cake-feature/<?php echo $dbdata2["Images"]?>" alt="">
+                <?php
+                $sort = "SELECT * FROM detailorders INNER JOIN products ON detailorders.IdProducts = products.IdProducts GROUP BY detailorders.IdProducts ORDER BY SUM(detailorders.Quantitydetail) DESC LIMIT 10";
+                $query_sort = mysqli_query($conn,$sort);
+                ?>
+                <div class="cake_feature_inner">
+                    <div class="cake_feature_slider owl-carousel">
+                        <?php
+                        while ($dbdata2 = mysqli_fetch_array($query_sort)) {
+                            ?>
+                            <div class="item">
+                                <div class="cake_feature_item">
+                                    <a href="../page/product-details.php?Masp=<?php echo $dbdata2["IdProducts"]?>">
+                                        <div class="cake_img">
+                                            <img src="../img/cake-feature/<?php echo $dbdata2["Images"]?>" alt="">
+                                        </div>
+                                        <div class="cake_text">
+                                            <input type="number" value="1" id="quantity" min="1" max="10" hidden>
+                                            <h4 style="width: 160px"><?=number_format($dbdata2["Price"],0,",",".")?> VNĐ</h4>
+                                            <h3><?php echo $dbdata2["Nameproducts"]?></h3>
+                                            <a class="pest_btn" href="#" onclick="AddCart(<?php echo $dbdata2["IdProducts"];?>)">Thêm vào giỏ</a>
+                                        </div>
+                                    </a>
                                 </div>
-                                <div class="cake_text">
-                                    <h4 style="width: 160px"><?=number_format($dbdata2["Price"],0,",",".")?> VNĐ</h4>
-                                    <h3><?php echo $dbdata2["Nameproducts"]?></h3>
-                                    <a class="pest_btn" href="#" onclick="AddCart(<?php echo $dbdata2["IdProducts"];?>)">Thêm vào giỏ</a>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    <?php
+                            </div>
+                            <?php
                         }
-                    ?>
+                        ?>
+                    </div>
+                </div>
                 </div>
         	</div>
         </section>
@@ -176,7 +226,28 @@ include ('../layout/header.php')
                 }
             }
         ?>
+        <!-- Đánh giá sao -->
 
+<script>
+    $(document).ready(function () {
+        for (i=1;i <= <?php echo $sosao ?>;i++){
+             $('.sao'+i).css('color','yellow');
+         }
+        $('.sao').mouseenter(function () {
+             for(i=1;i<=$(this).attr('data-sao');i++){
+                $('.sao'+i).addClass('saohover');
+            }
+        })
+        $('.sao').mouseleave(function () {
+            $('.sao').removeClass('saohover');
+        })
+    })
+</script>
+<style>
+    .saohover {
+        color: yellow;
+    }
+</style>
         <!--================Newsletter Area =================-->
 <?php
 include ('../layout/footer.php')

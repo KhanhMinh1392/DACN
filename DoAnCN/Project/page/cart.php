@@ -43,9 +43,12 @@ include ('../layout/header.php')
                                 <?php
                                 $number=0;
                                 $total=0;
+                                $count = 0;
                                 $tongtien=0;
                                 $giohang=$_SESSION["giohang"];
                                 foreach ($giohang as $key=> $value){
+                                    $total_quantity = $value["number"];
+                                    $count += $total_quantity;
                                     ?>
                                     <tr>
                                         <td>
@@ -54,7 +57,7 @@ include ('../layout/header.php')
                                         <td><?php echo $value["name"]?></td>
                                         <td><?=number_format($value["price"],0,",",".")?> VNĐ</td>
                                         <td>
-                                            <input type="number" id="num_<?php echo $key?>" min="1" max="200" value="<?php echo $value["number"]?>" onclick="UpdateCart(<?php echo $key?>)">
+                                            <input type="number" id="num_<?php echo $key?>" min="1" max="50" value="<?php echo $value["number"]?>" onclick="UpdateCart(<?php echo $key?>)">
                                         </td>
                                         <td><?php
                                             $total = $value["number"] * $value["price"];
@@ -90,7 +93,11 @@ include ('../layout/header.php')
                                         Tổng tiền
                                     </div>
                                     <div class="sub_total">
-                                        <h5>Sub Total <span>$25.00</span></h5>
+                                        <h5>Tổng số lượng
+                                            <span>
+                                                <?php echo $count?>
+                                            </span>
+                                        </h5>
                                     </div>
                                     <div class="total">
                                         <h4>Tổng hóa đơn <span><?php echo number_format($tongtien,0,",",".")?> VNĐ</span> </h4>
