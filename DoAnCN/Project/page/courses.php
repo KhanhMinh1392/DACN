@@ -1,6 +1,11 @@
 <?php
 include ('../layout/header.php')
 ?>
+<?php
+    $getcourse = "SELECT * FROM courses LIMIT 6";
+    $query_get = mysqli_query($conn,$getcourse);
+
+?>
         <!--================End Main Header Area =================-->
         
         <!--================End Main Header Area =================-->
@@ -170,94 +175,61 @@ include ('../layout/header.php')
 							</div>
         				</div>
         				<div class="float-right">
-        					<a class="pest_w_btn" href="../page/what-we-make.php">Xem Tất Cả</a>
+        					<a class="pest_w_btn" href="allcourses.php">Xem Tất Cả</a>
         				</div>
         			</div>
        				<div class="row">
-       					<div class="col-lg-6">
+                        <?php
+                            while ($dbdata = mysqli_fetch_array($query_get)) {
+                        ?>
+       					<div class="col-lg-6" style="margin-bottom: 20px">
        						<div class="discover_item_inner">
        							<div class="discover_item">
-									<!-- <h4>Double Chocolate Pie</h4>
-									<p>Chocolate puding, vanilla, fruite rasberry jam milk <span>$8.99</span></p>
-									<ul class="list">
-										<li class="item"><a href="">Hello</a></li>
-										<li class="item"><a href="">Hello</a></li>
-										<li class="item"><a href="">Hello</a></li>
-										<li class="item"><a href="">Hello</a></li>
-									</ul> -->
-									<h4>Valentines Date Cakes</h4>
-									<p>Khóa học hướng dẫn làm bánh tại nhà<span>1.300.000VNĐ</span></p>
-									<li class="dropdown submenu" style="list-style-type: none;">
-										<a class="dropdown-toggle cource" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" style="color: black;" >Khóa Học
-										</a>
-										<ul class="dropdown-menu subnav" style="padding: 10px">
-											<li class="item">
-												<a href="">Chuẩn bị nguyên liệu</a>
-												<div class="d-flex" style="float: right; margin-left: 50px">
-													<a class="d-flex popup-youtube" href="https://www.youtube.com/watch?v=dFTNHTxd394"><i class="flaticon-play-button"></i></a>
-												</div>
-											</li>
-											<li class="item">
-												<a href="">Nhồi bột</a>
-												<div class="d-flex" style="float: right;">
-													<a class="d-flex popup-youtube" href="https://www.youtube.com/watch?v=dFTNHTxd394"><i class="flaticon-play-button"></i></a>
-												</div>
-											</li>
-											<li class="item">
-												<a href="">Để bột tạo hình</a>
-												<div class="d-flex" style="float: right;">
-													<a class="d-flex popup-youtube" href="https://www.youtube.com/watch?v=dFTNHTxd394"><i class="flaticon-play-button"></i></a>
-												</div>
-											</li>
-											<li class="item">
-												<a href="">Nướng bánh</a>
-												<div class="d-flex" style="float: right;">
-													<a class="d-flex popup-youtube" href="https://www.youtube.com/watch?v=dFTNHTxd394"><i class="flaticon-play-button"></i></a>
-												</div>
-											</li>
-										</ul>
-									</li>
+                                    <a href="../page/course-detail.php?idCourses=<?php echo $dbdata["idCourses"]?>"><h4><?php echo $dbdata["NameCourses"]?></h4></a>
+									<p><?php echo $dbdata["TitleCourses"]?></p>
+                                    <p><span><?=number_format($dbdata["Price"],0,",",".")?> VNĐ</span></p>
 								</div>
        						</div>
        					</div>
-       					<div class="col-lg-6">
-       						<div class="discover_item_inner">
-       							<div class="discover_item">
-									<h4>Bread </h4>
-									<p>Khóa học hướng dẫn làm bánh tại nhà<span>1.300.000VNĐ</span></p>
-									<li class="dropdown submenu" style="list-style-type: none;">
-										<a class="dropdown-toggle cource" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" style="color: black;" >Khóa Học
-										</a>
-                                        <ul class="dropdown-menu subnav" style="padding: 10px">
-                                            <li class="item">
-                                                <a href="">Chuẩn bị nguyên liệu</a>
-                                                <div class="d-flex" style="float: right; margin-left: 50px">
-                                                    <a class="d-flex popup-youtube" href="https://www.youtube.com/watch?v=dFTNHTxd394"><i class="flaticon-play-button"></i></a>
-                                                </div>
-                                            </li>
-                                            <li class="item">
-                                                <a href="">Nhồi bột</a>
-                                                <div class="d-flex" style="float: right;">
-                                                    <a class="d-flex popup-youtube" href="https://www.youtube.com/watch?v=dFTNHTxd394"><i class="flaticon-play-button"></i></a>
-                                                </div>
-                                            </li>
-                                            <li class="item">
-                                                <a href="">Để bột tạo hình</a>
-                                                <div class="d-flex" style="float: right;">
-                                                    <a class="d-flex popup-youtube" href="https://www.youtube.com/watch?v=dFTNHTxd394"><i class="flaticon-play-button"></i></a>
-                                                </div>
-                                            </li>
-                                            <li class="item">
-                                                <a href="">Nướng bánh</a>
-                                                <div class="d-flex" style="float: right;">
-                                                    <a class="d-flex popup-youtube" href="https://www.youtube.com/watch?v=dFTNHTxd394"><i class="flaticon-play-button"></i></a>
-                                                </div>
-                                            </li>
-                                        </ul>
-									</li>
-								</div>
-       						</div>
-       					</div>
+                        <?php }?>
+<!--       					<div class="col-lg-6">-->
+<!--       						<div class="discover_item_inner">-->
+<!--       							<div class="discover_item">-->
+<!--									<h4>Bread </h4>-->
+<!--									<p>Khóa học hướng dẫn làm bánh tại nhà<span>1.300.000VNĐ</span></p>-->
+<!--									<li class="dropdown submenu" style="list-style-type: none;">-->
+<!--										<a class="dropdown-toggle cource" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" style="color: black;" >Khóa Học-->
+<!--										</a>-->
+<!--                                        <ul class="dropdown-menu subnav" style="padding: 10px">-->
+<!--                                            <li class="item">-->
+<!--                                                <a href="">Chuẩn bị nguyên liệu</a>-->
+<!--                                                <div class="d-flex" style="float: right; margin-left: 50px">-->
+<!--                                                    <a class="d-flex popup-youtube" href="https://www.youtube.com/watch?v=dFTNHTxd394"><i class="flaticon-play-button"></i></a>-->
+<!--                                                </div>-->
+<!--                                            </li>-->
+<!--                                            <li class="item">-->
+<!--                                                <a href="">Nhồi bột</a>-->
+<!--                                                <div class="d-flex" style="float: right;">-->
+<!--                                                    <a class="d-flex popup-youtube" href="https://www.youtube.com/watch?v=dFTNHTxd394"><i class="flaticon-play-button"></i></a>-->
+<!--                                                </div>-->
+<!--                                            </li>-->
+<!--                                            <li class="item">-->
+<!--                                                <a href="">Để bột tạo hình</a>-->
+<!--                                                <div class="d-flex" style="float: right;">-->
+<!--                                                    <a class="d-flex popup-youtube" href="https://www.youtube.com/watch?v=dFTNHTxd394"><i class="flaticon-play-button"></i></a>-->
+<!--                                                </div>-->
+<!--                                            </li>-->
+<!--                                            <li class="item">-->
+<!--                                                <a href="">Nướng bánh</a>-->
+<!--                                                <div class="d-flex" style="float: right;">-->
+<!--                                                    <a class="d-flex popup-youtube" href="https://www.youtube.com/watch?v=dFTNHTxd394"><i class="flaticon-play-button"></i></a>-->
+<!--                                                </div>-->
+<!--                                            </li>-->
+<!--                                        </ul>-->
+<!--									</li>-->
+<!--								</div>-->
+<!--       						</div>-->
+<!--       					</div>-->
        				</div>
         		</div>
         	</div>

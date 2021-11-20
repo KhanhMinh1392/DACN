@@ -79,9 +79,19 @@
                         $number+=(int)$value["number"];
                     }
                 }
+                if(isset($_SESSION["khoahoc"])){
+                    $giohang=$_SESSION["khoahoc"];
+                    foreach ($giohang as $key => $value){
+                        $number+=(int)$value["number"];
+                    }
+                }
                 ?>
                 <ul class="h_search list_style">
+                    <?php if(!empty($_SESSION["giohang"])) {?>
                     <li class="shopcart"><a href="../page/cart.php" class="lnr lnr-cart" id="numcart"><?php echo $number?></a></li>
+                    <?php } else {?>
+                     <li class="shopcart"><a href="../page/cartCourse.php" class="lnr lnr-cart" id="numcart"><?php echo $number?></a></li>
+                    <?php } ?>
                     <li><a class="popup-with-zoom-anim" href="#test-search"><i class="fa fa-search"></i></a></li>
                 </ul>
                 <?php
@@ -138,7 +148,7 @@
                     </ul>
                     <ul class="navbar-nav justify-content-end">
                         <li class="dropdown submenu">
-                            <a href="../page/service.php" >Course</a>
+                            <a href="../page/courses.php" >Course</a>
                         </li>
                         <li class="dropdown submenu">
                             <a href="../page/blog-2column.php">Blog</a>

@@ -22,5 +22,23 @@
                 $_SESSION["giohang"]=$giohang;
             }
         }
+        if(isset($_SESSION["khoahoc"]))
+        {
+            $giohang=$_SESSION["khoahoc"];
+
+            if(array_key_exists($id,$giohang)){
+                if($_POST["num"]){
+                    $giohang[$id]=array(
+                        'makh' => $giohang[$id]["makh"],
+                        'namekh'=>$giohang[$id]["namekh"],
+                        'price'=>$giohang[$id]["price"],
+                        'number'=>$_POST["num"]
+                    );
+                }else{
+                    unset($giohang[$id]);
+                }
+                $_SESSION["khoahoc"]=$giohang;
+            }
+        }
     }
 ?>

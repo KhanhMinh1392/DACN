@@ -6,7 +6,7 @@
     $query = mysqli_query($conn,$getorder);
     $dbdata = mysqli_fetch_array($query);
 
-    $total = "SELECT SUM(Total) FROM `orders` WHERE idAccounts = '".$_GET["idUser"]."'";
+    $total = "SELECT SUM(Total) FROM orders WHERE idAccounts = '".$_GET["idUser"]."'";
     $query_total = mysqli_query($conn, $total);
     $result_total = mysqli_fetch_row($query_total);
 
@@ -17,7 +17,7 @@
     $gethistory = "SELECT * FROM orders WHERE idAccounts = '".$_GET["idUser"]."' ORDER BY idOrders DESC ";
     $db_history = mysqli_query($conn,$gethistory);
     $db_hiscountpro = mysqli_query($conn,$gethistory);
-    $history = mysqli_fetch_assoc($db_hiscountpro);
+    $history = mysqli_fetch_array($db_hiscountpro);
 
     $countpro = "SELECT * FROM detailorders WHERE idOrders = '".$history["idOrders"]."'";
     $dbhispro = mysqli_query($conn,$countpro);

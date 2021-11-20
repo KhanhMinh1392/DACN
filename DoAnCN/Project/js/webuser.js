@@ -12,9 +12,32 @@ function XoaBinhLuan(mabinhluan,masanpham) {
     });
 }
 
+function XoaBinhLuanKhoahoc(mabinhluan,makhoahoc) {
+    $.ajax({
+        url:"ajax/XoaBinhLuanKhoaHoc.php",
+        type:"POST",
+        data:{
+            mabinhluan:mabinhluan
+        },
+        success:function (giatri) {
+            alert(giatri);
+            window.location="course-detail.php?idCourses="+makhoahoc;
+        }
+    });
+}
+
 function AddCart(id) {
     num= parseInt($("#quantity").val());
     $.post("addCart.php",{'id':id,'num':num},function (data,status) {
+        //location.reload();
+        item=data.split("-");
+        $("#numcart").text(item[0]);
+        //$("#listcart").load("cart.php #listcart");
+    });
+}
+function AddCartCourse(id) {
+    num= parseInt($("#quantity").val());
+    $.post("addCartCourse.php",{'id':id,'num':num},function (data,status) {
         //location.reload();
         item=data.split("-");
         $("#numcart").text(item[0]);

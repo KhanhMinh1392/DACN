@@ -87,6 +87,7 @@ include ('../layout/header.php')
                             <div class="form-group col-md-6">
                                 <h7>Ngày sinh</h7>
                                 <input type="date" class="form-control" id="numberCustomer" name="birthday" value="<?php echo $information["Birthday"];?>">
+                                <a href="../page/courseofcustumer.php" style="float: right">Xem khóa học</a>
                             </div>
 							<div class="form-group col-md-12">
 								<button type="submit" value="submit" class="btn order_s_btn form-control">Update</button>
