@@ -55,7 +55,7 @@ include ('../layout/header.php')
 										</div>
 										<div class="float-right">
 											<ul class="list_style">
-												<li><a href="#">By :  <?php echo $namestf["Name"]?></a></li>
+												<li><a href="#">By :  <?php echo $namestf["NameStaff"]?></a></li>
 												<li><a href="#">bekery, sweet</a></li>
 												<li><a href="#">Comments: 8</a></li>
 											</ul>

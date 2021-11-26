@@ -17,5 +17,5 @@
         $_SESSION["tongbill"] = $tongtien+$rowship["ship"];
         $_SESSION["ship"] = $rowship["ship"];
         ?>
-        <span class="ship"><?=number_format($_SESSION["tongbill"],0,",",".")?> VNĐ</span>
+        <span class="tong"><?=number_format($_SESSION["tongbill"],0,",",".")?> VNĐ</span>
 <?php }?>

@@ -179,11 +179,10 @@ include ('../layout/header.php')
         <?php
             if($_SERVER["REQUEST_METHOD"]=="POST"){
                 $id = $_GET["idCourses"];
-                date_default_timezone_set("Asia/Ho_Chi_Minh");
-                $dateadd = date("Y/m/d");
+                $date= date("Y-m-d");
                 $comment = $_POST["message"];
                 $idKH = $sql["idAccounts"];
-                $insert = "INSERT INTO comment_course(idAccounts,idCourses,Comments,DateCreate) VALUES ('".$idKH."','".$id."','".$comment."','.$dateadd.')";
+                $insert = "INSERT INTO comment_course(idAccounts,idCourses,Comments,DateCreate) VALUES ('".$idKH."','".$id."','".$comment."','".$date."')";
                 if(mysqli_query($conn,$insert)) {
                     echo "<script>window.location='course-detail.php?idCourses=".$id."' </script>";
                 } else {

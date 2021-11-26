@@ -13,12 +13,13 @@
     $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 7;
     $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
     $offset = ($current_page-1) * $item_per_page;
-    $dbdata = "SELECT * FROM accounts ORDER BY idAccounts DESC LIMIT ".$item_per_page." OFFSET ".$offset;
+    $dbdata = "SELECT * FROM order_courses ORDER BY idCOrders DESC LIMIT ".$item_per_page." OFFSET ".$offset;
     $query = mysqli_query($conn,$dbdata);
 
-    $total = mysqli_query($conn,"SELECT * FROM accounts");
+    $total = mysqli_query($conn,"SELECT * FROM order_courses");
     $total = $total->num_rows;
     $totalpage = ceil($total / $item_per_page);
+
 ?>
 <!DOCTYPE html>
 <!--
@@ -29,8 +30,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Starter</title>
-
+  <title>Cake Shop</title>
+    <link rel="icon" href="../img/fav-icon.png" type="image/x-icon" />
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
@@ -49,7 +50,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="" class="nav-link">Trang Chủ</a>
+        <a href="index3.html" class="nav-link">Trang Chủ</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Liên Hệ</a>
@@ -223,27 +224,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
           </li>
           <li class="nav-item menu-close">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-file-invoice-dollar"></i>
               <p>
                 Đơn hàng
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-              <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                      <a href="listBill.php" class="nav-link">
-                          <i class="far fa-circle nav-icon"></i>
-                          <p>Đơn hàng sản phẩm</p>
-                      </a>
-                  </li>
-                  <li class="nav-item">
-                      <a href="listBillCourse.php" class="nav-link">
-                          <i class="far fa-circle nav-icon"></i>
-                          <p>Đơn hàng khóa học</p>
-                      </a>
-                  </li>
-              </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="listBill.php" class="nav-link ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Danh sách đơn hàng</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="listBillCourse.php" class="nav-link active">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Danh sách khóa học</p>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item menu-close">
             <a href="#" class="nav-link">
@@ -263,7 +264,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="listCourses.php" class="nav-link">
+                <a href="../admin/listCourses.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Danh sách khóa học</p>
                 </a>
@@ -271,7 +272,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
           </li>
           <li class="nav-item menu-close">
-            <a href="#" class="nav-link active">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 Khách hàng
@@ -280,7 +281,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="../admin/listUser.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Danh sách khách hàng</p>
                 </a>
@@ -326,7 +327,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href="../admin/listBlog.php" class="nav-link">
+                        <a href="../admin/listUser.php" class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Quản lí Blog</p>
                         </a>
@@ -355,66 +356,49 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Danh sách khách hàng </h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
+            <h1 class="m-0">Đơn hàng khóa học </h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
       <div class="col-md-12">
         <div class="card">
           <div class="card-header" style="background-color: #007bff;">
-            <h3 class="card-title" style="color:#fff;" >Danh sách đơn hàng</h3>
+            <h3 class="card-title" style="color:#fff;" >Đơn hàng khóa học</h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body p-0">
             <table class="table">
               <thead>
                 <tr>
-                  <th style="width: 120px">Mã KH</th>
-                  <th style="width: 220px">Tên khách hàng</th>
-                  <th style="width: 140px">Số điện thoại</th>
-                  <th style="width: 200px">Email</th>
-                  <th style="width: 150px;text-align: center">Tổng chi tiêu</th>
-                  <th style="width: 150px;text-align: center">Tổng SL đơn hàng</th>
-                  <th style="width: 50px"></th>
+                  <th style="width: 150px">Mã đơn hàng</th>
+                  <th style="width: 150px">Ngày tạo đơn</th>
+                  <th style="width: 150px">Tên khách hàng</th>
+                  <th style="width: 150px;text-align: center">Khách phải trả</th>
+                  <th style="width: 70px"></th>
                 </tr>
               </thead>
               <tbody>
               <?php
                 while ($row = mysqli_fetch_array($query)){
-                    $getcount = "SELECT idOrders FROM orders WHERE idAccounts = '".$row["idAccounts"]."'";
-                    $db = mysqli_query($conn,$getcount);
-                    $count = mysqli_num_rows($db);
-
-                    $getcount1 = "SELECT idCOrders  FROM order_courses WHERE idAccounts = '".$row["idAccounts"]."'";
-                    $db1 = mysqli_query($conn,$getcount1);
-                    $count1 = mysqli_num_rows($db1);
-
-                    $total = "SELECT SUM(Total) FROM `orders` WHERE idAccounts = '".$row["idAccounts"]."'";
-                    $query_total = mysqli_query($conn, $total);
-                    $result_total = mysqli_fetch_row($query_total);
-
-                    $total_course = "SELECT SUM(Total) FROM `order_courses` WHERE idAccounts = '".$row["idAccounts"]."'";
-                    $query_course = mysqli_query($conn, $total_course);
-                    $result_course = mysqli_fetch_row($query_course);
-                    ?>
+              ?>
                 <tr>
-                  <td><?php echo $row["idAccounts"]?></td>
-                  <td><?php echo $row["NameCustomer"]?></td>
-                  <td><?php echo $row["Phone"]?></td>
-                  <td><?php echo $row["Email"]?></td>
-                  <td style="text-align: center"><?php echo number_format($result_total[0] + $result_course[0],0,",",".") ?></td>
-                  <td style="text-align: center"><?php echo $count + $count1?></td>
+                  <td><?php echo $row["idCOrders"]?></td>
                   <td>
-                    <a href="../admin/detailUser.php?idUser=<?php echo $row["idAccounts"]?>&count=<?php echo $count + $count1?>">
-                        <div class = "btn btn-primary">
-                            <i class="fas fa-edit"></i>
-                        </div>
+                      <?php
+                      $date=date_create($row["DateCreate"]);
+                      echo date_format($date,"d/m/Y"); ?>
+                  </td>
+                  <td><?php echo $row["NameCustomer"]?></td>
+                  <td style="text-align: center"><?=number_format($row["Total"],0,",",".")?></td>
+                  <td>
+                    <a href="editOrderCourse.php?idCOrder=<?php echo $row["idCOrders"]?>&idAccount=<?php echo $row["idAccounts"]?>&idStaff=<?php echo $row["idStaffs"]?>" class ="btn btn-primary">
+                      <i class="fas fa-edit"></i>
                     </a>
                   </td>
                 </tr>
-              <?php }?>
+                    <?php
+                }
+              ?>
               </tbody>
             </table>
             <div class="card-footer clearfix">
@@ -427,12 +411,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </ul>
             </div>
           </div>
+          
+          <!-- /.card-body -->
         </div>
       </div>
     </div>
   </div>
 </div>
-
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

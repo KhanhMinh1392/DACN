@@ -267,47 +267,23 @@
 						<h2>Khám Phá Menu</h2>
 						<h5>Giá của những chiếc bánh</h5>
 					</div>
+                    <?php
+                    $product = "SELECT * FROM products LIMIT 10";
+                    $query_product = mysqli_query($conn,$product);
+                    ?>
        				<div class="row">
+                        <?php
+                            while ($dbdata = mysqli_fetch_array($query_product)) {
+                        ?>
        					<div class="col-lg-6">
        						<div class="discover_item_inner">
        							<div class="discover_item">
-									<h4>Double Chocolate Pie</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử sữa <span>500.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Double Chocolate Pie</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử sữa <span>500.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Double Chocolate Pie</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử sữa <span>500.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Double Chocolate Pie</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử sữa <span>500.000VNĐ</span></p>
+                                    <a href="../page/product-details.php?Masp=<?php echo $dbdata["IdProducts"]?>"><h4><?php echo $dbdata["Nameproducts"]?></h4></a>
+									<p>Sô cô la, vani, mứt phúc bồn tử sữa <span><?=number_format($dbdata["Price"],0,",",".")?> VNĐ</span></p>
 								</div>
        						</div>
        					</div>
-       					<div class="col-lg-6">
-       						<div class="discover_item_inner">
-       							<div class="discover_item">
-									<h4>Double Chocolate Pie</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử sữa <span>500.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Double Chocolate Pie</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử sữa <span>500.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Double Chocolate Pie</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử sữa <span>500.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Double Chocolate Pie</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử sữa <span>500.000VNĐ</span></p>
-								</div>
-       						</div>
-       					</div>
+                        <?php }?>
        				</div>
         		</div>
         	</div>
@@ -432,30 +408,24 @@
        						</div>
        					</div>
        				</div>
+                    <?php
+                    $blog = "SELECT * FROM blog ORDER BY IdBlog DESC LIMIT 2";
+                    $query_blog = mysqli_query($conn,$blog);
+                        while ($result = mysqli_fetch_array($query_blog)) {
+                    ?>
        				<div class="col-lg-4 col-md-6">
        					<div class="l_news_item">
        						<div class="l_news_img">
-       							<img class="img-fluid" src="../img/blog/latest-news/l-news-2.jpg" alt="">
+       							<img class="img-fluid" src="../img/blog/column/<?php echo $result["Images"]?>" alt="">
        						</div>
        						<div class="l_news_text">
-       							<a href="#"><h5>15/10/2021</h5></a>
-       							<a href="#"><h4>Công nghệ làm bánh hiện đại, tạo ra những chiếc bánh ngon và đẹp nhất</h4></a>
+       							<a href="#"><h5><?php $date=date_create($result["Date"]);echo date_format($date,"d/m/Y");?></h5></a>
+       							<a href="#"><h4><?php echo $result["Content"]?></h4></a>
        							<p>Bánh mang lại cảm giác vị giác ngon nhất trong từng miếng bánh, mang lại hạnh phúc cho khách hàng. </p>
        						</div>
        					</div>
        				</div>
-       				<div class="col-lg-4 col-md-6">
-       					<div class="l_news_item">
-       						<div class="l_news_img">
-       							<img class="img-fluid" src="../img/blog/latest-news/l-news-3.jpg" alt="">
-       						</div>
-       						<div class="l_news_text">
-       							<a href="#"><h5>15/10/2021</h5></a>
-       							<a href="#"><h4>Công nghệ làm bánh hiện đại, tạo ra những chiếc bánh ngon và đẹp nhất</h4></a>
-       							<p>Bánh mang lại cảm giác vị giác ngon nhất trong từng miếng bánh, mang lại hạnh phúc cho khách hàng. </p>
-       						</div>
-       					</div>
-       				</div>
+                    <?php }?>
        			</div>
         	</div>
         </section>

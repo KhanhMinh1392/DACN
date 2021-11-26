@@ -31,7 +31,7 @@
               <input type="password" placeholder="Password" name="password" required/>
             </div>
             <input type="submit" value="Login" class="btn solid" />
-            <p class="social-text">Or Sign in with social platforms</p>
+            <p class="social-text">Forgot your <a href="#">password</a>?</p>
             <div class="social-media">
               <a href="#" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
@@ -109,9 +109,6 @@
         </div>
       </div>
     </div>
-
     <script src="../js/app.js"></script>
-
-
   </body>
 </html>

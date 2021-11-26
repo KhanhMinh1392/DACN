@@ -6,34 +6,19 @@
         echo "<script>location='../admin/loginAdmin.php';</script>";
     }
     $getinfo = "SELECT * FROM staffs WHERE Username = '".$_SESSION["email"]."'";
-    $query = mysqli_query($conn,$getinfo);
-    $name = mysqli_fetch_array($query);
+    $query_staff = mysqli_query($conn,$getinfo);
+    $name = mysqli_fetch_array($query_staff);
 ?>
 <?php
     $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 7;
     $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
     $offset = ($current_page-1) * $item_per_page;
-    $dbdata = "SELECT * FROM products ORDER BY IdProducts DESC LIMIT ".$item_per_page." OFFSET ".$offset;
+    $dbdata = "SELECT * FROM staffs ORDER BY idStaffs DESC LIMIT ".$item_per_page." OFFSET ".$offset;
     $query = mysqli_query($conn,$dbdata);
 
-    $total = mysqli_query($conn,"SELECT * FROM products");
+    $total = mysqli_query($conn,"SELECT * FROM staffs");
     $total = $total->num_rows;
     $totalpage = ceil($total / $item_per_page);
-
-    if(isset($_GET["MaSanPham"]))
-    {
-        $delete="DELETE FROM products WHERE IdProducts='".$_GET["MaSanPham"]."'";
-        if(mysqli_query($conn,$delete))
-        {
-            echo "<script>alert('Xóa thành công')</script>";
-            echo "<script>location='listProduct.php'</script>";
-        }
-        else
-        {
-            echo "<script>alert('Xảy ra lỗi')</script>";
-        }
-
-    }
 ?>
 
 <!DOCTYPE html>
@@ -268,7 +253,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </ul>
               </li>
               <li class="nav-item menu-close">
-                <a href="#" class="nav-link active">
+                <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-archive"></i>
                   <p>
                     Sản phẩm
@@ -277,7 +262,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="listProduct.php" class="nav-link active">
+                    <a href="listProduct.php" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Danh sách sản phẩm</p>
                     </a>
@@ -377,17 +362,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Danh sách sản phẩm </h1>
+                <h1 class="m-0">Danh sách nhân viên</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
-                  <a href="addProduct.php" class="btn btn-success float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
+                  <a href="addStaff.php" class="btn btn-success float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
               </div><!-- /.col -->
             </div><!-- /.row -->
           </div><!-- /.container-fluid -->
           <div class="col-md-12">
             <div class="card">
               <div class="card-header" style="background-color: #007bff;">
-                <h3 class="card-title" style="color:#fff; padding: 5px" >Danh sách sản phẩm</h3>
+                <h3 class="card-title" style="color:#fff; padding: 5px" >Danh sách nhân viên</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
@@ -395,42 +380,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <thead>
                     <tr>
                       <th style="width: 10px">ID</th>
-                      <th style="width: 90px">Ảnh</th>
-                      <th style="width: 180px">Sản phẩm</th>
-                      <th style="width: 150px">Trạng thái</th>
-                      <th style="width: 120px">Giá</th>
-                      <th style="width: 100px">Có thể bán</th>
-                      <th style="width: 150px">Ngày khởi tạo</th>
-                      <th style="width: 110px"></th>
+                      <th style="width: 180px">Tên nhân viên</th>
+                      <th style="width: 180px">Tài khoản</th>
+                      <th style="width: 150px">Chức vụ</th>
+                      <th style="width: 150px">Ngày sinh</th>
+                      <th style="width: 10px"></th>
                     </tr>
                   </thead>
                   <tbody>
                   <?php
                   while ($row = mysqli_fetch_array($query)){
-                      $idstatus = "SELECT * FROM status_product WHERE idStatus='".$row["idStatus"]."'";
-                      $getstatus = mysqli_query($conn,$idstatus);
-                      $status = mysqli_fetch_array($getstatus);
+                      $getrole = "SELECT * FROM roles WHERE idRole ='".$row["idRole"]."' ";
+                      $role=mysqli_query($conn,$getrole);
+                      $name_role = mysqli_fetch_array($role);
                   ?>
                     <tr>
-                      <td><?php echo $row["IdProducts"]?></td>
-                      <td><img src="../img/cake-feature/<?php echo $row["Images"]?>" style="width: 50px"></td>
-                      <td><?php echo $row["Nameproducts"]?></td>
-                        <?php if($status["idStatus"] == 1) {?>
-                            <td ><span style="background: #E7FBE3;width: 160px; color: #0DB473; border-radius: 20px; padding: 3px;"><?php echo $status["NameStatus"]?></span></td>
+                      <td><?php echo $row["idStaffs"]?></td>
+                      <td><?php echo $row["NameStaff"]?></td>
+                      <td><?php echo $row["Username"]?></td>
+                        <?php if($name_role["idRole"] == 1) {?>
+                            <td ><span style="background: #E7FBE3;width: 160px; color: #0DB473; border-radius: 20px; padding: 3px;"><?php echo $name_role["NameRole"]?></span></td>
                         <?php } else {?>
-                            <td ><span class="badge bg-danger" style="font-size: 14px"><?php echo $status["NameStatus"]?></span></td>
+                            <td ><span class="" style="font-size: 14px"><?php echo $name_role["NameRole"]?></span></td>
                         <?php }?>
-                      <td><?=number_format($row["Price"],0,",",".")?> VNĐ</td>
-                      <td><?php echo $row["Quantity"]?></td>
                       <td>
                           <?php
-                            $date=date_create($row["DateCreate"]);
+                            $date=date_create($row["Birthday"]);
                             echo date_format($date,"d/m/Y");
                           ?>
                       </td>
                       <td>
-                        <a href="../admin/editProduct.php?Masp=<?php echo $row["IdProducts"]?>&loaisp=<?php echo $row["idType"]?>" class="btn btn-primary icons"><i class="fas fa-edit"></i></a>
-                        <a onclick="return Delete('<?php echo $row["Nameproducts"];?>')" href="<?php echo $_SERVER["PHP_SELF"];?>?MaSanPham=<?php echo $row["IdProducts"];?>" class="btn btn-danger icons"><i class="fas fa-trash-alt"></i></a>
+                        <a href="../admin/editStaff.php?Mast=<?php echo $row["idStaffs"]?>&loaisp=<?php echo $name_role["idRole"]?>" class="btn btn-primary icons"><i class="fas fa-edit"></i></a>
                       </td>
                     </tr>
                       <?php
@@ -455,11 +435,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
       </div>
     </div>
-    <script>
-        function Delete(name) {
-            return confirm("Bạn có chắc muốn xóa sản phẩm: " + name + "?");
-        }
-    </script>
 <script src="../admin/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="../admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

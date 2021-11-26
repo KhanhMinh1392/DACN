@@ -10,10 +10,6 @@
     $query_total = mysqli_query($conn, $total);
     $result_total = mysqli_fetch_row($query_total);
 
-    $getcount = "SELECT idOrders FROM orders WHERE idAccounts = '".$_GET["idUser"]."'";
-    $db = mysqli_query($conn,$getcount);
-    $count = mysqli_num_rows($db);
-
     $gethistory = "SELECT * FROM orders WHERE idAccounts = '".$_GET["idUser"]."' ORDER BY idOrders DESC ";
     $db_history = mysqli_query($conn,$gethistory);
     $db_hiscountpro = mysqli_query($conn,$gethistory);
@@ -39,7 +35,7 @@
     </div>
     <div class="card col-3" style="float: right; margin-right: 60px;">
         <div class="d-flex card-header justify-content-between border-0">
-            <h3 class="card-title">Đơn hàng</h3>
+            <h3 class="card-title">Thông tin tích điểm</h3>
 
         </div>
         <div class="card-body">
@@ -97,14 +93,20 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="d-flex justify-content-between">
-                                    <h3 class="card-title" style="font-size: 15px">Tổng chi tiêu: <?php echo number_format($result_total[0],0,",",".")?> VNĐ</h3>
+                                    <h3 class="card-title" style="font-size: 15px">Tổng chi tiêu sản phẩm: <?php echo number_format($result_total[0],0,",",".")?> VNĐ</h3>
+                                </div>
+                                <?php
+                                $total_course = "SELECT SUM(Total) FROM `order_courses` WHERE idAccounts = '".$_GET["idUser"]."'";
+                                $query_course = mysqli_query($conn, $total_course);
+                                $result_course = mysqli_fetch_row($query_course);
+                                ?>
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="card-title" style="font-size: 15px">Tổng chi tiêu khóa học: <?php echo number_format($result_course[0],0,",",".")?> VNĐ</h3>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <h3 class="card-title" style="font-size: 15px">Tổng SL đơn: <?php echo $count ?></h3>
+                                    <h3 class="card-title" style="font-size: 15px">Tổng SL đơn: <?php echo $_GET["count"] ?></h3>
                                 </div>
-                                <div class="d-flex justify-content-between">
-                                    <h3 class="card-title" style="font-size: 15px">Ngày cuối cùng mua hàng: -- </h3>
-                                </div>
+
                             </div>
                             <div class="col-md-6">
                                 <div class="d-flex justify-content-between">
@@ -114,7 +116,7 @@
                                     <h3 class="card-title" style="font-size: 15px">Tổng SL sản phẩm hoàn trả: 0</h3>
                                 </div>
                                 <div class="d-flex justify-content-between">
-                                    <h3 class="card-title" style="font-size: 15px">Công nợ hiện tại: --</h3>
+                                    <h3 class="card-title" style="font-size: 15px">Ngày cuối cùng mua hàng: <?php $date=date_create($history["Dateorders"]);echo date_format($date,"d/m/Y");?></h3>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +171,58 @@
                                                 <?php }?>
                                         </td>
                                         <td ><?php echo number_format($result["Total"],0,",",".") ?></td>
-                                        <td style="text-align: center"><?php echo $namestaff["Name"]?></td>
+                                        <td style="text-align: center"><?php echo $namestaff["NameStaff"]?></td>
+                                    </tr>
+                                <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php
+        $getcourse = "SELECT * FROM order_courses WHERE idAccounts = '".$_GET["idUser"]."' ORDER BY idCOrders DESC ";
+        $db_course = mysqli_query($conn,$getcourse);
+    ?>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="d-flex justify-content-between">
+                        <h3 class="card-title">Lịch sử mua khóa học</h3>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="card">
+                        <!-- /.card-header -->
+                        <div class="card-body p-0">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th style="width: 200px">Mã đơn hàng</th>
+                                    <th style="width: 300px">Ngày thanh toán</th>
+                                    <th>Thanh toán</th>
+                                    <th style="">Giá trị</th>
+                                    <th style="width: 190px">Nhân viên xử lí đơn</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                while ($course = mysqli_fetch_array($db_course)) {
+
+                                    $getstaff = "SELECT * FROM staffs WHERE idStaffs = '".$course["idStaffs"]."'";
+                                    $db_staff = mysqli_query($conn,$getstaff);
+                                    $namestaff = mysqli_fetch_array($db_staff);
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $course["idCOrders"]?></td>
+                                        <td><p> <?php $date=date_create($course["DateCreate"]);echo date_format($date,"d/m/Y"); ?></p></td>
+
+                                        <td style="margin-left: 50px;">
+                                            <span><i class="fas fa-circle"></i></span>
+                                        </td>
+                                        <td ><?php echo number_format($course["Total"],0,",",".") ?></td>
+                                        <td style="text-align: center"><?php echo $namestaff["NameStaff"]?></td>
                                     </tr>
                                 <?php } ?>
                                 </tbody>

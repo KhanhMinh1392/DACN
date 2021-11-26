@@ -162,7 +162,7 @@ include ('../layout/header.php')
         	</div>
         </section>
         <!--================End Product Area =================-->
-        
+
         <!--================Newsletter Area =================-->
 <?php
 include ('../layout/footer.php')

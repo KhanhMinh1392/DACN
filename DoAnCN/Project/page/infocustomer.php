@@ -79,6 +79,7 @@ include ('../layout/header.php')
 							<div class="form-group col-md-6">
 								<h7>Mật khẩu</h7>
 								<input type="password" class="form-control" id="passWord" value="<?php echo $information["Password"]; ?>" placeholder="Mật khẩu" disabled>
+                                <a href="" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Đổi mật khẩu</a>
 							</div>
                             <div class="form-group col-md-6">
                                 <h7>Số điện thoại</h7>
@@ -87,7 +88,7 @@ include ('../layout/header.php')
                             <div class="form-group col-md-6">
                                 <h7>Ngày sinh</h7>
                                 <input type="date" class="form-control" id="numberCustomer" name="birthday" value="<?php echo $information["Birthday"];?>">
-                                <a href="../page/courseofcustumer.php" style="float: right">Xem khóa học</a>
+                                <a href="../page/courseofcustumer.php">Xem khóa học</a>
                             </div>
 							<div class="form-group col-md-12">
 								<button type="submit" value="submit" class="btn order_s_btn form-control">Update</button>
@@ -167,6 +168,39 @@ include ('../layout/header.php')
                 </div>
         	</div>
         </section>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img src="../img/logo-2.png" style="margin-left: 135px" alt="">
+                        <form action="../PHPfile/Changpass.php" method="post">
+                            <input type="hidden" name="callbackSignin" value="<?php echo $_SERVER["PHP_SELF"]?>">
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Mật khẩu cũ</label>
+                                <input type="password" class="form-control" name="passold" id="recipient-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Mật khẩu mới: </label>
+                                <input type="password" class="form-control" name="passnew" id="recipient-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Confirm mật khẩu: </label>
+                                <input type="password" class="form-control" name="confirm" id="recipient-name" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Đổi mật khẩu</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--================End Contact Form Area =================-->
 
         <!--================End Banner Area =================-->

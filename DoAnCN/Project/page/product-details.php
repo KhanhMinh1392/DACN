@@ -142,7 +142,10 @@ include ('../layout/header.php')
                                     <?php
                                         if(isset($_SESSION["username"]) && $result["Username"] == $_SESSION["username"] ) {
                                     ?>
-                                        <a style="font-size: 13px; float: right; cursor: pointer" onclick="XoaBinhLuan(<?php echo $result["id_Comment"];?>,<?php echo $dbdata["IdProducts"];?>)"><i class="fa fa-trash"></i> Xóa bình luận</a>
+                                        <div>
+                                            <a style="font-size: 13px; float: right; cursor: pointer" onclick="XoaBinhLuan(<?php echo $result["id_Comment"];?>,<?php echo $dbdata["IdProducts"];?>)"><i class="fa fa-trash"></i> Xóa</a>
+                                            <a style="font-size: 13px; float: right; cursor: pointer; margin-right: 10px" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fa fa-pencil"></i> Chỉnh sửa</a>
+                                        </div>
                                     <?php }?>
                                     </div>
                                 </div>
@@ -211,6 +214,34 @@ include ('../layout/header.php')
                 </div>
         	</div>
         </section>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa bình luận</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="post">
+                            <?php
+                            $sql2 = "SELECT * FROM comments ORDER BY IdProducts DESC LIMIT 4";
+                            $query2 = mysqli_query($conn,$sql2);
+                            ?>
+                            <input type="hidden" name="callbackSignin" value="<?php echo $_SERVER["PHP_SELF"]?>">
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Bình luận</label>
+                                <input type="text" class="form-control" name="txt" id="recipient-name" value="" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Chỉnh sửa</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!--================Comment =================-->
         <?php
             if($_SERVER["REQUEST_METHOD"]=="POST"){

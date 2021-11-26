@@ -1,22 +1,7 @@
 <?php
 include ('../page/connect.php')
 ?>
-<?php
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    $email = $_POST["email"];
-    $pass = $_POST["pass"];
-    $callData = "SELECT * FROM staffs WHERE Username='".$email."' and Password='".$pass."'";
-    $query = mysqli_query($conn,$callData);
 
-    if(mysqli_num_rows($query) > 0) {
-        echo "<script>alert('Đăng nhập thành công')</script>";
-        $_SESSION["admin"] = $email;
-        echo "<script>location='../admin/index4.php'</script>";
-    } else {
-        echo "<script>alert('Đăng nhập thất bại')</script>";
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,9 +24,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="../admin/assest/css/util.css">
 	<link rel="stylesheet" type="text/css" href="../admin/assest/css/main.css">
-
     <?php
-        session_start();
+    session_start();
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        $email = $_POST["email"];
+        $pass = $_POST["pass"];
+        $callData = "SELECT * FROM staffs WHERE Username='".$email."' and Password='".$pass."'";
+        $query = mysqli_query($conn,$callData);
+        $check = mysqli_fetch_array($query);
+        if($check["idStatus"] == 2) {
+            echo "<script>alert('Tài khoản đã khóa')</script>";
+        } else {
+            if(mysqli_num_rows($query) > 0) {
+                echo "<script>alert('Đăng nhập thành công')</script>";
+                $_SESSION["email"] = $email;
+                echo "<script>location='../admin/index4.php'</script>";
+            } else {
+                echo "<script>alert('Đăng nhập thất bại')</script>";
+            }
+        }
+    }
     ?>
 <!--===============================================================================================-->
 </head>

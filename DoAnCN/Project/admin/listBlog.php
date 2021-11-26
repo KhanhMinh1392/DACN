@@ -1,5 +1,13 @@
 <?php
-    include ('../page/connect.php')
+    include ('../page/connect.php');
+    session_start();
+    if(isset($_GET["LogOut"])) {
+        unset($_SESSION["email"]);
+        echo "<script>location='../admin/loginAdmin.php';</script>";
+    }
+    $getinfo = "SELECT * FROM staffs WHERE Username = '".$_SESSION["email"]."'";
+    $query = mysqli_query($conn,$getinfo);
+    $name = mysqli_fetch_array($query);
 ?>
 <?php
     $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 5;
@@ -187,7 +195,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Đào Khánh Minh</a>
+            <a href="../admin/infoadmin.php?idAdmin=<?php echo $name["idStaffs"]?>" class="d-block"><?php echo $name["NameStaff"];?></a>
         </div>
       </div>
 
@@ -255,9 +263,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="../admin/listCourses.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Quản lý bình luận</p>
+                  <p>Danh sách khóa học</p>
                 </a>
               </li>
             </ul>
@@ -287,6 +295,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
             </ul>
           </li>
+            <?php
+            if($name["idRole"] == 1) {
+                ?>
+                <li class="nav-item menu-close">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                            Nhân viên
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="../admin/listStaff.php" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh sách nhân viên</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            <?php }?>
             <li class="nav-item menu-close">
                 <a href="#" class="nav-link active">
                     <i class="nav-icon fas fa-blog"></i>
@@ -305,7 +334,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="../admin/loginAdmin.php" class="nav-link">
+                <a href="<?php echo $_SERVER["PHP_SELF"]?>?LogOut=0" class="nav-link">
                     <i class="nav-icon fas fa-sign-out-alt"></i>
                     <p>
                         Đăng xuất
@@ -368,10 +397,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       echo date_format($date,"d/m/Y");?>
                   </td>
                   <td style="text-align: center">
-                      <p><?php echo $nameStaff["Name"]?></p>
+                      <p><?php echo $nameStaff["NameStaff"]?></p>
                   </td>
                   <td style="text-align: center">
-                    <a href="editOrder.php?idOrder=<?php echo $row["idOrders"]?>&idAccount=<?php echo $row["idAccounts"]?>&idStaff=<?php echo $row["idStaffs"]?>" class ="btn btn-primary">
+                    <a href="editBlog.php?idBlog=<?php echo $row["IdBlog"]?>&idStaff=<?php echo $row["idStaffs"]?>" class ="btn btn-primary">
                       <i class="fas fa-edit"></i>
                     </a>
                   </td>

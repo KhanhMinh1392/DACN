@@ -1,6 +1,10 @@
 <?php
 include ('../layout/header.php')
 ?>
+<?php
+    $getcourse = "SELECT * FROM products LIMIT 12";
+    $query_get = mysqli_query($conn,$getcourse);
+?>
         <!--================End Main Header Area =================-->
         <section class="banner_area">
         	<div class="container">
@@ -24,88 +28,29 @@ include ('../layout/header.php')
         				<p></p>
         			</div>
        				<div class="row">
-       					<div class="col-lg-6">
-       						<div class="discover_item_inner">
-       							<div class="discover_item">
-									<h4>Double Chocolate Pie</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc <span>450.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Zabaglione Cake</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc<span>450.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Blueberry Muffin</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc <span>450.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Box of Delight</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc<span>450.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Classic French Croissant</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc<span>450.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Macarons & Tea</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc<span>450.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Strawberry Sweet Cake</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc<span>450.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Cupcake of Vanela</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc<span>450.000VNĐ</span></p>
-								</div>
-       						</div>
-       					</div>
-       					<div class="col-lg-6">
-       						<div class="discover_item_inner">
-       							<div class="discover_item">
-									<h4>Fried Egg Sandwich</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc <span>450.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Multigrain Hot Cake</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc <span>500.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Branch Special Cake</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc <span>450.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Bialy Egg Sandwich with Cake</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc <span>450.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Strawberry Sweet Cake</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc <span>450.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Double Chocolate Pie</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc <span>450.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Blueberry Muffin</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc <span>500.000VNĐ</span></p>
-								</div>
-       							<div class="discover_item">
-									<h4>Classic Chocolate Cake</h4>
-									<p>Sô cô la, vani, mứt phúc bồn tử trái cây sữa cô đặc <span>500.000VNĐ</span></p>
-								</div>
-       						</div>
-       					</div>
+                        <?php
+                        while ($dbdata = mysqli_fetch_array($query_get)) {
+                            ?>
+                            <div class="col-lg-6" style="margin-bottom: 20px">
+                                <div class="discover_item_inner">
+                                    <div class="discover_item">
+                                        <a href="../page/product-details.php?Masp=<?php echo $dbdata["IdProducts"]?>"><h4><?php echo $dbdata["Nameproducts"]?></h4></a>
+                                        <p>Tất cả những nguyên liệu này sẽ được bọc ngoài bởi lớp glaze rượu rum anh đào</p>
+                                        <p><span><?=number_format($dbdata["Price"],0,",",".")?> VNĐ</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php }?>
        				</div>
        				<div class="row our_bakery_image">
 						<div class="col-md-4 col-6">
-							<img class="img-fluid" src="img/our-bakery/bakery-1.jpg" alt="">
+							<img class="img-fluid" src="../img/our-bakery/bakery-1.jpg" alt="">
 						</div>
 						<div class="col-md-4 col-6">
-							<img class="img-fluid" src="img/our-bakery/bakery-2.jpg" alt="">
+							<img class="img-fluid" src="../img/our-bakery/bakery-2.jpg" alt="">
 						</div>
 						<div class="col-md-4 col-6">
-							<img class="img-fluid" src="img/our-bakery/bakery-3.jpg" alt="">
+							<img class="img-fluid" src="../img/our-bakery/bakery-3.jpg" alt="">
 						</div>
 					</div>
         		</div>

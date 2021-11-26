@@ -13,20 +13,20 @@
     $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 7;
     $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
     $offset = ($current_page-1) * $item_per_page;
-    $dbdata = "SELECT * FROM products ORDER BY IdProducts DESC LIMIT ".$item_per_page." OFFSET ".$offset;
+    $dbdata = "SELECT * FROM courses ORDER BY idCourses DESC LIMIT ".$item_per_page." OFFSET ".$offset;
     $query = mysqli_query($conn,$dbdata);
 
-    $total = mysqli_query($conn,"SELECT * FROM products");
+    $total = mysqli_query($conn,"SELECT * FROM courses");
     $total = $total->num_rows;
     $totalpage = ceil($total / $item_per_page);
 
-    if(isset($_GET["MaSanPham"]))
+    if(isset($_GET["MaKhoaHoc"]))
     {
-        $delete="DELETE FROM products WHERE IdProducts='".$_GET["MaSanPham"]."'";
+        $delete="DELETE FROM courses WHERE idCourses='".$_GET["MaKhoaHoc"]."'";
         if(mysqli_query($conn,$delete))
         {
             echo "<script>alert('Xóa thành công')</script>";
-            echo "<script>location='listProduct.php'</script>";
+            echo "<script>location='listCourses.php'</script>";
         }
         else
         {
@@ -277,7 +277,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="listProduct.php" class="nav-link active">
+                    <a href="listProduct.php" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Danh sách sản phẩm</p>
                     </a>
@@ -285,7 +285,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </ul>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="listCourses.php" class="nav-link">
+                    <a href="listCourses.php" class="nav-link active">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Danh sách khóa học</p>
                     </a>
@@ -377,17 +377,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Danh sách sản phẩm </h1>
+                <h1 class="m-0">Danh sách khóa học</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
-                  <a href="addProduct.php" class="btn btn-success float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
+                  <a href="addCourses.php" class="btn btn-success float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
               </div><!-- /.col -->
             </div><!-- /.row -->
           </div><!-- /.container-fluid -->
           <div class="col-md-12">
             <div class="card">
               <div class="card-header" style="background-color: #007bff;">
-                <h3 class="card-title" style="color:#fff; padding: 5px" >Danh sách sản phẩm</h3>
+                <h3 class="card-title" style="color:#fff; padding: 5px" >Danh sách khóa học</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
@@ -395,42 +395,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <thead>
                     <tr>
                       <th style="width: 10px">ID</th>
-                      <th style="width: 90px">Ảnh</th>
-                      <th style="width: 180px">Sản phẩm</th>
-                      <th style="width: 150px">Trạng thái</th>
-                      <th style="width: 120px">Giá</th>
-                      <th style="width: 100px">Có thể bán</th>
-                      <th style="width: 150px">Ngày khởi tạo</th>
-                      <th style="width: 110px"></th>
+                      <th style="width: 200px">Tên khóa học</th>
+                      <th style="width: 120px">Học phí</th>
+                      <th style="width: 100px">Thời gian bắt đầu</th>
+                      <th style="width: 100px">Thời gian kết thúc</th>
+                      <th style="width: 10px"></th>
                     </tr>
                   </thead>
                   <tbody>
                   <?php
-                  while ($row = mysqli_fetch_array($query)){
-                      $idstatus = "SELECT * FROM status_product WHERE idStatus='".$row["idStatus"]."'";
-                      $getstatus = mysqli_query($conn,$idstatus);
-                      $status = mysqli_fetch_array($getstatus);
+                    while ($row = mysqli_fetch_array($query)){
                   ?>
                     <tr>
-                      <td><?php echo $row["IdProducts"]?></td>
-                      <td><img src="../img/cake-feature/<?php echo $row["Images"]?>" style="width: 50px"></td>
-                      <td><?php echo $row["Nameproducts"]?></td>
-                        <?php if($status["idStatus"] == 1) {?>
-                            <td ><span style="background: #E7FBE3;width: 160px; color: #0DB473; border-radius: 20px; padding: 3px;"><?php echo $status["NameStatus"]?></span></td>
-                        <?php } else {?>
-                            <td ><span class="badge bg-danger" style="font-size: 14px"><?php echo $status["NameStatus"]?></span></td>
-                        <?php }?>
+                      <td><?php echo $row["idCourses"]?></td>
+                      <td><?php echo $row["NameCourses"]?></td>
                       <td><?=number_format($row["Price"],0,",",".")?> VNĐ</td>
-                      <td><?php echo $row["Quantity"]?></td>
                       <td>
                           <?php
-                            $date=date_create($row["DateCreate"]);
+                           $date=date_create($row["TimeStart"]);
+                           echo date_format($date,"d/m/Y");
+                          ?>
+                      </td>
+                      <td>
+                          <?php
+                            $date=date_create($row["TimeEnd"]);
                             echo date_format($date,"d/m/Y");
                           ?>
                       </td>
                       <td>
-                        <a href="../admin/editProduct.php?Masp=<?php echo $row["IdProducts"]?>&loaisp=<?php echo $row["idType"]?>" class="btn btn-primary icons"><i class="fas fa-edit"></i></a>
-                        <a onclick="return Delete('<?php echo $row["Nameproducts"];?>')" href="<?php echo $_SERVER["PHP_SELF"];?>?MaSanPham=<?php echo $row["IdProducts"];?>" class="btn btn-danger icons"><i class="fas fa-trash-alt"></i></a>
+                        <a href="../admin/editCourse.php?Makh=<?php echo $row["idCourses"]?>" class="btn btn-primary icons"><i class="fas fa-edit"></i></a>
+                        <a onclick="return Delete('<?php echo $row["NameCourses"];?>')" href="<?php echo $_SERVER["PHP_SELF"];?>?MaKhoaHoc=<?php echo $row["idCourses"];?>" class="btn btn-danger icons"><i class="fas fa-trash-alt"></i></a>
                       </td>
                     </tr>
                       <?php

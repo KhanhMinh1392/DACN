@@ -125,6 +125,44 @@
         });
     });
 </script>
+<!-- Include the PayPal JavaScript SDK; replace "test" with your own sandbox Business account app client ID -->
+<script src="https://www.paypal.com/sdk/js?client-id=Afk_aUJeDz5f4YlIBfym3FNGmaKjdmx3xZFJH7PlFOXChR8Rk9TdRf_2HqIK1Kt1dZUHHtJzkT1VxhI3&currency=USD"></script>
+<?php
+$bill = $_SESSION["tongbill"]/23000;
+?>
+<script>
+    var m = <?php echo json_encode($bill);?>;
+    paypal.Buttons({
+        // Sets up the transaction when a payment button is clicked
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: '77.44' // Can reference variables or functions. Example: value: document.getElementById('...').value
+                    }
+                }]
+            });
+        },
+
+        // Finalize the transaction after payer approval
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(orderData) {
+                // Successful capture! For dev/demo purposes:
+                console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                var transaction = orderData.purchase_units[0].payments.captures[0];
+                alert('Transaction ' + transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+
+                // When ready to go live, remove the alert and show a success message within this page. For example:
+                // var element = document.getElementById('paypal-button-container');
+                // element.innerHTML = '';
+                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                // Or go to another URL:  actions.redirect('thank_you.html');
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
+
+
 <script src="../js/webuser.js"></script>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

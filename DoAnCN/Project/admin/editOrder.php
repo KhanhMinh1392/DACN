@@ -41,7 +41,7 @@
                 <p class="d-flex flex-column text-left" style="font-size: 14px">Thuế: Giá chưa bao gồm thuế</p>
                 <p class="d-flex flex-column text-left" style="font-size: 14px">Ngày chứng từ: <?php if($dbdata["Status"]=="Hoàn thành") { $date=date_create($dbdata["Datedeliver"]);echo date_format($date,"d/m/Y"); } else { echo "---"; }?></p>
                 <p class="d-flex flex-column text-left" style="font-size: 14px">Nội dung: <?php echo $dbdata["Notes"]?></p>
-                <p class="d-flex flex-column text-left" style="font-size: 14px">Nhân viên bán hàng: <?php echo $db_staff["Name"]?></p>
+                <p class="d-flex flex-column text-left" style="font-size: 14px">Nhân viên bán hàng: <?php echo $db_staff["NameStaff"]?></p>
             </div>
         </div>
     </div>
