@@ -19,6 +19,20 @@
     $total = mysqli_query($conn,"SELECT * FROM blog");
     $total = $total->num_rows;
     $totalpage = ceil($total / $item_per_page);
+
+    if(isset($_GET["MaBlog"]))
+    {
+        $delete="DELETE FROM blog WHERE IdBlog ='".$_GET["MaBlog"]."'";
+        if(mysqli_query($conn,$delete))
+        {
+            echo "<script>alert('Xóa thành công')</script>";
+            echo "<script>location='listBlog.php'</script>";
+        }
+        else
+        {
+            echo "<script>alert('Xảy ra lỗi')</script>";
+        }
+    }
 ?>
 <!DOCTYPE html>
 <!--
@@ -230,20 +244,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="listBill.php" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Danh sách đơn hàng</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Khách hàng trả</p>
-                </a>
-              </li>
-            </ul>
+              <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                      <a href="listBill.php" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Đơn hàng sản phẩm</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="listBillCourse.php" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Đơn hàng khóa học</p>
+                      </a>
+                  </li>
+                  <?php
+                  if($name["idRole"] == 1) {
+                      ?>
+                      <li class="nav-item">
+                          <a href="../admin/listCity.php" class="nav-link">
+                              <i class="far fa-circle nav-icon"></i>
+                              <p>Quản lí ship</p>
+                          </a>
+                      </li>
+                  <?php }?>
+              </ul>
           </li>
           <li class="nav-item menu-close">
             <a href="#" class="nav-link">
@@ -358,7 +382,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <h1 class="m-0">Quản lí blog web</h1>
           </div><!-- /.col -->
             <div class="col-sm-6">
-                <a href="" class="btn btn-success float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
+                <a href="addBlog.php" class="btn btn-primary float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
             </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -403,6 +427,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <a href="editBlog.php?idBlog=<?php echo $row["IdBlog"]?>&idStaff=<?php echo $row["idStaffs"]?>" class ="btn btn-primary">
                       <i class="fas fa-edit"></i>
                     </a>
+                      <a onclick="return Delete('<?php echo $row["IdBlog"];?>')" href="<?php echo $_SERVER["PHP_SELF"];?>?MaBlog=<?php echo $row["IdBlog"];?>" class="btn btn-danger icons"><i class="fas fa-trash-alt"></i></a>
                   </td>
                 </tr>
                     <?php
@@ -427,6 +452,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
   </div>
 </div>
+<script>
+    function Delete(name) {
+        return confirm("Bạn có chắc muốn xóa blog: " + name + "?");
+    }
+</script>
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>

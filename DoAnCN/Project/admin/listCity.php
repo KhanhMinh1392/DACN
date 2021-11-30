@@ -10,23 +10,34 @@
     $name = mysqli_fetch_array($query);
 ?>
 <?php
+    $search = isset($_GET["city"])? $_GET["city"] : "" ;
+    if($search) {
+        $get = "WHERE name_city LIKE '%".$search."%' ";
+    }
     $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 7;
     $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
     $offset = ($current_page-1) * $item_per_page;
-    $dbdata = "SELECT * FROM courses ORDER BY idCourses DESC LIMIT ".$item_per_page." OFFSET ".$offset;
-    $query = mysqli_query($conn,$dbdata);
+    if ($search) {
+        $dbdata = "SELECT * FROM pvs_tinhthanhpho WHERE name_city LIKE '%".$search."%' ORDER BY matp ASC LIMIT ".$item_per_page." OFFSET ".$offset;
+        $query = mysqli_query($conn,$dbdata);
 
-    $total = mysqli_query($conn,"SELECT * FROM courses");
+        $total = mysqli_query($conn,"SELECT * FROM pvs_tinhthanhpho WHERE name_city LIKE '%".$search."%' ");
+    } else {
+        $dbdata = "SELECT * FROM pvs_tinhthanhpho ORDER BY matp ASC LIMIT ".$item_per_page." OFFSET ".$offset;
+        $query = mysqli_query($conn,$dbdata);
+
+        $total = mysqli_query($conn,"SELECT * FROM pvs_tinhthanhpho");
+    }
     $total = $total->num_rows;
     $totalpage = ceil($total / $item_per_page);
 
-    if(isset($_GET["MaKhoaHoc"]))
+    if(isset($_GET["matp"]))
     {
-        $delete="DELETE FROM courses WHERE idCourses='".$_GET["MaKhoaHoc"]."'";
+        $delete="DELETE FROM pvs_tinhthanhpho WHERE matp ='".$_GET["matp"]."'";
         if(mysqli_query($conn,$delete))
         {
             echo "<script>alert('Xóa thành công')</script>";
-            echo "<script>location='listCourses.php'</script>";
+            echo "<script>location='listCity.php'</script>";
         }
         else
         {
@@ -244,7 +255,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </a>
                 </li>
               <li class="nav-item menu-close">
-                <a href="#" class="nav-link">
+                <a href="#" class="nav-link active">
                   <i class="nav-icon fas fa-file-invoice-dollar"></i>
                   <p>
                     Đơn hàng
@@ -268,7 +279,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       if($name["idRole"] == 1) {
                           ?>
                           <li class="nav-item">
-                              <a href="../admin/listCity.php" class="nav-link">
+                              <a href="../admin/listCity.php" class="nav-link active">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>Quản lí ship</p>
                               </a>
@@ -277,7 +288,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </ul>
               </li>
               <li class="nav-item menu-close">
-                <a href="#" class="nav-link active">
+                <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-archive"></i>
                   <p>
                     Sản phẩm
@@ -286,7 +297,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="listProduct.php" class="nav-link">
+                    <a href="listProduct.php" class="nav-link active">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Danh sách sản phẩm</p>
                     </a>
@@ -294,7 +305,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </ul>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="listCourses.php" class="nav-link active">
+                    <a href="listCourses.php" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Danh sách khóa học</p>
                     </a>
@@ -386,17 +397,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Danh sách khóa học</h1>
+                <h1 class="m-0">Danh sách tỉnh thành phố </h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
-                  <a href="addCourses.php" class="btn btn-primary float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
+                  <a href="addProduct.php" class="btn btn-primary float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
+                  <div class="col-sm-6" style="margin-left: 250px">
+                      <div class="form-inline">
+                          <form action="" method="get">
+                              <div class="input-group" >
+                                  <input class="form-control form-control-sidebar" name="city" type="search" placeholder="Tìm kiếm thành phố" value="<?=isset($_GET["city"]) ? $_GET["city"] : "" ?>" aria-label="Search">
+                                  <div class="input-group-append">
+                                      <button class="btn btn-sidebar" style="background: #007bff">
+                                          <i class="fas fa-search fa-fw"></i>
+                                      </button>
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
+                  </div><!-- /.col -->
               </div><!-- /.col -->
             </div><!-- /.row -->
           </div><!-- /.container-fluid -->
           <div class="col-md-12">
             <div class="card">
               <div class="card-header" style="background-color: #007bff;">
-                <h3 class="card-title" style="color:#fff; padding: 5px" >Danh sách khóa học</h3>
+                <h3 class="card-title" style="color:#fff; padding: 5px" >Danh sách thành phố</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
@@ -404,36 +429,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <thead>
                     <tr>
                       <th style="width: 10px">ID</th>
-                      <th style="width: 200px">Tên khóa học</th>
-                      <th style="width: 120px">Học phí</th>
-                      <th style="width: 100px">Thời gian bắt đầu</th>
-                      <th style="width: 100px">Thời gian kết thúc</th>
-                      <th style="width: 10px"></th>
+                      <th style="width: 180px">Tên thành phố</th>
+                      <th style="width: 150px">Type</th>
+                      <th style="width: 120px">Ship</th>
+                      <th style="width: 110px"></th>
                     </tr>
                   </thead>
                   <tbody>
                   <?php
-                    while ($row = mysqli_fetch_array($query)){
+                  while ($row = mysqli_fetch_array($query)){
                   ?>
                     <tr>
-                      <td><?php echo $row["idCourses"]?></td>
-                      <td><?php echo $row["NameCourses"]?></td>
-                      <td><?=number_format($row["Price"],0,",",".")?> VNĐ</td>
+                      <td><?php echo $row["matp"]?></td>
+                      <td><?php echo $row["name_city"]?></td>
+                      <td><?php echo $row["type"]?></td>
+                        <td><?=number_format($row["ship"],0,",",".")?> VNĐ</td>
                       <td>
-                          <?php
-                           $date=date_create($row["TimeStart"]);
-                           echo date_format($date,"d/m/Y");
-                          ?>
-                      </td>
-                      <td>
-                          <?php
-                            $date=date_create($row["TimeEnd"]);
-                            echo date_format($date,"d/m/Y");
-                          ?>
-                      </td>
-                      <td>
-                        <a href="../admin/editCourse.php?Makh=<?php echo $row["idCourses"]?>" class="btn btn-primary icons"><i class="fas fa-edit"></i></a>
-                        <a onclick="return Delete('<?php echo $row["NameCourses"];?>')" href="<?php echo $_SERVER["PHP_SELF"];?>?MaKhoaHoc=<?php echo $row["idCourses"];?>" class="btn btn-danger icons"><i class="fas fa-trash-alt"></i></a>
+                        <a href="../admin/editCity.php?matp=<?php echo $row["matp"]?>" class="btn btn-primary icons"><i class="fas fa-edit"></i></a>
+                        <a onclick="return Delete('<?php echo $row["name_city"];?>')" href="<?php echo $_SERVER["PHP_SELF"];?>?matp=<?php echo $row["matp"];?>" class="btn btn-danger icons"><i class="fas fa-trash-alt"></i></a>
                       </td>
                     </tr>
                       <?php
@@ -442,16 +455,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </tbody>
                 </table>
               </div>
-<!--                <hr> -->
-                <div class="card-footer clearfix">
-                    <ul class="pagination pagination-sm m-0 float-right">
-                        <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                        <?php for($num = 1 ; $num <= $totalpage; $num++){ ?>
-                            <li class="page-item"><a class="page-link" href="?per_page=<?=$item_per_page?>&page=<?=$num?>"><?=$num?></a></li>
-                        <?php } ?>
-                        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                    </ul>
-                </div>
+             <?php include ("panigation.php")?>
               <!-- /.card-body -->
             </div>
           </div>

@@ -16,7 +16,53 @@
     <title>Sign in & Sign up Form</title>
   </head>
   <body>
-    <div class="container">
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v12.0&appId=1026708278186391&autoLogAppEvents=1" nonce="jvd8jJLI"></script>
+
+<!--  <script>-->
+<!--      window.fbAsyncInit = function() {-->
+<!--          FB.init({-->
+<!--              appId      : '1026708278186391',-->
+<!--              cookie     : true,                     // Enable cookies to allow the server to access the session.-->
+<!--              xfbml      : true,                     // Parse social plugins on this webpage.-->
+<!--              version    : 'v2.5'           // Use this Graph API version for this call.-->
+<!--          });-->
+<!---->
+<!--          FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.-->
+<!--              statusChangeCallback(response);        // Returns the login status.-->
+<!--          });-->
+<!---->
+<!--          function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().-->
+<!--              // The current login status of the person.-->
+<!--              if (response.status === 'connected') {   // Logged into your webpage and Facebook.-->
+<!--                  alert('Bạn đã đăng nhập thành công')-->
+<!--              } else {                                 // Not logged into your webpage or we are unable to tell.-->
+<!--                  // alert('Bạn đã đăng nhập thất bại')-->
+<!--              }-->
+<!--          }-->
+<!---->
+<!---->
+<!--          function checkLoginState() {               // Called when a person is finished with the Login Button.-->
+<!--              FB.getLoginStatus(function(response) {   // See the onlogin handler-->
+<!--                  statusChangeCallback(response);-->
+<!--              });-->
+<!--          }-->
+<!---->
+<!---->
+<!--      };-->
+<!---->
+<!--      function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.-->
+<!--          console.log('Welcome!  Fetching your information.... ');-->
+<!--          FB.api('/me', function(response) {-->
+<!--              console.log('Successful login for: ' + response.name);-->
+<!--              document.getElementById('status').innerHTML =-->
+<!--                  'Thanks for logging in, ' + response.name + '!';-->
+<!--          });-->
+<!--      }-->
+<!---->
+<!--  </script>-->
+
+  <div class="container">
       <div class="forms-container">
         <div class="signin-signup">
           <form action="../PHPfile/Signin.php" class="sign-in-form" method="post">
@@ -32,10 +78,13 @@
             </div>
             <input type="submit" value="Login" class="btn solid" />
             <p class="social-text">Forgot your <a href="#">password</a>?</p>
+
             <div class="social-media">
-              <a href="#" class="social-icon">
+              <div href="#" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
-              </a>
+<!--                  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">-->
+<!--                  </fb:login-button>-->
+              </div>
               <a href="#" class="social-icon">
                 <i class="fab fa-twitter"></i>
               </a>

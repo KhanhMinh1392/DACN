@@ -2,7 +2,7 @@
 include ('../layout/header.php')
 ?>
 <?php
-    $item_per_page = !empty($_GET['per_page'])?$_GET['per_page']:3;
+    $item_per_page = !empty($_GET['per_page'])?$_GET['per_page']:9;
     $current_page = !empty($_GET['page'])?$_GET['page']:1;
     $offset = ($current_page-1) * $item_per_page;
 

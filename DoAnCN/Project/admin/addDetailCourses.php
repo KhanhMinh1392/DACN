@@ -62,7 +62,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
                           <button type="submit" class="btn btn-primary">Submit</button>
                       </div>
                       <!-- /.card-body -->
-                  </div>>
+                  </div>
               </form>
           </div>
         </div>

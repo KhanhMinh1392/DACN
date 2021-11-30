@@ -97,45 +97,29 @@
 
         <div class="card col-3" style="float: right">
           <div class="card-header border-0">
-            <h3 class="card-title"></h3>
+            <h3 class="card-title">Sản phẩm bán chạy</h3>
           </div>
           <div class="card-body">
+              <?php
+              $sort = "SELECT * ,SUM(detailorders.Quantitydetail) as total FROM detailorders INNER JOIN products ON detailorders.IdProducts = products.IdProducts GROUP BY detailorders.IdProducts ORDER BY SUM(detailorders.Quantitydetail) DESC LIMIT 4";
+              $query_sort = mysqli_query($conn,$sort);
+              $i = 0;
+              while ($row_sort = mysqli_fetch_array($query_sort)){
+                  $i++;
+              ?>
             <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-              <p class="text-success text-xl">
+                <p class="text-success text-l" style="text-align: left">
                 <i class="ion ion-ios-refresh-empty"></i>
+                <span class="text-muted"><?php echo $row_sort["Nameproducts"]?></span>
               </p>
               <p class="d-flex flex-column text-right">
                 <span class="font-weight-bold">
-                  <i class="ion ion-android-arrow-up text-success"></i> 15
+                  <i class="ion ion-android-arrow-up text-success"></i>
+                    <?php echo $row_sort["total"]?>
                 </span>
-                <span class="text-muted">Sản phẩm mới</span>
               </p>
             </div>
-            <!-- /.d-flex -->
-            <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-              <p class="text-warning text-xl">
-                <i class="ion ion-ios-cart-outline"></i>
-              </p>
-              <p class="d-flex flex-column text-right">
-                <span class="font-weight-bold">
-                  <i class="ion ion-android-arrow-up text-warning"></i> 0.8%
-                </span>
-                <span class="text-muted">SALES RATE</span>
-              </p>
-            </div>
-            <!-- /.d-flex -->
-            <div class="d-flex justify-content-between align-items-center mb-0">
-              <p class="text-danger text-xl">
-                <i class="ion ion-ios-people-outline"></i>
-              </p>
-              <p class="d-flex flex-column text-right">
-                <span class="font-weight-bold">
-                  <i class="ion ion-android-arrow-down text-danger"></i> 1%
-                </span>
-                <span class="text-muted">Đơn hàng</span>
-              </p>
-            </div>
-            <!-- /.d-flex -->
+              <?php }?>
           </div>
         </div>
         <div class="card col-8">
@@ -151,6 +135,7 @@
                   <span class="text-bold text-lg"> <?php echo number_format($result_total[0],0,",",".")?> VNĐ</span>
                   <span>Sales Over Time</span>
                 </p>
+
                 <p class="ml-auto d-flex flex-column text-right">
                   <span class="text-success">
                     <i class="fas fa-arrow-up"></i> 33.1%

@@ -41,7 +41,11 @@
                 <p class="d-flex flex-column text-left" style="font-size: 14px">Thuế: Giá chưa bao gồm thuế</p>
                 <p class="d-flex flex-column text-left" style="font-size: 14px">Ngày chứng từ: <?php if($dbdata["Status"]=="Hoàn thành") { $date=date_create($dbdata["Datedeliver"]);echo date_format($date,"d/m/Y"); } else { echo "---"; }?></p>
                 <p class="d-flex flex-column text-left" style="font-size: 14px">Nội dung: <?php echo $dbdata["Notes"]?></p>
-                <p class="d-flex flex-column text-left" style="font-size: 14px">Nhân viên bán hàng: <?php echo $db_staff["NameStaff"]?></p>
+                <?php if($dbdata["Status"]=="Hoàn thành") {?>
+                    <p class="d-flex flex-column text-left" style="font-size: 14px">Nhân viên xác nhận: <?php echo $db_staff["NameStaff"]?></p>
+                <?php }else {?>
+                    <p class="d-flex flex-column text-left" style="font-size: 14px">Nhân viên xác nhận: --/--</p>
+                <?php }?>
             </div>
         </div>
     </div>
@@ -148,10 +152,14 @@
                         <div class="card-body" style="float: right">
                             <?php
                             if($_SERVER["REQUEST_METHOD"]=="POST") {
+                                $gst = "SELECT * FROM staffs WHERE Username = '".$_SESSION["email"]."'";
+                                $querystf = mysqli_query($conn,$gst);
+                                $dbstf = mysqli_fetch_array($querystf);
+
                                 $status = $_POST["status"];
                                 date_default_timezone_set('Asia/Ho_Chi_Minh');
                                 $ngaydat = date("Y-m-d H:i:s");
-                                $query = "UPDATE orders SET Status = '".$status."',Datedeliver = '".$ngaydat."' WHERE idOrders = '".$_GET["idOrder"]."'";
+                                $query = "UPDATE orders SET idStaffs = '".$dbstf["idStaffs"]."',Status = '".$status."',Datedeliver = '".$ngaydat."' WHERE idOrders = '".$_GET["idOrder"]."'";
                                 $queryupdate=mysqli_query($conn,$query);
                                 echo "<script>location='../admin/listBill.php'</script>";
                             }

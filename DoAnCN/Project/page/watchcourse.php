@@ -59,43 +59,44 @@ include ('../layout/header.php')
                         </div>
         			</div>
         		</div>
-                <?php
-                while ($db_detail = mysqli_fetch_array($query_detail)) {
-                ?>
-                <div class="row" style="margin-bottom: 20px">
-                    <div class="col-lg-6" style="position: relative;">
-                        <div class="discover_item_inner">
-                            <div class="discover_item" style="display: flex">
-                                <h4><?php echo $db_detail["Content"]?></h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="product_details_text">
-                            <div class="video_inner">
-                                <div class="media">
-                                    <div class="d-flex">
-                                        <div class="d-flex" style="float: right;">
-                                            <a class="d-flex popup-youtube" href="https://www.youtube.com/watch?v=rd7xYyTX00o"><i class="flaticon-play-button"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php }?>
+
                 <div class="product_tab_area" style="margin-top: 50px">
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Mô tả</a>
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Cách làm</a>
                             <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Review (<?php echo $count?>)</a>
                         </div>
                     </nav>
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                            <p style="text-align: justify"><?php echo $db_course["Info"]?></p>
-                            <p style="text-align: justify"><?php echo $db_course["Info"]?></p>
+<!--                            <p style="text-align: justify">--><?php //echo $db_course["Info"]?><!--</p>-->
+<!--                            <p style="text-align: justify">--><?php //echo $db_course["Info"]?><!--</p>-->
+                            <?php
+                            while ($db_detail = mysqli_fetch_array($query_detail)) {
+                                ?>
+                                <div class="row" style="margin-bottom: 20px">
+                                    <div class="col-lg-6" style="position: relative;">
+                                        <div class="discover_item_inner">
+                                            <div class="discover_item" style="display: flex">
+                                                <h4><?php echo $db_detail["Content"]?></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="product_details_text">
+                                            <div class="video_inner">
+                                                <div class="media">
+                                                    <div class="d-flex">
+                                                        <div class="d-flex" style="float: right;">
+                                                            <a class="d-flex popup-youtube" href="https://www.youtube.com/watch?v=rd7xYyTX00o"><i class="flaticon-play-button"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php }?>
                         </div>
                         <?php
                         $laybl="SELECT * FROM comment_course INNER JOIN accounts ON comment_course.idAccounts = accounts.idAccounts WHERE idCourses= '".$db_course["idCourses"]."' ORDER BY idCCourse DESC ";

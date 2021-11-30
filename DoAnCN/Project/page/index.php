@@ -1,7 +1,6 @@
 <?php
     include ('../layout/header.php')
 ?>
-        
         <!--================Slider Area =================-->
         <section class="main_slider_area">
             <div id="main_slider" class="rev_slider" data-version="5.3.1.6">
@@ -255,10 +254,11 @@
         				</div>
         			</div>
         		</div>
+
         	</div>
         </section>
         <!--================End Service Area =================-->
-        
+
         <!--================Discover Menu Area =================-->
         <section class="discover_menu_area">
         	<div class="discover_menu_inner">
@@ -287,6 +287,7 @@
        				</div>
         		</div>
         	</div>
+
         </section>
         <!--================End Discover Menu Area =================-->
         <?php
@@ -326,10 +327,52 @@
         	</div>
         </section>
         <!--================End Client Says Area =================-->
-        
+
         <!--================End Client Says Area =================-->
         <section class="our_chef_area p_100">
         	<div class="container">
+                <?php
+                $sort_star = "SELECT * FROM reviews INNER JOIN products ON reviews.IdProducts = products.IdProducts GROUP BY reviews.IdProducts ORDER BY SUM(reviews.Star) DESC LIMIT 7";
+                $query_star = mysqli_query($conn,$sort_star);
+                ?>
+                <div class="cake_feature_inner">
+                    <div class="main_title">
+                        <h2>Sản phẩm đánh giá sao</h2>
+                        <h5>Các chiếc bánh đẹp nhất</h5>
+                    </div>
+                    <div class="cake_feature_slider owl-carousel">
+                        <?php
+                        $sosao = "";
+                        while ($dbdata_star = mysqli_fetch_array($query_star)) {
+                            $sosao = $dbdata_star["Star"];
+                            ?>
+                            <div class="item">
+                                <div class="cake_feature_item">
+                                    <a href="../page/product-details.php?Masp=<?php echo $dbdata_star["IdProducts"]?>">
+                                        <div class="cake_img">
+                                            <img src="../img/cake-feature/<?php echo $dbdata_star["Images"]?>" alt="">
+                                        </div>
+                                        <div class="cake_text">
+                                            <input type="number" value="1" id="quantity" min="1" max="10" hidden>
+                                            <h4 style="width: 160px"><?=number_format($dbdata_star["Price"],0,",",".")?> VNĐ</h4>
+                                            <h3><?php echo $dbdata_star["Nameproducts"]?></h3>
+<!--                                            <ul class="list_style" style="display: flex;width: 400px">-->
+<!--                                                <li><a href="#"><i class="fa fa-star sao sao1" data-sao="1"></i></a></li>-->
+<!--                                                <li><a href="#"><i class="fa fa-star sao sao2" data-sao="2"></i></a></li>-->
+<!--                                                <li><a href="#"><i class="fa fa-star sao sao3" data-sao="3"></i></a></li>-->
+<!--                                                <li><a href="#"><i class="fa fa-star sao sao4" data-sao="4"></i></a></li>-->
+<!--                                                <li><a href="#"><i class="fa fa-star sao sao5" data-sao="5"></i></a></li>-->
+<!--                                            </ul>-->
+                                            <a class="pest_btn" href="#" onclick="AddCart(<?php echo $dbdata_star["IdProducts"];?>)">Thêm vào giỏ</a>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </div>
         		<div class="row our_chef_inner">
         			<div class="col-lg-3 col-6">
         				<div class="chef_text_item">
@@ -385,6 +428,7 @@
         				</div>
         			</div>
         		</div>
+
         	</div>
         </section>
         <!--================End Client Says Area =================-->
@@ -429,6 +473,18 @@
        			</div>
         	</div>
         </section>
+<script>
+    $(document).ready(function () {
+        for (i=1;i <= <?php echo $sosao ?>;i++){
+            $('.sao'+i).css('color','yellow');
+        }
+    })
+</script>
+<style>
+    .saohover {
+        color: yellow;
+    }
+</style>
         <!--================End Latest News Area =================-->
 <?php
     include ('../layout/footer.php')

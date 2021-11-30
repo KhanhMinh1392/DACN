@@ -51,9 +51,6 @@ include ('../layout/header.php')
                                     $count += $total_quantity;
                                     ?>
                                     <tr>
-<!--                                        <td>-->
-<!--                                            <img src="../img/cake-feature/--><?php //echo $value["image"]?><!--" alt="" style="width: 150px">-->
-<!--                                        </td>-->
                                         <td><?php echo $value["makh"]?></td>
                                         <td><?php echo $value["namekh"]?></td>
                                         <td><?=number_format($value["price"],0,",",".")?> VNĐ</td>

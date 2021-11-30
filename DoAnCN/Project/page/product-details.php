@@ -81,10 +81,12 @@ include ('../layout/header.php')
                                     <li onclick="DanhGiaSao(<?php echo $dbdata["IdProducts"];?>, '<?php echo $sql["idAccounts"] ?>', 5)"><a href="#"><i class="fa fa-star sao sao5" data-sao="5"></i></a></li>
                                     <span style="margin-left: 10px;margin-top: 2px">(<?php echo mysqli_num_rows($truyvandanhgia)?> Đánh giá)</span>
                                 </ul>
+                                <br>
+<!--                                <div class="fb-like" data-href="https://www.huongnghiepaau.com/hoc-lam-banh/bep-truong-bep-banh" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>-->
                                 <p style="text-align: justify"><?php echo $dbdata["Detailinfo"]?></p>
                                 <h5>Giá : <span><?=number_format($dbdata["Price"],0,",",".")?> VNĐ</span></h5>
                                 <div class="quantity_box">
-                                    <label for="quantity">Số lượng :</label>
+                                    <label>Số lượng :</label>
                                     <input type="number" value="1" id="quantity" min="1" max="10">
                                 </div>
                                 <a class="pink_more" href="#" onclick="AddCart(<?php echo $dbdata["IdProducts"];?>)">Thêm vào giỏ</a>
@@ -106,8 +108,9 @@ include ('../layout/header.php')
                             <p style="text-align: justify"><?php echo $dbdata["Info"]?></p>
 						</div>
 						<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-							<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+                            <p style="text-align: justify"><?php echo $dbdata["Info"]?></p>
+                            <p style="text-align: justify"><?php echo $dbdata["Info"]?></p>
+<!--                            <div class="fb-comments" data-href="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fhhsb.vn%2Fposts%2F5410538482294474&show_text=true&width=500" data-width="1000" data-numposts="3"></div>-->
 						</div>
                         <?php
                         $laybl="SELECT * FROM comments INNER JOIN accounts ON comments.idAccounts = accounts.idAccounts WHERE IdProducts='".$dbdata["IdProducts"]."' ORDER BY id_Comment DESC ";
@@ -118,37 +121,41 @@ include ('../layout/header.php')
                             if(mysqli_num_rows($cotbl) > 0) {
                             while ($result = mysqli_fetch_array($cotbl)) {
                                 ?>
+                            <div class="card" style="border: none">
                                 <div class="media" style="max-height: 100px; margin-bottom: 30px">
                                     <div class="d-flex">
                                         <img src="../img/userimg/<?php echo $result["Image"]?>" alt="" style="width: 100px;height: 110px;margin-bottom: 30px;border-radius: 50%;">
                                     </div>
                                     <div class="media-body" style="margin-left: 20px; max-width: 500px"">
-                                        <h5>
-                                            <?php
-                                            if($result["NameCustomer"]== "") {
-                                                echo $result["Username"];
-                                            } else {
-                                                echo $result["NameCustomer"];}?>
-                                            <span style="float: right; font-size: 15px">
+                                    <h5>
+                                        <?php
+                                        if($result["NameCustomer"]== "") {
+                                            echo $result["Username"];
+                                        } else {
+                                            echo $result["NameCustomer"];}?>
+                                        <span style="float: right; font-size: 15px">
                                                 <?php
                                                 date_default_timezone_set("Asia/Ho_Chi_Minh");
                                                 echo $result["Datecomments"]
                                                 ?>
                                             </span>
-                                        </h5>
-                                        <div style="border: 1px solid #e2e2e2; border-radius: 2px; padding: 15px">
-                                            <?php echo $result["Title"]?>
-                                        </div>
+                                    </h5>
+                                    <div style="border: 1px solid #e2e2e2; border-radius: 2px; padding: 15px" class="title">
+                                        <?php echo $result["Title"]?>
+                                    </div>
                                     <?php
-                                        if(isset($_SESSION["username"]) && $result["Username"] == $_SESSION["username"] ) {
-                                    ?>
+                                    if(isset($_SESSION["username"]) && $result["Username"] == $_SESSION["username"] ) {
+                                        ?>
                                         <div>
                                             <a style="font-size: 13px; float: right; cursor: pointer" onclick="XoaBinhLuan(<?php echo $result["id_Comment"];?>,<?php echo $dbdata["IdProducts"];?>)"><i class="fa fa-trash"></i> Xóa</a>
-                                            <a style="font-size: 13px; float: right; cursor: pointer; margin-right: 10px" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fa fa-pencil"></i> Chỉnh sửa</a>
+                                            <a style="font-size: 13px; float: right; cursor: pointer; margin-right: 10px" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo" class="editcmt"><i class="fa fa-pencil"></i> Chỉnh sửa</a>
+                                            <a style="font-size: 13px; float: right; cursor: pointer; margin-right: 10px" onclick="reply(this)"><i class="fa fa-reply"></i> Trả lời</a>
                                         </div>
                                     <?php }?>
-                                    </div>
+                                    <input type="text" id="findcmt" value="<?php echo $result["id_Comment"]?>" hidden>
+                                    <input type="text" id="findct" value="<?php echo $result["Title"]?>" hidden>
                                 </div>
+                            </div>
                             <?php } } else {?>
                                 <h5>Chưa có bình luận</h5>
                             <?php }?>
@@ -163,9 +170,7 @@ include ('../layout/header.php')
                                     <button type="submit" class="btn order_s_btn form-control" style="float: right">Bình luận</button>
                                 </div>
                             </form>
-                            <?php } else {?>
-<!--                           <p>Bạn phải đăng nhập mới được cmt</p>-->
-                            <?php }?>
+                            <?php } ?>
 						</div>
 					</div>
         		</div>
@@ -225,23 +230,22 @@ include ('../layout/header.php')
                     </div>
                     <div class="modal-body">
                         <form action="" method="post">
-                            <?php
-                            $sql2 = "SELECT * FROM comments ORDER BY IdProducts DESC LIMIT 4";
-                            $query2 = mysqli_query($conn,$sql2);
-                            ?>
-                            <input type="hidden" name="callbackSignin" value="<?php echo $_SERVER["PHP_SELF"]?>">
                             <div class="form-group">
                                 <label for="recipient-name" class="col-form-label">Bình luận</label>
-                                <input type="text" class="form-control" name="txt" id="recipient-name" value="" required>
+                                <input type="text" id="edit" hidden>
+                                <input type="text" id="masp" value="<?php echo $_GET["Masp"]?>" hidden>
+                                <input type="text" class="form-control" name="txt" id="name" value="" required>
                             </div>
                             <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Chỉnh sửa</button>
+                                <button type="submit" class="btn btn-primary" id="btn">Chỉnh sửa</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+
+
         <!--================Comment =================-->
         <?php
             if($_SERVER["REQUEST_METHOD"]=="POST"){
@@ -272,6 +276,14 @@ include ('../layout/header.php')
         $('.sao').mouseleave(function () {
             $('.sao').removeClass('saohover');
         })
+        // $('.editcmt').click(function () {
+        //     $('#edit').val($(this).parent().find('#findcmt').val());
+        //     $('#name').val($(this).parent().find('#findct').val());
+        // })
+        $('.editcmt').click(function () {
+            $('#edit').val($(this).parent().find("#findcmt").val());
+            $('#name').val($(this).parent().find("#findct").val());
+        })
     })
 </script>
 <style>
@@ -279,6 +291,13 @@ include ('../layout/header.php')
         color: yellow;
     }
 </style>
+
+<script>
+    function reply(caller) {
+        $(".reply").insertAfter($(caller));
+        $('.reply').show();
+    }
+</script>
         <!--================Newsletter Area =================-->
 <?php
 include ('../layout/footer.php')

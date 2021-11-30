@@ -231,20 +231,30 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="listBill.php" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Đơn hàng sản phẩm</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="listBillCourse.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Đơn hàng khóa học</p>
-                </a>
-              </li>
-            </ul>
+              <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                      <a href="listBill.php" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Đơn hàng sản phẩm</p>
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a href="listBillCourse.php" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Đơn hàng khóa học</p>
+                      </a>
+                  </li>
+                  <?php
+                  if($name["idRole"] == 1) {
+                      ?>
+                      <li class="nav-item">
+                          <a href="../admin/listCity.php" class="nav-link">
+                              <i class="far fa-circle nav-icon"></i>
+                              <p>Quản lí ship</p>
+                          </a>
+                      </li>
+                  <?php }?>
+              </ul>
           </li>
           <li class="nav-item menu-close">
             <a href="#" class="nav-link">

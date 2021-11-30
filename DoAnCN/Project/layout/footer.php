@@ -41,19 +41,6 @@
                 <div class="col-lg-3 col-6">
                     <aside class="f_widget f_link_widget">
                         <div class="f_title">
-                            <h3>Đường Dẫn Nhanh</h3>
-                        </div>
-                        <ul class="list_style">
-                            <li><a href="#">Tài khoản của bạn</a></li>
-                            <li><a href="#">Đơn đặt hàng</a></li>
-                            <li><a href="#">Chích sách bảo mật</a></li>
-                            <li><a href="#">Điều khoản và điều kiện</a></li>
-                        </ul>
-                    </aside>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <aside class="f_widget f_link_widget">
-                        <div class="f_title">
                             <h3>Thời Gian</h3>
                         </div>
                         <ul class="list_style">
@@ -71,6 +58,18 @@
                         <h4>(1800) 574 9687</h4>
                         <p>HUTECH <br />475A Điện Biên Phủ, Phường 25, Bình Thạnh, Thành phố Hồ Chí Minh</p>
                         <h5>cakebakery@contact.co.in</h5>
+                    </aside>
+                </div>
+                <div class="col-lg-3 col-6">
+                    <aside class="f_widget f_link_widget">
+                        <div class="f_title">
+                            <h3>Đường Dẫn Nhanh</h3>
+                        </div>
+<!--                        <div class="fb-page"-->
+<!--                             data-href="https://www.facebook.com/C%E1%BB%ADa-h%C3%A0ng-Cake-Bakery-102494562277873"-->
+<!--                             data-width="480"-->
+<!--                             data-hide-cover="false"-->
+<!--                             data-show-facepile="false"></div>-->
                     </aside>
                 </div>
             </div>
@@ -106,7 +105,18 @@
         </div>
     </div>
 </div>
-<!--================End Search Box Area =================-->
+<!--================Share FB =================-->
+<script>
+    $(document).ready(function() {
+        $('.share').click(function(e) {
+            e.preventDefault();
+            window.open($(this).attr('href'), 'fbShareWindow', 'height=450, width=550, top=' + ($(window).height() / 2 - 275) + ', left=' + ($(window).width() / 2 - 225) + ', toolbar=0, location=0, menubar=0,         directories=0, scrollbars=0');
+            return false;
+        });
+    });
+</script>
+<!--================Share FB =================-->
+
 <script>
     $(document).ready(function() {
         var readURL = function(input) {
@@ -127,11 +137,7 @@
 </script>
 <!-- Include the PayPal JavaScript SDK; replace "test" with your own sandbox Business account app client ID -->
 <script src="https://www.paypal.com/sdk/js?client-id=Afk_aUJeDz5f4YlIBfym3FNGmaKjdmx3xZFJH7PlFOXChR8Rk9TdRf_2HqIK1Kt1dZUHHtJzkT1VxhI3&currency=USD"></script>
-<?php
-$bill = $_SESSION["tongbill"]/23000;
-?>
 <script>
-    var m = <?php echo json_encode($bill);?>;
     paypal.Buttons({
         // Sets up the transaction when a payment button is clicked
         createOrder: function(data, actions) {

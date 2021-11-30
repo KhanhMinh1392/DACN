@@ -9,34 +9,28 @@
     if (mysqli_num_rows($query) > 0) {
         $dbdata = mysqli_fetch_array($query);
     } else {
-//        echo "<script>location='listCourses.php'</script>";
+        echo "<script>location='listCourses.php'</script>";
     }
 
-//    if($_SERVER["REQUEST_METHOD"]=="POST") {
-//        $name = $_POST["namepro"];
-//        $quantity = $_POST["quantity"];
-//        $price = $_POST["price"] * 1000;
-//        $detail = $_POST["detail"];
-//        $message = $_POST["message"];
-//        $genres = $_POST["genres"];
-//        $getstatus = $_POST["status"];
-//        $date = $_POST["date"];
-//        $img = $dbdata["Images"];
-//        if(($_FILES["image"]["name"]!="")) {
-//            unlink("../img/cake-feature/".$img);
-//            $img = $_FILES["image"]['name'];
-//            move_uploaded_file($_FILES["image"]['tmp_name'],'../img/cake-feature/'.$img);
-//        }
-//
-//        $sql = "UPDATE products SET idStatus = '".$getstatus."',Nameproducts = '".$name."',Quantity = '".$quantity."',Images = '".$img."',Price = '".$price."', Info = '".$detail."',Detailinfo = '".$message."', DateCreate = '".$date."',idType = '".$genres."' WHERE IdProducts = '".$_GET["Masp"]."'";
-//        $queryupdate=mysqli_query($conn,$sql);
-//        if($queryupdate > 0) {
-//            echo "<script>alert('Cập nhật thành công')</script>";
-//        echo "<script>location='listProduct.php'</script>";
-//        } else {
-//            echo "<script>alert('Xay ra loi')</script>";
-//        }
-//    }
+    if($_SERVER["REQUEST_METHOD"]=="POST") {
+
+        $namecourse = $_POST["namecourse"];
+        $price = $_POST["price"];
+        $detail = $_POST["detail"];
+        $message = $_POST["message"];
+        $link = $_POST["linkintro"];
+        $datestart = $_POST["datestart"];
+        $dateend = $_POST["dateend"];
+
+        $sql = "UPDATE courses SET NameCourses = '".$namecourse."',TitleCourses = '".$detail."',Price = '".$price."',TimeStart = '".$datestart."',TimeEnd = '".$dateend."', Link = '".$link."',Info = '".$message."' WHERE idCourses = '".$_GET["Makh"]."'";
+        $queryupdate=mysqli_query($conn,$sql);
+        if($queryupdate > 0) {
+            echo "<script>alert('Cập nhật thành công')</script>";
+        echo "<script>location='listCourses.php'</script>";
+        } else {
+            echo "<script>alert('Xay ra loi')</script>";
+        }
+    }
 
 ?>
 
@@ -71,18 +65,18 @@
                         </div>
                           <div class="form-group">
                               <label for="exampleInputEmail1">Mô tả khóa học</label>
-                              <textarea class="form-control col-md-8" name="detail" rows="1" style="height: 100px; color: black"><?php echo empty($_POST["detail"])? $dbdata["Info"] : $_POST["detail"]?></textarea>
+                              <textarea class="form-control col-md-8" name="detail" cols="50" rows="30"  style="height: 100px; color: black"><?php echo empty($_POST["detail"])? $dbdata["Info"] : $_POST["detail"]?></textarea>
                           </div>
                           <div class="form-group">
                               <label for="exampleInputEmail1">Mô tả chi tiết</label>
-                              <textarea class="form-control col-md-8" name="message" rows="1" style="height: 100px; color: black"><?php echo empty($_POST["message"])? $dbdata["TitleCourses"] : $_POST["message"]?></textarea>
+                              <textarea class="form-control col-md-8" name="message" cols="50" rows="30" style="height: 100px; color: black"><?php echo empty($_POST["message"])? $dbdata["TitleCourses"] : $_POST["message"]?></textarea>
                           </div>
                       </div>
                       <!-- /.col -->
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="exampleInputPassword1">Học phí</label>
-                          <input type="text" class="form-control col-sm-8" name="price" value="<?=number_format($dbdata["Price"],0,",",".")?>" placeholder="Học phí">
+                          <input type="text" class="form-control col-sm-8" name="price" value="<?php echo $dbdata["Price"]?>" placeholder="Học phí">
                         </div>
                         <!-- /.form-group -->
                         <div class="form-group">

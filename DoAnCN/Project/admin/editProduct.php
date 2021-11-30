@@ -15,7 +15,7 @@
     if($_SERVER["REQUEST_METHOD"]=="POST") {
         $name = $_POST["namepro"];
         $quantity = $_POST["quantity"];
-        $price = $_POST["price"] * 1000;
+        $price = $_POST["price"];
         $detail = $_POST["detail"];
         $message = $_POST["message"];
         $genres = $_POST["genres"];
@@ -106,7 +106,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="exampleInputPassword1">Giá sản phẩm</label>
-                          <input type="text" class="form-control col-sm-8" name="price" value="<?=number_format($dbdata["Price"],0,",",".")?>" placeholder="Giá sản phẩm">
+                          <input type="text" class="form-control col-sm-8" name="price" value="<?php echo $dbdata["Price"]?>" placeholder="Giá sản phẩm">
                         </div>
                         <!-- /.form-group -->
                         <div class="form-group">

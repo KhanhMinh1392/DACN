@@ -10,13 +10,25 @@
     $name = mysqli_fetch_array($query);
 ?>
 <?php
+    $search = isset($_GET["city"])? $_GET["city"] : "" ;
+    if($search) {
+        $get = "WHERE Nameproducts LIKE '%".$search."%' ";
+    }
     $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 7;
     $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
     $offset = ($current_page-1) * $item_per_page;
-    $dbdata = "SELECT * FROM products ORDER BY IdProducts DESC LIMIT ".$item_per_page." OFFSET ".$offset;
-    $query = mysqli_query($conn,$dbdata);
+    if ($search) {
+        $dbdata = "SELECT * FROM products WHERE Nameproducts LIKE '%".$search."%' ORDER BY IdProducts ASC LIMIT ".$item_per_page." OFFSET ".$offset;
+        $query = mysqli_query($conn,$dbdata);
 
-    $total = mysqli_query($conn,"SELECT * FROM products");
+        $total = mysqli_query($conn,"SELECT * FROM products WHERE Nameproducts LIKE '%".$search."%' ");
+    } else {
+        $dbdata = "SELECT * FROM products ORDER BY IdProducts ASC LIMIT ".$item_per_page." OFFSET ".$offset;
+        $query = mysqli_query($conn,$dbdata);
+
+        $total = mysqli_query($conn,"SELECT * FROM products");
+    }
+
     $total = $total->num_rows;
     $totalpage = ceil($total / $item_per_page);
 
@@ -265,6 +277,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                               <p>Đơn hàng khóa học</p>
                           </a>
                       </li>
+                      <?php
+                      if($name["idRole"] == 1) {
+                          ?>
+                          <li class="nav-item">
+                              <a href="../admin/listCity.php" class="nav-link">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Quản lí ship</p>
+                              </a>
+                          </li>
+                      <?php }?>
                   </ul>
               </li>
               <li class="nav-item menu-close">
@@ -380,7 +402,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <h1 class="m-0">Danh sách sản phẩm </h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
-                  <a href="addProduct.php" class="btn btn-success float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
+                  <a href="addProduct.php" class="btn btn-primary float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
+                  <div class="col-sm-6" style="margin-left: 250px">
+                      <div class="form-inline">
+                          <form action="" method="get">
+                              <div class="input-group" >
+                                  <input class="form-control form-control-sidebar" name="city" type="search" placeholder="Tìm theo tên sản phẩm" value="<?=isset($_GET["city"]) ? $_GET["city"] : "" ?>" aria-label="Search">
+                                  <div class="input-group-append">
+                                      <button class="btn btn-sidebar" style="background: #007bff">
+                                          <i class="fas fa-search fa-fw"></i>
+                                      </button>
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
+                  </div><!-- /.col -->
               </div><!-- /.col -->
             </div><!-- /.row -->
           </div><!-- /.container-fluid -->
@@ -440,15 +476,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </table>
               </div>
 <!--                <hr> -->
-                <div class="card-footer clearfix">
-                    <ul class="pagination pagination-sm m-0 float-right">
-                        <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                        <?php for($num = 1 ; $num <= $totalpage; $num++){ ?>
-                            <li class="page-item"><a class="page-link" href="?per_page=<?=$item_per_page?>&page=<?=$num?>"><?=$num?></a></li>
-                        <?php } ?>
-                        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                    </ul>
-                </div>
+                <?php include ("panigation.php")?>
               <!-- /.card-body -->
             </div>
           </div>

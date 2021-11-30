@@ -233,6 +233,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       <p>Đơn hàng khóa học</p>
                   </a>
                 </li>
+                  <?php
+                  if($name["idRole"] == 1) {
+                  ?>
+                  <li class="nav-item">
+                      <a href="../admin/listCity.php" class="nav-link">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Quản lí ship</p>
+                      </a>
+                  </li>
+                  <?php }?>
               </ul>
             </li>
             <li class="nav-item menu-close">

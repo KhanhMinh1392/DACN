@@ -19,6 +19,7 @@ include ('../layout/header.php')
     $db = mysqli_query($conn,$getcount);
     $count = mysqli_num_rows($db);
 ?>
+
         <!--================End Main Header Area =================-->
         <section class="banner_area">
         	<div class="container">
@@ -43,8 +44,9 @@ include ('../layout/header.php')
         			</div>
         			<div class="col-lg-6">
         				<div class="product_details_text">
-        					<h4><?php echo $db_course["NameCourses"]?>"</h4>
-        					<p style="text-align: justify">
+        					<h4><?php echo $db_course["NameCourses"]?></h4> <br>
+<!--                            <div class="fb-like" data-href="https://www.huongnghiepaau.com/hoc-lam-banh/bep-truong-bep-banh" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>-->
+                            <p style="text-align: justify">
                                 Thời gian bắt đầu:
                                 <?php
                                 $datest = date_create($db_course["TimeStart"]);
@@ -54,7 +56,6 @@ include ('../layout/header.php')
                                 echo date_format($dateend, "d/m/Y"); ?> <br>
                                 <br>
                                 <?php echo $db_course["TitleCourses"]?> <br>
-
                             </p>
         					<h5>Giá : <span><?=number_format($db_course["Price"],0,",",".")?> VNĐ</span></h5>
                             <a class="pink_more" href="" onclick="AddCartCourse(<?php echo $db_course["idCourses"];?>)">Thêm vào giỏ</a>

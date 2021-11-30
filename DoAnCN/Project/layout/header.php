@@ -58,7 +58,8 @@
     ?>
 </head>
 <body>
-
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v12.0&appId=1026708278186391&autoLogAppEvents=1" nonce="be4v3fYl"></script>
 <!--================Main Header Area =================-->
 <header class="main_header_area">
     <div class="top_header_area row m0 header-color">
@@ -75,25 +76,26 @@
                     <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
                 </ul>
                 <?php
-                $number=0;
+                $number1=0;
+                $number2=0;
                 if(isset($_SESSION["giohang"])){
                     $giohang=$_SESSION["giohang"];
                     foreach ($giohang as $key => $value){
-                        $number+=(int)$value["number"];
+                        $number1+=(int)$value["number"];
                     }
                 }
                 if(isset($_SESSION["khoahoc"])){
                     $giohang=$_SESSION["khoahoc"];
                     foreach ($giohang as $key => $value){
-                        $number+=(int)$value["number"];
+                        $number2+=(int)$value["number"];
                     }
                 }
                 ?>
                 <ul class="h_search list_style">
-                    <?php if(!empty($_SESSION["giohang"])) {?>
-                    <li class="shopcart"><a href="../page/cart.php" class="lnr lnr-cart" id="numcart"><?php echo $number?></a></li>
+                    <?php if(!empty($_SESSION["khoahoc"])) {?>
+                    <li class="shopcart"><a href="../page/cartCourse.php" class="lnr lnr-cart" id="numcart"><?php echo $number2?></a></li>
                     <?php } else {?>
-                     <li class="shopcart"><a href="../page/cartCourse.php" class="lnr lnr-cart" id="numcart"><?php echo $number?></a></li>
+                     <li class="shopcart"><a href="../page/cart.php" class="lnr lnr-cart" id="numcart"><?php echo $number1?></a></li>
                     <?php } ?>
                     <li><a class="popup-with-zoom-anim" href="#test-search"><i class="fa fa-search"></i></a></li>
                 </ul>

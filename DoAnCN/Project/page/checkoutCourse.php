@@ -98,52 +98,26 @@ if(isset($_SESSION["username"])) {
                                 <hr>
                                 <h4 style="text-transform: none">Tổng tiền: <span><?php echo number_format($tongtien,0,",",".")?> VNĐ</span></h4>
                             </div>
-                            <!--								<div id="accordion" class="accordion_area">-->
-                            <!--									<div class="card">-->
-                            <!--										<div class="card-header" id="headingOne">-->
-                            <!--											<h5 class="mb-0">-->
-                            <!--												<button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">-->
-                            <!--												Direct Bank Transfer-->
-                            <!--												</button>-->
-                            <!--											</h5>-->
-                            <!--										</div>-->
-                            <!--										<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">-->
-                            <!--											<div class="card-body">-->
-                            <!--											Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.-->
-                            <!--											</div>-->
-                            <!--										</div>-->
-                            <!--									</div>-->
-                            <!--									<div class="card">-->
-                            <!--										<div class="card-header" id="headingTwo">-->
-                            <!--											<h5 class="mb-0">-->
-                            <!--												<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">-->
-                            <!--												Check Payment-->
-                            <!--												</button>-->
-                            <!--											</h5>-->
-                            <!--										</div>-->
-                            <!--										<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">-->
-                            <!--											<div class="card-body">-->
-                            <!--											Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.-->
-                            <!--											</div>-->
-                            <!--										</div>-->
-                            <!--									</div>-->
-                            <!--									<div class="card">-->
-                            <!--										<div class="card-header" id="headingThree">-->
-                            <!--											<h5 class="mb-0">-->
-                            <!--												<button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">-->
-                            <!--												Paypal-->
-                            <!--												<img src="img/checkout-card.png" alt="">-->
-                            <!--												</button>-->
-                            <!--												<a href="#">What is PayPal?</a>-->
-                            <!--											</h5>-->
-                            <!--										</div>-->
-                            <!--										<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">-->
-                            <!--											<div class="card-body">-->
-                            <!--											Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.-->
-                            <!--											</div>-->
-                            <!--										</div>-->
-                            <!--									</div>-->
-                            <!--								</div>-->
+                            <div id="accordion" class="accordion_area">
+                                <div class="card">
+                                    <div class="card-header" id="headingThree">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                                Paypal
+                                                <img src="../img/checkout-card.png" alt="">
+                                            </button>
+                                            <a href="#">What is PayPal?</a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                                        <div class="card-body">
+                                            <!-- Set up a container element for the button -->
+                                            <div id="paypal-button-container">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <a class="pest_btn" href="../page/cart.php">Quay lại giỏ hàng</a>
                         </div>
                     </div>

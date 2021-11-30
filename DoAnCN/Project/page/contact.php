@@ -21,12 +21,12 @@ include ('../layout/header.php')
         <section class="contact_form_area p_100">
         	<div class="container">
         		<div class="main_title">
-					<h2>Get In Touch</h2>
-					<h5>Do you have anything in your mind to let us know?  Kindly don't delay to connect to us by means of our contact form.</h5>
+					<h2>Liên hệ với chúng tôi</h2>
+					<h5>Bạn có bất cứ điều gì trong tâm trí của bạn muốn cho chúng tôi biết? Vui lòng liên hệ với chúng tôi qua biểu mẫu liên hệ của chúng tôi</h5>
 				</div>
        			<div class="row">
        				<div class="col-lg-7">
-       					<form class="row contact_us_form" action="http://galaxyanalytics.net/demos/cake/theme/cake-html/contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+       					<form class="row contact_us_form" action="" method="post" id="contactForm" novalidate="novalidate">
 							<div class="form-group col-md-6">
 								<input type="text" class="form-control" id="name" name="name" placeholder="Your name">
 							</div>
@@ -37,25 +37,25 @@ include ('../layout/header.php')
 								<input type="text" class="form-control" id="subject" name="subject" placeholder="Subject">
 							</div>
 							<div class="form-group col-md-12">
-								<textarea class="form-control" name="message" id="message" rows="1" placeholder="Wrtie message"></textarea>
+								<textarea class="form-control" name="message" id="message" rows="1" placeholder="Write message"></textarea>
 							</div>
 							<div class="form-group col-md-12">
-								<button type="submit" value="submit" class="btn order_s_btn form-control">submit now</button>
+								<button type="submit" value="submit" class="btn order_s_btn form-control">Gửi mail</button>
 							</div>
 						</form>
        				</div>
        				<div class="col-lg-4 offset-md-1">
        					<div class="contact_details">
        						<div class="contact_d_item">
-       							<h3>Address :</h3>
-       							<p>54B, Tailstoi Town 5238 <br /> La city, IA 522364</p>
+       							<h3>Địa chỉ :</h3>
+       							<p>475A Điện Biên Phủ, Phường 25, <br />Bình Thạnh, Thành phố Hồ Chí Minh</p>
        						</div>
        						<div class="contact_d_item">
-       							<h5>Phone : <a href="tel:01372466790">01372.466.790</a></h5>
-       							<h5>Email : <a href="mailto:rockybd1995@gmail.com">rockybd1995@gmail.com</a></h5>
+       							<h5>Số điện thoại : <a href="tel:01372466790">01234567890</a></h5>
+       							<h5>Email : <a href="mailto:rockybd1995@gmail.com">minhdao933@gmail.com</a></h5>
        						</div>
        						<div class="contact_d_item">
-       							<h3>Opening Hours :</h3>
+       							<h3>Giờ mở cửa :</h3>
        							<p>8:00 AM – 10:00 PM</p>
        							<p>Monday – Sunday</p>
        						</div>
@@ -64,7 +64,6 @@ include ('../layout/header.php')
        			</div>
         	</div>
         </section>
-        <!--================End Newsletter Area =================-->
 <?php
 include ('../layout/footer.php')
 ?>
