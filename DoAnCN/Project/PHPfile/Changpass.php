@@ -29,7 +29,5 @@
         echo "<script>alert('Mật khẩu cũ sai')</script>";
         echo "<script>location='../page/infocustomer.php'</script>";
     }
-
-
 ?>
 

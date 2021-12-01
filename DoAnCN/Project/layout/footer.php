@@ -96,7 +96,7 @@
     <div class="search_box_inner">
         <h3>Search</h3>
         <div class="input-group">
-            <form action="../PHPfile/Search.php" method="post">
+            <form action="../PHPfile/Search.php" method="get">
                 <input type="text" class="form-control" name="search" placeholder="Search for..." style="color: white">
                 <span class="input-group-btn">
                       <button class="btn btn-default" type="submit"><i class="icon icon-Search"></i></button>
@@ -138,13 +138,14 @@
 <!-- Include the PayPal JavaScript SDK; replace "test" with your own sandbox Business account app client ID -->
 <script src="https://www.paypal.com/sdk/js?client-id=Afk_aUJeDz5f4YlIBfym3FNGmaKjdmx3xZFJH7PlFOXChR8Rk9TdRf_2HqIK1Kt1dZUHHtJzkT1VxhI3&currency=USD"></script>
 <script>
+    var money = document.getElementById('vnd_to_usd').value;
     paypal.Buttons({
         // Sets up the transaction when a payment button is clicked
         createOrder: function(data, actions) {
             return actions.order.create({
                 purchase_units: [{
                     amount: {
-                        value: '77.44' // Can reference variables or functions. Example: value: document.getElementById('...').value
+                        value: money // Can reference variables or functions. Example: value: document.getElementById('...').value
                     }
                 }]
             });
@@ -156,13 +157,13 @@
                 // Successful capture! For dev/demo purposes:
                 console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                 var transaction = orderData.purchase_units[0].payments.captures[0];
-                alert('Transaction ' + transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+                alert("Bạn đã thanh toán thành công");
 
                 // When ready to go live, remove the alert and show a success message within this page. For example:
-                // var element = document.getElementById('paypal-button-container');
-                // element.innerHTML = '';
-                // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-                // Or go to another URL:  actions.redirect('thank_you.html');
+                var element = document.getElementById('paypal-button-container');
+                element.innerHTML = '';
+                element.innerHTML = '<h4>Thank you for your payment!</h4>';
+                document.getElementById("check").click();
             });
         }
     }).render('#paypal-button-container');

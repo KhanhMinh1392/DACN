@@ -26,10 +26,14 @@
                   $total = "SELECT SUM(Total) FROM `orders`";
                   $query_total = mysqli_query($conn,$total);
                   $result_total = mysqli_fetch_row($query_total);
+
+                  $total_course = "SELECT SUM(Total) FROM `orders`";
+                  $query_course = mysqli_query($conn,$total_course);
+                  $result_course = mysqli_fetch_row($query_course);
                   ?>
                 <span class="info-box-text">Doanh Thu</span>
                 <span class="info-box-number">
-                  <?php echo number_format($result_total[0],0,",",".")?>
+                  <?php echo number_format($result_total[0]+$result_course[0],0,",",".")?>
                   <small>VNĐ</small>
                 </span>
               </div>
@@ -132,7 +136,7 @@
             <div class="card-body">
               <div class="d-flex">
                 <p class="d-flex flex-column">
-                  <span class="text-bold text-lg"> <?php echo number_format($result_total[0],0,",",".")?> VNĐ</span>
+                  <span class="text-bold text-lg"> <?php echo number_format($result_total[0]+$result_course[0],0,",",".")?> VNĐ</span>
                   <span>Sales Over Time</span>
                 </p>
 

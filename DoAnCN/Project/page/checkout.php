@@ -51,15 +51,15 @@ include ('../layout/header.php')
                 			<form class="billing_form row" action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" id="contactForm" novalidate="novalidate">
 								<div class="form-group col-md-6">
 								    <label for="first">Họ và tên *</label>
-									<input type="text" class="form-control" id="name" name="name" value="<?php echo $cottv["NameCustomer"]?>" placeholder="Họ và tên" style="color: black">
+									<input type="text" class="form-control" id="name" name="name" value="<?php echo $cottv["NameCustomer"]?>" placeholder="Họ và tên" style="color: black" required>
 								</div>
 								<div class="form-group col-md-6">
 								    <label for="last">Email *</label>
-									<input type="text" class="form-control" id="email" name="email" value="<?php echo $cottv["Email"]?>" placeholder="Email" style="color: black">
+									<input type="text" class="form-control" id="email" name="email" value="<?php echo $cottv["Email"]?>" placeholder="Email" style="color: black" required>
 								</div>
                                 <div class="form-group col-md-6">
                                     <label for="zip">Số điện thoại *</label>
-                                    <input type="tel" class="form-control" id="phone" name="phone" value="<?php echo $cottv["Phone"]?>" placeholder="Số điện thoại" style="color: black">
+                                    <input type="tel" class="form-control" id="phone" name="phone" value="<?php echo $cottv["Phone"]?>" placeholder="Số điện thoại" style="color: black" required>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="last">Ngày đặt *</label>
@@ -67,14 +67,14 @@ include ('../layout/header.php')
                                 </div>
 								<div class="form-group col-md-12">
 								    <label for="address">Địa chỉ *</label>
-									<input type="text" class="form-control" id="address" name="address" value="<?php echo $cottv["Address"]?>" placeholder="Địa chỉ" style="color: black">
+									<input type="text" class="form-control" id="address" name="address" value="<?php echo $cottv["Address"]?>" placeholder="Địa chỉ" style="color: black" required>
 								</div>
                                 <?php
                                     $sql_thanhpho = mysqli_query($conn,"SELECT * FROM pvs_tinhthanhpho ORDER BY matp ASC");
                                 ?>
                                 <div class="form-group col-md-6">
                                     <label for="state1">Tỉnh/ Thành phố</label>
-                                    <select class="product_select city" id="state1" name="city">
+                                    <select class="product_select city" id="state1" name="city" required>
                                         <?php
                                             while ($rows_thanhpho = mysqli_fetch_array($sql_thanhpho)){
                                                 ?>
@@ -84,9 +84,7 @@ include ('../layout/header.php')
                                 </div>
 								<div class="form-group col-md-6">
 								    <label for="city">Quận/ Huyện</label>
-                                    <select class=" tinh" id="state1" name="districts" style="color: black;border: solid 1px #e8e8e8;line-height: 40px; width: 320px; height: 40px; color: #cccc;font-size: 15px">
-
-                                    </select>
+                                    <select class=" tinh" id="state1" name="districts" style="color: black;border: solid 1px #e8e8e8;line-height: 40px; width: 320px; height: 40px; color: #cccc;font-size: 15px" required></select>
 								</div>
 
                                 <div class="form-group col-md-12">
@@ -100,7 +98,7 @@ include ('../layout/header.php')
 										<div class="check"></div>
 									</div>
 								</div>
-                                <button type="submit" value="submit" name="order" class="btn pest_btn" style="margin-left: 15px">Thanh Toán</button>
+                                <button type="submit" value="submit" name="order" id="check" class="btn pest_btn" style="margin-left: 15px">Thanh Toán</button>
 							</form>
                 		</div>
                 	</div>
@@ -148,8 +146,13 @@ include ('../layout/header.php')
 										</div>
 										<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
 											<div class="card-body">
-                                                <!-- Set up a container element for the button -->
                                                 <div id="paypal-button-container">
+                                                    <?php
+                                                    error_reporting(0);
+                                                    $vnd_to_usd = $_SESSION["tongbill"]/ 23000;
+                                                    ?>
+                                                    <div style="margin-left: 30px" id="paypal-button"></div>
+                                                    <input type="hidden" id="vnd_to_usd" value="<?php echo ceil($vnd_to_usd) ?>">
                                                 </div>
 											</div>
 										</div>
@@ -253,15 +256,15 @@ include ('../layout/header.php')
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'minhkhanh99312@gmail.com'; //SMTP username
-            $mail->Password   = 'minhkhanh1392';
+            $mail->Username   = 'cakebakery1392@gmail.com'; //SMTP username
+            $mail->Password   = 'Minhkhanh1392';
             $mail->SMTPSecure = 'tls';
             $mail->CharSet = 'UTF-8';
             $mail->Port       = 587;
             $sendmail= $_POST["email"];
             $fullname=$_POST["hoten"];
 
-            $mail->setFrom('minhkhanh99312@gmail.com', 'Shop Cake');
+            $mail->setFrom('cakebakery1392@gmail.com', 'Shop Cake');
             $mail->addAddress($sendmail, $fullname);
             $mail->isHTML(true);  //Set email format to HTML
             $mail->Subject = 'Xác nhận thông tin đơn hàng Shop Cake';

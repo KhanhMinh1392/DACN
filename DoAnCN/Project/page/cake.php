@@ -5,7 +5,7 @@ include ('../layout/header.php')
     $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 12;
     $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
     $offset = ($current_page-1) * $item_per_page;
-    $dbdata = "SELECT * FROM products ORDER BY IdProducts ASC LIMIT ".$item_per_page." OFFSET ".$offset;
+    $dbdata = "SELECT * FROM products ORDER BY IdProducts DESC LIMIT ".$item_per_page." OFFSET ".$offset;
     $query = mysqli_query($conn,$dbdata);
 
     $total = mysqli_query($conn,"SELECT * FROM products");

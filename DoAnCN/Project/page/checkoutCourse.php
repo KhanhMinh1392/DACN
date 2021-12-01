@@ -51,21 +51,21 @@ if(isset($_SESSION["username"])) {
                         <form class="billing_form row" action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" id="contactForm" novalidate="novalidate">
                             <div class="form-group col-md-6">
                                 <label for="first">Họ và tên *</label>
-                                <input type="text" class="form-control" id="name" name="name" value="<?php echo $cottv["NameCustomer"]?>" placeholder="Họ và tên" style="color: black">
+                                <input type="text" class="form-control" id="name" name="name" value="<?php echo $cottv["NameCustomer"]?>" placeholder="Họ và tên" style="color: black" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="last">Email *</label>
-                                <input type="text" class="form-control" id="email" name="email" value="<?php echo $cottv["Email"]?>" placeholder="Email" style="color: black">
+                                <input type="text" class="form-control" id="email" name="email" value="<?php echo $cottv["Email"]?>" placeholder="Email" style="color: black" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="zip">Số điện thoại *</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" value="<?php echo $cottv["Phone"]?>" placeholder="Số điện thoại" style="color: black">
+                                <input type="tel" class="form-control" id="phone" name="phone" value="<?php echo $cottv["Phone"]?>" placeholder="Số điện thoại" style="color: black" required>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="last">Ngày đặt *</label>
                                 <input type="text" class="form-control" id="email" name="date" value="<?php echo date("d/m/Y"); ?>" disabled >
                             </div>
-                            <button type="submit" value="submit" name="order" class="btn pest_btn" style="margin-left: 15px">Thanh Toán</button>
+                            <button type="submit" value="submit" name="order" id="check" class="btn pest_btn" style="margin-left: 15px" hidden>Thanh Toán</button>
                         </form>
                     </div>
                 </div>
@@ -111,8 +111,13 @@ if(isset($_SESSION["username"])) {
                                     </div>
                                     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
                                         <div class="card-body">
-                                            <!-- Set up a container element for the button -->
                                             <div id="paypal-button-container">
+                                                <?php
+                                                error_reporting(0);
+                                                $vnd_to_usd = $tongtien/ 23000;
+                                                ?>
+                                                <div style="margin-left: 30px" id="paypal-button"></div>
+                                                <input type="hidden" id="vnd_to_usd" value="<?php echo ceil($vnd_to_usd) ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -191,15 +196,15 @@ if(isset($_POST["order"])){
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'minhkhanh99312@gmail.com'; //SMTP username
-        $mail->Password   = 'minhkhanh1392';
+        $mail->Username   = 'cakebakery1392@gmail.com'; //SMTP username
+        $mail->Password   = 'Minhkhanh1392';
         $mail->SMTPSecure = 'tls';
         $mail->CharSet = 'UTF-8';
         $mail->Port       = 587;
         $sendmail= $_POST["email"];
         $fullname=$_POST["hoten"];
 
-        $mail->setFrom('minhkhanh99312@gmail.com', 'Shop Cake');
+        $mail->setFrom('cakebakery1392@gmail.com', 'Shop Cake');
         $mail->addAddress($sendmail, $fullname);
         $mail->isHTML(true);  //Set email format to HTML
         $mail->Subject = 'Chúc mừng bạn mua thành công khóa học';

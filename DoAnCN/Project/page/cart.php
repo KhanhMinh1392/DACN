@@ -93,7 +93,7 @@ include ('../layout/header.php')
                                         Tổng tiền
                                     </div>
                                     <div class="sub_total">
-                                        <h5>Tổng số lượng
+                                        <h5>Số lượng
                                             <span>
                                                 <?php echo $count?>
                                             </span>

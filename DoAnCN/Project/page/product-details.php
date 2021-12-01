@@ -136,13 +136,16 @@ include ('../layout/header.php')
                                         <span style="float: right; font-size: 15px">
                                                 <?php
                                                 date_default_timezone_set("Asia/Ho_Chi_Minh");
-                                                echo $result["Datecomments"]
+                                                $date=date_create($result["Datecomments"]);
+                                                echo date_format($date,"d/m/Y");
                                                 ?>
                                             </span>
                                     </h5>
+
                                     <div style="border: 1px solid #e2e2e2; border-radius: 2px; padding: 15px" class="title">
                                         <?php echo $result["Title"]?>
                                     </div>
+
                                     <?php
                                     if(isset($_SESSION["username"]) && $result["Username"] == $_SESSION["username"] ) {
                                         ?>

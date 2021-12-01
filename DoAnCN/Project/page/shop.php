@@ -2,15 +2,33 @@
 include ('../layout/header.php')
 ?>
 <?php
-    $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 9;
-    $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
-    $offset = ($current_page-1) * $item_per_page;
+$item_per_page = !empty($_GET['per_page'])?$_GET['per_page']:9;
+$current_page = !empty($_GET['page'])?$_GET['page']:1;
+$offset = ($current_page-1) * $item_per_page;
+
+error_reporting(0);
+$search = isset($_GET["search"])? $_GET["search"] : "" ;
+if($search) {
+    $get = "WHERE Nameproducts LIKE '%".$search."%' ";
+}
+if ($search) {
+    $dbdata = "SELECT * FROM products WHERE Nameproducts LIKE '%".$search."%' ORDER BY IdProducts ASC LIMIT ".$item_per_page." OFFSET ".$offset;
+    $query = mysqli_query($conn,$dbdata);
+
+    $total = mysqli_query($conn,"SELECT * FROM products WHERE Nameproducts LIKE '%".$search."%' ");
+} else {
     $dbdata = "SELECT * FROM products ORDER BY IdProducts DESC LIMIT ".$item_per_page." OFFSET ".$offset;
     $query = mysqli_query($conn,$dbdata);
 
     $total = mysqli_query($conn,"SELECT * FROM products");
-    $total = $total->num_rows;
-    $totalpage = ceil($total / $item_per_page);
+}
+
+//    $getData = "SELECT * FROM products WHERE Nameproducts LIKE '%".$_POST["search"]."%' ORDER BY IdProducts ASC LIMIT ".$item_per_page." OFFSET ".$offset;
+//    $query = mysqli_query($conn,$getData);
+//
+//    $total = mysqli_query($conn,"SELECT * FROM products WHERE Nameproducts LIKE '%".$_POST["search"]."%' ORDER BY IdProducts");
+$total = $total->num_rows;
+$totalpage = ceil($total / $item_per_page);
 ?>
 
         <!--================End Main Header Area =================-->
@@ -87,7 +105,7 @@ include ('../layout/header.php')
         				<div class="product_left_sidebar">
         					<aside class="left_sidebar search_widget">
         						<div class="input-group">
-                                    <form action="../PHPfile/Search.php" method="post">
+                                    <form action="../PHPfile/Search.php" method="get">
                                         <input type="text" class="form-control" name="search" placeholder="Enter Search Keywords">
                                         <div class="input-group-append">
                                             <button class="btn" type="submit"><i class="icon icon-Search"></i></button>

@@ -7,9 +7,13 @@
             }
         ?>
         <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-        <?php for($num = 1 ; $num <= $totalpage; $num++){ ?>
-            <li class="page-item"><a class="page-link" href="?<?=$get_pa?>per_page=<?=$item_per_page?>&page=<?=$num?>"><?=$num?></a></li>
-        <?php } ?>
+            <?php for($num = 1 ; $num<= $totalpage; $num++){
+                if ($num != $current_page) {
+                    if ($num > $current_page - 3 && $num < $current_page + 3) {?>
+                        <li class="page-item"><a class="page-link" href="?<?=$get_pa?>per_page=<?=$item_per_page?>&page=<?=$num?>"><?=$num?></a></li>
+                    <?php } } else { ?>
+                    <li class="page-item active"><a class="page-link" href=""><?=$num?></a></li>
+                <?php } } ?>
         <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
     </ul>
 </div>
