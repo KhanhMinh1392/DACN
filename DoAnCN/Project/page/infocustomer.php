@@ -112,7 +112,7 @@ include ('../layout/header.php')
                                     <tr>
                                         <th scope="col">Đơn hàng#</th>
                                         <th scope="col">Ngày đặt</th>
-                                        <th scope="col">Ngày chuyển</th>
+                                        <th scope="col">Ngày nhận</th>
                                         <th scope="col">Giá trị đơn hàng</th>
                                         <th scope="col">Tình trạng đơn hàng</th>
                                     </tr>
@@ -140,16 +140,20 @@ include ('../layout/header.php')
                                                     <td><?=number_format($row["Total"],0,",",".")?> VNĐ</td>
                                                     <td>
                                                         <?php
-                                                        if($row["Status"] != "Đã tiếp nhận") {
+                                                        if($row["Status"] == "Hoàn thành") {
                                                             ?>
-                                                            <div style="background: #E7FBE3;width: 110px; color: #0DB473; border-radius: 20px; padding-left: 12px">
+                                                            <div style="background: #E7FBE3;width: 120px; color: #0DB473; border-radius: 20px; text-align: center">
                                                                 <?php echo $row["Status"]?>
                                                             </div>
-                                                        <?php } else {?>
+                                                        <?php } else if($row["Status"] == "Đã tiếp nhận") {?>
                                                             <div style="background: #fa5e5e;width: 120px; color: white; border-radius: 20px; padding-left: 12px">
                                                                 <?php echo $row["Status"]?>
                                                             </div>
-                                                        <?php }?>
+                                                        <?php } else {?>
+                                                            <div style="background: linear-gradient(66.01deg, #FFAE06 37.34%, #FFBE38 101.09%);width: 120px; color: white; border-radius: 20px; text-align: center">
+                                                                <?php echo $row["Status"]?>
+                                                            </div>
+                                                        <?php } ?>
                                                     </td>
                                                 </tr>
                                          <?php } ?>

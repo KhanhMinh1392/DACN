@@ -82,7 +82,7 @@ include ('../layout/header.php')
                                     <span style="margin-left: 10px;margin-top: 2px">(<?php echo mysqli_num_rows($truyvandanhgia)?> Đánh giá)</span>
                                 </ul>
                                 <br>
-<!--                                <div class="fb-like" data-href="https://www.huongnghiepaau.com/hoc-lam-banh/bep-truong-bep-banh" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>-->
+                                <div class="fb-like" data-href="https://www.huongnghiepaau.com/hoc-lam-banh/bep-truong-bep-banh" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
                                 <p style="text-align: justify"><?php echo $dbdata["Detailinfo"]?></p>
                                 <h5>Giá : <span><?=number_format($dbdata["Price"],0,",",".")?> VNĐ</span></h5>
                                 <div class="quantity_box">
@@ -98,7 +98,7 @@ include ('../layout/header.php')
 					<nav>
 						<div class="nav nav-tabs" id="nav-tab" role="tablist">
 							<a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Mô tả</a>
-							<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Chi tiết</a>
+							<a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Bình luận</a>
 							<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Review (<?php echo $count ?>)</a>
 						</div>
 					</nav>
@@ -108,9 +108,9 @@ include ('../layout/header.php')
                             <p style="text-align: justify"><?php echo $dbdata["Info"]?></p>
 						</div>
 						<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                            <p style="text-align: justify"><?php echo $dbdata["Info"]?></p>
-                            <p style="text-align: justify"><?php echo $dbdata["Info"]?></p>
-<!--                            <div class="fb-comments" data-href="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fhhsb.vn%2Fposts%2F5410538482294474&show_text=true&width=500" data-width="1000" data-numposts="3"></div>-->
+<!--                            <p style="text-align: justify">--><?php //echo $dbdata["Info"]?><!--</p>-->
+<!--                            <p style="text-align: justify">--><?php //echo $dbdata["Info"]?><!--</p>-->
+                            <div class="fb-comments" data-href="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fhhsb.vn%2Fposts%2F5410538482294474&show_text=true&width=500" data-width="1000" data-numposts="3"></div>
 						</div>
                         <?php
                         $laybl="SELECT * FROM comments INNER JOIN accounts ON comments.idAccounts = accounts.idAccounts WHERE IdProducts='".$dbdata["IdProducts"]."' ORDER BY id_Comment DESC ";

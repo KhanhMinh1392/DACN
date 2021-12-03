@@ -82,7 +82,7 @@ $totalpage = ceil($total / $item_per_page);
 									    </div>
 									    <div class="cake_text">
                                             <input type="number" value="1" id="quantity" min="1" max="10" hidden>
-										    <h4 style="width: 160px"><?=number_format($row["Price"],0,",",".")?> VNĐ</h4>
+										    <h4 style="min-width: 200px"><?=number_format($row["Price"],0,",",".")?> VNĐ</h4>
 										    <h3><?php echo $row["Nameproducts"]?></h3>
                                             <?php if($row["Quantity"] == 0) {?>
                                                 <button class="pest_btn" href="" disabled style="border: none">Hết hàng</button>

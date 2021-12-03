@@ -10,7 +10,7 @@
     $query_staff = mysqli_query($conn,$getstaff);
     $db_staff = mysqli_fetch_array($query_staff);
 
-    $get_ctdh="SELECT * FROM detailorders INNER JOIN products ON detailorders.IdProducts = products.IdProducts WHERE idOrders='".$_GET["idOrder"]."' ";
+    $get_ctdh="SELECT * , detailorders.Price AS price FROM detailorders INNER JOIN products ON detailorders.IdProducts = products.IdProducts WHERE idOrders='".$_GET["idOrder"]."' ";
     $db_detail=mysqli_query($conn,$get_ctdh);
 ?>
     <!-- Content Wrapper. Contains page content -->
@@ -30,10 +30,12 @@
         <div class="d-flex card-header justify-content-between border-0">
             <h3 class="card-title">Đơn hàng</h3>
             <?php if($dbdata["Status"] == "Đã tiếp nhận") {?>
-                <h3 class="card-title badge bg-danger" style="margin-left: 50px;font-size: 14px"><?php echo $dbdata["Status"]?></h3>
-            <?php } else {?>
+                <h3 class="card-title badge bg-danger" style="margin-left: 50px;font-size: 14px; padding: 5px"><?php echo $dbdata["Status"]?></h3>
+            <?php } else if ($dbdata["Status"] == "Hoàn thành") {?>
                 <h3 class="card-title" style="background: #E7FBE3;width: 100px; color: #0DB473; border-radius: 20px; padding-left: 12px;font-size: 15px; margin-left: 50px"><?php echo $dbdata["Status"]?></h3>
-            <?php }?>
+            <?php } else {?>
+                <td ><p class="badge bg-warning" style="margin-left: 50px;font-size: 14px; padding: 5px;width: 100px"><?php echo $dbdata["Status"]?></p></td>
+            <?php } ?>
         </div>
         <div class="card-body">
             <div class=" justify-content-between align-items-center border-bottom mb-3">
@@ -72,7 +74,7 @@
                         $dbcity= mysqli_fetch_array($query_city);
                     ?>
                     <div class="d-flex justify-content-between">
-                        <h3 class="card-title" style="font-size: 15px"><i class="fa fa-location-arrow"></i> Địa chỉ: <?php echo $dbdata["Address"]?>, <?php echo $dbdistrict["name_quanhuyen"]?>, <?php echo $dbcity["name_city"]?></h3>
+                        <h3 class="card-title" style="font-size: 15px"><i class="fas fa-map-marker-alt"></i> Địa chỉ: <?php echo $dbdata["Address"]?>, <?php echo $dbdistrict["name_quanhuyen"]?>, <?php echo $dbcity["name_city"]?></h3>
                     </div>
                 </div>
             </div>
@@ -157,8 +159,12 @@
                                 $dbstf = mysqli_fetch_array($querystf);
 
                                 $status = $_POST["status"];
-                                date_default_timezone_set('Asia/Ho_Chi_Minh');
-                                $ngaydat = date("Y-m-d H:i:s");
+                                if($status == "Đang giao") {
+                                    $ngaydat = 0;
+                                } else {
+                                    date_default_timezone_set('Asia/Ho_Chi_Minh');
+                                    $ngaydat = date("Y-m-d H:i:s");
+                                }
                                 $query = "UPDATE orders SET idStaffs = '".$dbstf["idStaffs"]."',Status = '".$status."',Datedeliver = '".$ngaydat."' WHERE idOrders = '".$_GET["idOrder"]."'";
                                 $queryupdate=mysqli_query($conn,$query);
                                 echo "<script>location='../admin/listBill.php'</script>";
@@ -183,6 +189,7 @@
                                 <div class="card-footer" style="display: flex">
                                     <select class="form-control" name="status" id="" style="margin-right: 20px">
                                         <option value="Hoàn thành">Hoàn thành</option>
+                                        <option value="Đang giao">Đang giao</option>
                                         <option value="Đã tiếp nhận">Đã tiếp nhận</option>
                                     </select>
                                     <button type="submit" class="btn btn-primary">Xác nhận</button>

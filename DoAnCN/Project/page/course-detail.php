@@ -45,7 +45,7 @@ include ('../layout/header.php')
         			<div class="col-lg-6">
         				<div class="product_details_text">
         					<h4><?php echo $db_course["NameCourses"]?></h4> <br>
-<!--                            <div class="fb-like" data-href="https://www.huongnghiepaau.com/hoc-lam-banh/bep-truong-bep-banh" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>-->
+                            <div class="fb-like" data-href="https://www.huongnghiepaau.com/hoc-lam-banh/bep-truong-bep-banh" data-width="" data-layout="standard" data-action="like" data-size="small" data-share="true"></div>
                             <p style="text-align: justify">
                                 Thời gian bắt đầu:
                                 <?php
@@ -66,6 +66,7 @@ include ('../layout/header.php')
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Mô tả</a>
+                            <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Bình luận</a>
                             <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Review (<?php echo $count?>)</a>
                         </div>
                     </nav>
@@ -73,6 +74,9 @@ include ('../layout/header.php')
                         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                             <p style="text-align: justify"><?php echo $db_course["Info"]?></p>
                             <p style="text-align: justify"><?php echo $db_course["Info"]?></p>
+                        </div>
+                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <div class="fb-comments" data-href="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fhhsb.vn%2Fposts%2F5410538482294474&show_text=true&width=500" data-width="1000" data-numposts="3"></div>
                         </div>
                         <?php
                         $laybl="SELECT * FROM comment_course INNER JOIN accounts ON comment_course.idAccounts = accounts.idAccounts WHERE idCourses= '".$db_course["idCourses"]."' ORDER BY idCCourse DESC ";

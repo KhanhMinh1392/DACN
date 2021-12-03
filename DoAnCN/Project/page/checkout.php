@@ -207,7 +207,7 @@ include ('../layout/header.php')
                     $ngaydat = date("d-m-Y H:i:s");
                     $i++;
 
-                    $themctdd = "INSERT INTO detailorders VALUES ('".$madondat."','".$masp."','".$number."','".$total."')";
+                    $themctdd = "INSERT INTO detailorders VALUES ('".$madondat."','".$masp."','".$number."','".$price."')";
                     mysqli_query($conn, $themctdd);
                     //==========================Trừ số lượng tồn ==========================================
                     $getcount = "SELECT * FROM detailorders WHERE IdProducts = '".$masp."' AND IdOrders = '".$madondat."'";

@@ -65,11 +65,11 @@
                         <div class="f_title">
                             <h3>Đường Dẫn Nhanh</h3>
                         </div>
-<!--                        <div class="fb-page"-->
-<!--                             data-href="https://www.facebook.com/C%E1%BB%ADa-h%C3%A0ng-Cake-Bakery-102494562277873"-->
-<!--                             data-width="480"-->
-<!--                             data-hide-cover="false"-->
-<!--                             data-show-facepile="false"></div>-->
+                        <div class="fb-page"
+                             data-href="https://www.facebook.com/C%E1%BB%ADa-h%C3%A0ng-Cake-Bakery-102494562277873"
+                             data-width="480"
+                             data-hide-cover="false"
+                             data-show-facepile="false"></div>
                     </aside>
                 </div>
             </div>
@@ -157,7 +157,6 @@
                 // Successful capture! For dev/demo purposes:
                 console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
                 var transaction = orderData.purchase_units[0].payments.captures[0];
-                alert("Bạn đã thanh toán thành công");
 
                 // When ready to go live, remove the alert and show a success message within this page. For example:
                 var element = document.getElementById('paypal-button-container');

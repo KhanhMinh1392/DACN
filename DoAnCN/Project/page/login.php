@@ -79,14 +79,15 @@
               <input type="password" placeholder="Password" name="password" required/>
             </div>
             <input type="submit" value="Login" class="btn_login solid" />
-            <p class="social-text">Forgot your <a href="#" data-toggle="modal" data-target="#exampleModalCenter">password</a>?</p>
 
+            <p class="social-text">Forgot your <a href="#" data-toggle="modal" data-target="#exampleModalCenter">password</a>?</p>
+            <div style="margin-bottom: 20px; margin-top: -20px">
+                <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+            </div>
             <div class="social-media">
-              <div href="#" class="social-icon">
+              <a href="#" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
-<!--                  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">-->
-<!--                  </fb:login-button>-->
-              </div>
+              </a>
               <a href="#" class="social-icon">
                 <i class="fab fa-twitter"></i>
               </a>

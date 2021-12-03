@@ -402,7 +402,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <h1 class="m-0">Danh sách sản phẩm </h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
-                  <a href="addProduct.php" class="btn btn-primary float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
+                  <?php
+                  if($name["idRole"] == 1) {
+                      ?>
+                      <a href="addProduct.php" class="btn btn-primary float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
+                  <?php } else {?>
+                      <a href="../admin/404.php" class="btn btn-primary float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
+                  <?php } ?>
+
                   <div class="col-sm-6" style="margin-left: 250px">
                       <div class="form-inline">
                           <form action="" method="get">
@@ -442,6 +449,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </thead>
                   <tbody>
                   <?php
+                  $new = mysqli_query($conn,"SELECT * FROM products ORDER BY DateCreate DESC LIMIT 1");
                   while ($row = mysqli_fetch_array($query)){
                       $idstatus = "SELECT * FROM status_product WHERE idStatus='".$row["idStatus"]."'";
                       $getstatus = mysqli_query($conn,$idstatus);
@@ -450,7 +458,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <tr>
                       <td><?php echo $row["IdProducts"]?></td>
                       <td><img src="../img/cake-feature/<?php echo $row["Images"]?>" style="width: 50px"></td>
-                      <td><?php echo $row["Nameproducts"]?></td>
+                      <td><?php
+                          echo $row["Nameproducts"];
+                          ?>
+                      </td>
                         <?php if($status["idStatus"] == 1) {?>
                             <td ><span style="background: #E7FBE3;width: 160px; color: #0DB473; border-radius: 20px; padding: 3px;"><?php echo $status["NameStatus"]?></span></td>
                         <?php } else {?>
@@ -465,8 +476,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                           ?>
                       </td>
                       <td>
+                      <?php
+                        if($name["idRole"] == 1) {
+                      ?>
                         <a href="../admin/editProduct.php?Masp=<?php echo $row["IdProducts"]?>&loaisp=<?php echo $row["idType"]?>" class="btn btn-primary icons"><i class="fas fa-edit"></i></a>
                         <a onclick="return Delete('<?php echo $row["Nameproducts"];?>')" href="<?php echo $_SERVER["PHP_SELF"];?>?MaSanPham=<?php echo $row["IdProducts"];?>" class="btn btn-danger icons"><i class="fas fa-trash-alt"></i></a>
+                      <?php } else {?>
+                            <a href="../admin/404.php" class="btn btn-primary icons"><i class="fas fa-edit"></i></a>
+                            <a href="../admin/404.php" class="btn btn-danger icons"><i class="fas fa-trash-alt"></i></a>
+                      <?php } ?>
                       </td>
                     </tr>
                       <?php
