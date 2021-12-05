@@ -117,17 +117,31 @@
                                   <span class="text-bold text-lg"> <?php echo number_format($result_total[0]+$result_course[0],0,",",".")?> VNĐ</span>
                                   <span>Sales Over Time</span>
                               </p>
+                              <?php
+                                //tháng vừa rồi
+                                  $curdate_last = "SELECT SUM(Total) as total FROM orders WHERE month(Dateorders) = month(curdate())-1";
+                                  $query_last = mysqli_query($conn, $curdate_last);
+                                  $lastmonth = mysqli_fetch_row($query_last);
+                                // tháng này
+                                  $curdate = "SELECT SUM(Total) FROM orders WHERE month(curdate()) = month(Dateorders)";
+                                  $query_curdate = mysqli_query($conn, $curdate);
+                                  $curdate_query = mysqli_fetch_row($query_curdate);
+
+                                  $result =  (($curdate_query[0]*100/$lastmonth[0]));
+                              ?>
                               <p class="ml-auto d-flex flex-column text-right">
                                   <span class="text-success">
-                                    <i class="fas fa-arrow-up"></i> 33.1%
+                                    <i class="fas fa-arrow-up"></i> <?php echo number_format((float)$result, 2, '.', '')?>%
                                   </span>
                                   <span class="text-muted">Since last month</span>
                               </p>
                           </div>
-                          <!-- /.d-flex -->
-                          <div class="position-relative mb-4">
-                              <canvas id="sales-chart" height="200"></canvas>
+                          <div class="card-body">
+                              <div class="chart">
+                                  <canvas id="areaChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                              </div>
                           </div>
+                              <!-- /.card-body -->
                           <div class="d-flex flex-row justify-content-end">
                             <span class="mr-2">
                               <i class="fas fa-square text-primary"></i> This year
@@ -188,9 +202,18 @@
                   </div>
               </div>
           </div>
-
     </div>
-<?php
+        <?php
+        $i = 1;
+            for ($i;$i<13;$i++) {
+                $get_total = "SELECT SUM(Total) as total FROM orders WHERE month(Dateorders) = '$i'";
+                $query = mysqli_query($conn, $get_total);
+                $mysql = mysqli_fetch_array($query);
+        ?>
+            <input type="hidden" id="total<?php echo $i?>" value="<?php echo $mysql["total"]?>">
+        <?php }?>
+
+        <?php
     include ('../admin/layoutAdmin/footer.php')
 ?>
 

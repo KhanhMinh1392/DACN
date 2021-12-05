@@ -140,7 +140,7 @@ $totalpage = ceil($total / $item_per_page);
         						</div>
         						<div class="filter_price">
 									<div id="slider-range"></div>
-       								<label for="amount">Price range:</label>
+       								<label for="amount">Giá:</label>
 									<input type="text" id="amount" readonly />
        								<a href="#">Filter</a>
         						</div>
@@ -161,13 +161,13 @@ $totalpage = ceil($total / $item_per_page);
                                         </div>
                                         <div class="media-body">
                                             <a href="#"><h4><?php echo $row_sort["Nameproducts"]?></h4></a>
-                                            <ul class="list_style">
-                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>
-                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>
-                                            </ul>
+<!--                                            <ul class="list_style">-->
+<!--                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>-->
+<!--                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>-->
+<!--                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>-->
+<!--                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>-->
+<!--                                                <li><a href="#"><i class="fa fa-star-o"></i></a></li>-->
+<!--                                            </ul>-->
                                             <h5><?=number_format($row_sort["Price"],0,",",".")?> VNĐ</h5>
                                         </div>
                                     </div>

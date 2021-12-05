@@ -126,7 +126,7 @@ include ('../layout/header.php')
                                     <div class="d-flex">
                                         <img src="../img/userimg/<?php echo $result["Image"]?>" alt="" style="width: 100px;height: 110px;margin-bottom: 30px;border-radius: 50%;">
                                     </div>
-                                    <div class="media-body" style="margin-left: 20px; max-width: 500px"">
+                                    <div class="media-body" style="margin-left: 20px; max-width: 1000px"">
                                     <h5>
                                         <?php
                                         if($result["NameCustomer"]== "") {

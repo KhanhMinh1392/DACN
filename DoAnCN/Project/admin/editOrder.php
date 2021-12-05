@@ -34,7 +34,7 @@
             <?php } else if ($dbdata["Status"] == "Hoàn thành") {?>
                 <h3 class="card-title" style="background: #E7FBE3;width: 100px; color: #0DB473; border-radius: 20px; padding-left: 12px;font-size: 15px; margin-left: 50px"><?php echo $dbdata["Status"]?></h3>
             <?php } else {?>
-                <td ><p class="badge bg-warning" style="margin-left: 50px;font-size: 14px; padding: 5px;width: 100px"><?php echo $dbdata["Status"]?></p></td>
+                <p class="badge bg-warning" style="margin-left: 50px;font-size: 14px; padding: 5px;width: 100px"><?php echo $dbdata["Status"]?></p>
             <?php } ?>
         </div>
         <div class="card-body">
