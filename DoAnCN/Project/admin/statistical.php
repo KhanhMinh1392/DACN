@@ -27,6 +27,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="../admin/plugins/fontawesome-free/css/all.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../admin/dist/css/adminlte.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <style>
     .icons{
       text-decoration: none;
@@ -242,7 +245,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                       if($name["idRole"] == 1) {
                           ?>
                           <li class="nav-item">
-                              <a href="../admin/listCity.php" class="nav-link active">
+                              <a href="../admin/listCity.php" class="nav-link">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>Quản lí ship</p>
                               </a>
@@ -371,43 +374,208 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </aside>
 
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-          <div class="container-fluid">
-            <div class="row mb-2">
-              <div class="col-sm-6">
-                <h1 class="m-0">Doanh thu</h1>
-              </div><!-- /.col -->
-            </div><!-- /.row -->
-          </div><!-- /.container-fluid -->
-        </div>
-          <div class="card col-8">
-              <div class="card">
-                  <div class="card-header border-0">
-                      <div class="d-flex justify-content-between">
-                          <h3 class="card-title">Tổng doanh thu</h3>
-                      </div>
-                  </div>
-                  <div class="card-body">
-                      <div class="card-body">
-                          <div class="chart">
-                              <canvas id="areaChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                          </div>
-                      </div>
-                      <!-- /.card-body -->
-                      <div class="d-flex flex-row justify-content-end">
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Doanh thu </h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <?php
+            $total = "SELECT SUM(Total) FROM `orders` WHERE Dateorders <= NOW() - INTERVAL 1 DAY AND Dateorders > NOW() - INTERVAL 8 DAY AND Status = 'Hoàn thành'";
+            $query_total = mysqli_query($conn,$total);
+            $result_total = mysqli_fetch_row($query_total);
+
+            $total_course = "SELECT SUM(Total) FROM `order_courses` WHERE DateCreate <= NOW() - INTERVAL 1 DAY AND DateCreate > NOW() - INTERVAL 8 DAY ";
+            $query_course = mysqli_query($conn,$total_course);
+            $result_course = mysqli_fetch_row($query_course);
+
+            ?>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="card col-6">
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="card-title">Doanh thu cửa hàng</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <p class="d-flex flex-column">
+                                        <span class="text-bold text-lg">Doanh thu 7 ngày qua</span>
+                                    </p>
+                                    <p class="ml-auto d-flex flex-column text-right">
+                                      <h4 class="text-success">
+                                        <?php echo number_format($result_total[0]+$result_course[0],0,",",".")?> VNĐ
+                                      </h4>
+                                    </p>
+                                </div>
+                                <div class="card-body">
+<!--                                    <div id="bar-chart" style="height: 300px;"></div>-->
+                                    <div class="chart">
+                                        <canvas id="areaChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row justify-content-end">
                             <span class="mr-2">
                               <i class="fas fa-square text-primary"></i> This year
                             </span>
-                          <span>
+                                    <span>
                               <i class="fas fa-square text-gray"></i> Last year
                             </span>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-    <?php
-    include ('../admin/layoutAdmin/footer.php')
-    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card col-6">
+                        <div class="card">
+                            <div class="card-header border-0">
+                                <div class="d-flex justify-content-between">
+                                    <h3 class="card-title">Thông tin giao hàng</h3>
+                                </div>
+                            </div>
+                            <?php
+                            $count = "SELECT * FROM orders WHERE Dateorders <= NOW() - INTERVAL 1 DAY AND Dateorders > NOW() - INTERVAL 8 DAY AND Status = 'Hoàn thành'";
+                            $query_count = mysqli_query($conn,$count);
+                            $result_count = mysqli_num_rows($query_count);
+
+                            $getcourse = "SELECT * FROM `order_courses` WHERE DateCreate <= NOW() - INTERVAL 1 DAY AND DateCreate > NOW() - INTERVAL 8 DAY ";
+                            $query_getcourse = mysqli_query($conn,$getcourse);
+                            $result_getcourse = mysqli_num_rows($query_getcourse);
+                            ?>
+                            <div class="card-body">
+                                <div class="d-flex" >
+                                    <p class="d-flex flex-column">
+                                        <span class="text-bold text-lg">Vận đơn 7 ngày qua</span>
+                                    </p>
+                                </div>
+                                <span class="mr-2">
+                                      <i class="fas fa-square" style="color: rgb(13, 180, 115)"></i> Đã giao hàng
+                                    </span>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <input type="text" class="knob" value="<?php echo $result_count + $result_getcourse?>" data-width="200" data-height="200" data-fgColor="rgb(13, 180, 115)" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-12">
+                        <div class="info-box bg-info">
+                            <span class="info-box-icon"><i class="fas fa-file-invoice-dollar"></i></i></span>
+                            <?php
+                                $count_bill = "SELECT * FROM orders WHERE Dateorders <= NOW() - INTERVAL 1 DAY AND Dateorders > NOW() - INTERVAL 8 DAY";
+                                $query_bill = mysqli_query($conn,$count_bill);
+                                $result_bill = mysqli_num_rows($query_bill);
+                            ?>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Thông tin đơn hàng</span>
+                                <h3 class="info-box-number"><?php echo $result_bill?> đơn hàng</h3>
+                                <span class="progress-description">
+                                   7 ngày theo sản phẩm
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-3 col-sm-6 col-12">
+                        <div class="info-box bg-success">
+                            <span class="info-box-icon"><i class="fas fa-money-bill-wave-alt"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Thông tin thanh toán</span>
+                                <h3 class="info-box-number"> <?php echo number_format($result_total[0],0,",",".")?></h3>
+
+                                <span class="progress-description">
+                                  7 ngày theo sản phẩm
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <?php
+                    $count_billcourse = "SELECT * FROM order_courses WHERE DateCreate <= NOW() - INTERVAL 1 DAY AND DateCreate > NOW() - INTERVAL 8 DAY";
+                    $query_billcourse = mysqli_query($conn,$count_billcourse);
+                    $courses = mysqli_num_rows($query_billcourse);
+                    ?>
+                    <div class="col-md-3 col-sm-6 col-12">
+                        <div class="info-box bg-danger">
+                            <span class="info-box-icon"><i class="fas fa-file-invoice-dollar"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Thông tin đơn hàng</span>
+                                <h3 class="info-box-number"><?php echo$courses?> đơn hàng</h3>
+                                <span class="progress-description">
+                                    7 ngày theo khóa học
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-3 col-sm-6 col-12">
+                        <div class="info-box bg-warning">
+                            <span class="info-box-icon"><i class="fas fa-book-open"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Thông tin thanh toán</span>
+                                <h3 class="info-box-number"><?php echo number_format($result_course[0],0,",",".")?></h3>
+
+                                <span class="progress-description">
+                                  7 ngày theo khóa học
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-md-3 col-sm-6 col-12">
+                        <div class="info-box" style="background: #007bff; color: white">
+                            <span class="info-box-icon"><i class="fas fa-money-bill"></i></span>
+                            <?php
+                            $sort = "SELECT SUM(detailorders.Quantitydetail*detailorders.Price) as total FROM detailorders INNER JOIN orders ON orders.idOrders = detailorders.idOrders WHERE orders.Status = 'Hoàn thành' AND Dateorders <= NOW() - INTERVAL 1 DAY AND Dateorders > NOW() - INTERVAL 8 DAY";
+                            $query_sort = mysqli_query($conn, $sort);
+                            $totalrevenues = mysqli_fetch_row($query_sort);
+                            ?>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Lợi nhuận 7 ngày qua</span>
+                                <h3 class="info-box-number"><?php echo number_format($totalrevenues[0],0,",",".")?></h3>
+
+                                <span class="progress-description">
+                                  <a href="revenues.php" style="color: white">>> Lợi nhuận theo sản phẩm</a>
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </div>
+            <?php
+            $i = 1;
+            for ($i;$i<13;$i++) {
+                $get_total = "SELECT SUM(Total) as total FROM orders WHERE month(Dateorders) = '$i' AND Status = 'Hoàn thành'";
+                $query = mysqli_query($conn, $get_total);
+                $mysql = mysqli_fetch_array($query);
+                ?>
+                <input type="hidden" id="total<?php echo $i?>" value="<?php echo $mysql["total"]?>">
+            <?php }?>
+
+            <?php
+            include ('../admin/layoutAdmin/footer.php')
+            ?>

@@ -9,31 +9,6 @@
     $query = mysqli_query($conn,$getinfo);
     $name = mysqli_fetch_array($query);
 ?>
-<?php
-    $item_per_page = !empty($_GET['per_page']) ? $_GET['per_page'] : 7;
-    $current_page = !empty($_GET['page']) ? $_GET['page'] : 1;
-    $offset = ($current_page-1) * $item_per_page;
-    $dbdata = "SELECT * FROM courses ORDER BY idCourses DESC LIMIT ".$item_per_page." OFFSET ".$offset;
-    $query = mysqli_query($conn,$dbdata);
-
-    $total = mysqli_query($conn,"SELECT * FROM courses");
-    $total = $total->num_rows;
-    $totalpage = ceil($total / $item_per_page);
-
-    if(isset($_GET["MaKhoaHoc"]))
-    {
-        $delete="DELETE FROM courses WHERE idCourses='".$_GET["MaKhoaHoc"]."'";
-        if(mysqli_query($conn,$delete))
-        {
-            echo "<script>alert('Xóa thành công')</script>";
-            echo "<script>location='listCourses.php'</script>";
-        }
-        else
-        {
-            echo "<script>alert('Xảy ra lỗi')</script>";
-        }
-    }
-?>
 
 <!DOCTYPE html>
 <!--
@@ -277,7 +252,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </ul>
               </li>
               <li class="nav-item menu-close">
-                <a href="#" class="nav-link active">
+                <a href="#" class="nav-link">
                   <i class="nav-icon fas fa-archive"></i>
                   <p>
                     Sản phẩm
@@ -294,7 +269,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </ul>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="listCourses.php" class="nav-link active">
+                    <a href="listCourses.php" class="nav-link">
                       <i class="far fa-circle nav-icon"></i>
                       <p>Danh sách khóa học</p>
                     </a>
@@ -365,7 +340,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </ul>
                 </li>
                 <li class="nav-item menu-close">
-                    <a href="#" class="nav-link">
+                    <a href="#" class="nav-link active">
                         <i class="nav-icon fas fa-chart-line"></i>
                         <p>
                             Thống kê
@@ -403,17 +378,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Danh sách khóa học</h1>
-              </div><!-- /.col -->
-              <div class="col-sm-6">
-                  <a href="addCourses.php" class="btn btn-primary float-right"><i class="fa fa-plus-circle"></i> Thêm</a>
+                <h1 class="m-0">Lợi nhuận theo sản phẩm </h1>
               </div><!-- /.col -->
             </div><!-- /.row -->
           </div><!-- /.container-fluid -->
           <div class="col-md-12">
             <div class="card">
               <div class="card-header" style="background-color: #007bff;">
-                <h3 class="card-title" style="color:#fff; padding: 5px" >Danh sách khóa học</h3>
+                <h3 class="card-title" style="color:#fff; padding: 5px" >Lợi nhuận theo sản phẩm</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0">
@@ -421,36 +393,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <thead>
                     <tr>
                       <th style="width: 10px">ID</th>
-                      <th style="width: 200px">Tên khóa học</th>
-                      <th style="width: 120px">Học phí</th>
-                      <th style="width: 100px">Thời gian bắt đầu</th>
-                      <th style="width: 100px">Thời gian kết thúc</th>
-                      <th style="width: 10px"></th>
+                      <th style="width: 130px">Sản phẩm</th>
+                      <th style="width: 100px">SL hàng thực bán</th>
+                      <th style="width: 120px;text-align: center">Doanh thu thuần</th>
+                      <th style="width: 100px;text-align: center">Tiền vốn</th>
+                      <th style="width: 100px;text-align: center">Lợi nhuận</th>
                     </tr>
                   </thead>
                   <tbody>
                   <?php
-                    while ($row = mysqli_fetch_array($query)){
-                  ?>
+                  $sort = "SELECT *, SUM(detailorders.Quantitydetail) as total FROM detailorders INNER JOIN products ON detailorders.IdProducts = products.IdProducts INNER JOIN orders ON orders.idOrders = detailorders.idOrders WHERE orders.Status = 'Hoàn thành' GROUP BY detailorders.IdProducts ORDER BY detailorders.IdProducts DESC";
+                  $query_sort = mysqli_query($conn, $sort);
+
+                  while ($row = mysqli_fetch_array($query_sort)){
+                      $query_material = mysqli_query($conn,"SELECT SUM(Price) as price FROM material WHERE IdProducts = '".$row["IdProducts"]."' GROUP BY IdProducts");
+                      $material = mysqli_fetch_row($query_material)
+                      ?>
                     <tr>
-                      <td><?php echo $row["idCourses"]?></td>
-                      <td><?php echo $row["NameCourses"]?></td>
-                      <td><?=number_format($row["Price"],0,",",".")?> VNĐ</td>
-                      <td>
-                          <?php
-                           $date=date_create($row["TimeStart"]);
-                           echo date_format($date,"d/m/Y");
+                      <td><?php echo $row["IdProducts"]?></td>
+                      <td><?php
+                          echo $row["Nameproducts"];
                           ?>
                       </td>
-                      <td>
-                          <?php
-                            $date=date_create($row["TimeEnd"]);
-                            echo date_format($date,"d/m/Y");
-                          ?>
-                      </td>
-                      <td>
-                        <a href="../admin/editCourse.php?Makh=<?php echo $row["idCourses"]?>" class="btn btn-primary icons"><i class="fas fa-edit"></i></a>
-                        <a onclick="return Delete('<?php echo $row["NameCourses"];?>')" href="<?php echo $_SERVER["PHP_SELF"];?>?MaKhoaHoc=<?php echo $row["idCourses"];?>" class="btn btn-danger icons"><i class="fas fa-trash-alt"></i></a>
+                        <td><p style="margin-left: 50px"><?php echo $row["total"] ?></p></td>
+                      <td><p style="text-align: center"><?php echo number_format($row["Price"]*$row["total"],0,",",".")?></p></td>
+                        <td style="text-align: center"><?php echo number_format( $material[0],0,",",".")?></td>
+                      <td style="text-align: center">
+                          <?php echo number_format( ($row["Price"]*$row["total"]) - $material[0],0,",",".")?>
                       </td>
                     </tr>
                       <?php
@@ -459,17 +428,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </tbody>
                 </table>
               </div>
-<!--                <hr> -->
-                <div class="card-footer clearfix">
-                    <ul class="pagination pagination-sm m-0 float-right">
-                        <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                        <?php for($num = 1 ; $num <= $totalpage; $num++){ ?>
-                            <li class="page-item"><a class="page-link" href="?per_page=<?=$item_per_page?>&page=<?=$num?>"><?=$num?></a></li>
-                        <?php } ?>
-                        <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                    </ul>
-                </div>
-              <!-- /.card-body -->
             </div>
           </div>
         </div>

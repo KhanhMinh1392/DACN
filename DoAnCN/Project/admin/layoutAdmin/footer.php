@@ -23,12 +23,18 @@
 <script src="../admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../admin/plugins/chart.js/Chart.min.js"></script>
-<!--<script src="../plugins/chart.js/Chart.min.js"></script>-->
+
 <script src="../admin/dist/js/adminlte.min.js"></script>
 
 <script src="../admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- SweetAlert2 -->
 <script src="../admin/plugins/sweetalert2/sweetalert2.min.js"></script>
+
+<script src="../admin/plugins/flot/jquery.flot.js"></script>
+<!-- jQuery Knob -->
+<script src="../admin/plugins/jquery-knob/jquery.knob.min.js"></script>
+<!-- Sparkline -->
+<script src="../admin/plugins/sparklines/sparkline.js"></script>
 </body>
 </html>
 

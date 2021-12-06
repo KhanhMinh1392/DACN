@@ -23,11 +23,11 @@
               <span class="info-box-icon bg-info elevation-1"><i class="fas fa-money-check-alt"></i></span>
               <div class="info-box-content">
                   <?php
-                  $total = "SELECT SUM(Total) FROM `orders`";
+                  $total = "SELECT SUM(Total) FROM `orders` WHERE Status = 'Hoàn thành'";
                   $query_total = mysqli_query($conn,$total);
                   $result_total = mysqli_fetch_row($query_total);
 
-                  $total_course = "SELECT SUM(Total) FROM `orders`";
+                  $total_course = "SELECT SUM(Total) FROM `order_courses`";
                   $query_course = mysqli_query($conn,$total_course);
                   $result_course = mysqli_fetch_row($query_course);
                   ?>
@@ -119,11 +119,11 @@
                               </p>
                               <?php
                                 //tháng vừa rồi
-                                  $curdate_last = "SELECT SUM(Total) as total FROM orders WHERE month(Dateorders) = month(curdate())-1";
+                                  $curdate_last = "SELECT SUM(Total) as total FROM orders WHERE month(Dateorders) = month(curdate())-1 AND Status = 'Hoàn thành'";
                                   $query_last = mysqli_query($conn, $curdate_last);
                                   $lastmonth = mysqli_fetch_row($query_last);
                                 // tháng này
-                                  $curdate = "SELECT SUM(Total) FROM orders WHERE month(curdate()) = month(Dateorders)";
+                                  $curdate = "SELECT SUM(Total) FROM orders WHERE month(curdate()) = month(Dateorders) AND Status = 'Hoàn thành'";
                                   $query_curdate = mysqli_query($conn, $curdate);
                                   $curdate_query = mysqli_fetch_row($query_curdate);
 
@@ -206,7 +206,7 @@
         <?php
         $i = 1;
             for ($i;$i<13;$i++) {
-                $get_total = "SELECT SUM(Total) as total FROM orders WHERE month(Dateorders) = '$i'";
+                $get_total = "SELECT SUM(Total) as total FROM orders WHERE month(Dateorders) = '$i' AND Status = 'Hoàn thành'";
                 $query = mysqli_query($conn, $get_total);
                 $mysql = mysqli_fetch_array($query);
         ?>

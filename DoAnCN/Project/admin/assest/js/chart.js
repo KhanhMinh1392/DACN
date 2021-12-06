@@ -68,4 +68,147 @@ $(function () {
     options: areaChartOptions
     })
     })
+//bar chart
+
+$(function () {
+    var d = new Date();
+    if(d.getMonth() >=0 ) {
+        var c = d.getMonth()+1;
+
+        var startOfWeek = moment().startOf('week').toDate();
+        var endOfWeek   = moment().endOf('week').toDate();
+
+    }
+    var areaChartCanvas1 = $('#areaChart1').get(0).getContext('2d');
+    var array1 = document.getElementById('total1').value;
+    var array2 = document.getElementById('total2').value;
+    var array3 = document.getElementById('total3').value;
+    var array4 = document.getElementById('total4').value;
+    var array5 = document.getElementById('total5').value;
+    var array6 = document.getElementById('total6').value;
+    var array7 = document.getElementById('total7').value;
+    var array8 = document.getElementById('total8').value;
+    var array9 = document.getElementById('total9').value;
+    var array10 = document.getElementById('total10').value;
+    var array11 = document.getElementById('total11').value;
+    var array12 = document.getElementById('total12').value;
+    var areaChartData = {
+        labels: [startOfWeek +"/"+c, d.getDate()+1+"/"+c, d.getDate()+2+"/"+c, d.getDate()+3+"/"+c, d.getDate()+4+"/"+c, d.getDate()+5+"/"+c, endOfWeek+"/"+c],
+        datasets: [
+            {
+                label: 'This year',
+                backgroundColor: 'rgba(60,141,188,0.9)',
+                borderColor: 'rgba(60,141,188,0.8)',
+                pointRadius: false,
+                pointColor: '#3b8bba',
+                pointStrokeColor: 'rgba(60,141,188,1)',
+                pointHighlightFill: '#fff',
+                pointHighlightStroke: 'rgba(60,141,188,1)',
+                data: [100, 100, 100, 100, 100, 100, 100, 100, 0, 0, 0, 0]
+            },
+            {
+                label: 'Last year',
+                backgroundColor: 'rgba(210, 214, 222, 1)',
+                borderColor: 'rgba(210, 214, 222, 1)',
+                pointRadius: false,
+                pointColor: 'rgba(210, 214, 222, 1)',
+                pointStrokeColor: '#c1c7d1',
+                pointHighlightFill: '#fff',
+                pointHighlightStroke: 'rgba(220,220,220,1)',
+                data: [6500000.000, 5900000.000, 8000000.000, 8100000.000, 5600000.000, 5500000.000, 4000000.000, 6000000.000, 7000000.000, 9000000.000, 5000000.000, 3000000.000]
+            },
+        ]
+    }
+
+    var areaChartOptions = {
+        maintainAspectRatio: false,
+        responsive: true,
+        legend: {
+            display: false
+        },
+        scales: {
+            xAxes: [{
+                gridLines: {
+                    display: false,
+                }
+            }],
+            yAxes: [{
+                gridLines: {
+                    display: false,
+                }
+            }]
+        }
+    }
+
+    // This will get the first returned node in the jQuery collection.
+    new Chart(areaChartCanvas1, {
+        type: 'line',
+        data: areaChartData,
+        options: areaChartOptions
+    })
+})
+
+$(function () {
+    /* jQueryKnob */
+
+    $('.knob').knob({
+        /*change : function (value) {
+         //console.log("change : " + value);
+         },
+         release : function (value) {
+         console.log("release : " + value);
+         },
+         cancel : function () {
+         console.log("cancel : " + this.value);
+         },*/
+        draw: function () {
+
+            // "tron" case
+            if (this.$.data('skin') == 'tron') {
+
+                var a   = this.angle(this.cv)  // Angle
+                    ,
+                    sa  = this.startAngle          // Previous start angle
+                    ,
+                    sat = this.startAngle         // Start angle
+                    ,
+                    ea                            // Previous end angle
+                    ,
+                    eat = sat + a                 // End angle
+                    ,
+                    r   = true
+
+                this.g.lineWidth = this.lineWidth
+
+                this.o.cursor
+                && (sat = eat - 0.3)
+                && (eat = eat + 0.3)
+
+                if (this.o.displayPrevious) {
+                    ea = this.startAngle + this.angle(this.value)
+                    this.o.cursor
+                    && (sa = ea - 0.3)
+                    && (ea = ea + 0.3)
+                    this.g.beginPath()
+                    this.g.strokeStyle = this.previousColor
+                    this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sa, ea, false)
+                    this.g.stroke()
+                }
+
+                this.g.beginPath()
+                this.g.strokeStyle = r ? this.o.fgColor : this.fgColor
+                this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sat, eat, false)
+                this.g.stroke()
+
+                this.g.lineWidth = 2
+                this.g.beginPath()
+                this.g.strokeStyle = this.o.fgColor
+                this.g.arc(this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false)
+                this.g.stroke()
+
+                return false
+            }
+        }
+    })
+})
 
