@@ -72,79 +72,61 @@ $(function () {
 
 $(function () {
     var d = new Date();
-    if(d.getMonth() >=0 ) {
-        var c = d.getMonth()+1;
-
-        var startOfWeek = moment().startOf('week').toDate();
-        var endOfWeek   = moment().endOf('week').toDate();
-
+    if (d.getMonth() >= 0) {
+        c = d.getMonth()+1;
     }
-    var areaChartCanvas1 = $('#areaChart1').get(0).getContext('2d');
-    var array1 = document.getElementById('total1').value;
-    var array2 = document.getElementById('total2').value;
-    var array3 = document.getElementById('total3').value;
-    var array4 = document.getElementById('total4').value;
-    var array5 = document.getElementById('total5').value;
-    var array6 = document.getElementById('total6').value;
-    var array7 = document.getElementById('total7').value;
-    var array8 = document.getElementById('total8').value;
-    var array9 = document.getElementById('total9').value;
-    var array10 = document.getElementById('total10').value;
-    var array11 = document.getElementById('total11').value;
-    var array12 = document.getElementById('total12').value;
+    var day1 = document.getElementById('today').value;
+    var day2 = document.getElementById('day1').value;
+    var day3 = document.getElementById('day2').value;
+    var day4 = document.getElementById('day3').value;
+    var day5 = document.getElementById('day4').value;
+    var day6 = document.getElementById('day5').value;
+    var day7 = document.getElementById('day6').value;
+
     var areaChartData = {
-        labels: [startOfWeek +"/"+c, d.getDate()+1+"/"+c, d.getDate()+2+"/"+c, d.getDate()+3+"/"+c, d.getDate()+4+"/"+c, d.getDate()+5+"/"+c, endOfWeek+"/"+c],
+        labels  : [d.getDate()-6+"/"+c, d.getDate()-5+"/"+c, d.getDate()-4+"/"+c, d.getDate()-3+"/"+c, d.getDate()-2+"/"+c, d.getDate()-1+"/"+c,d.getDate()+"/"+c],
         datasets: [
             {
-                label: 'This year',
-                backgroundColor: 'rgba(60,141,188,0.9)',
-                borderColor: 'rgba(60,141,188,0.8)',
-                pointRadius: false,
-                pointColor: '#3b8bba',
-                pointStrokeColor: 'rgba(60,141,188,1)',
-                pointHighlightFill: '#fff',
+                label               : 'Digital Goods',
+                backgroundColor     : '#007bff',
+                borderColor         : 'rgba(60,141,188,0.8)',
+                pointRadius          : false,
+                pointColor          : '#3b8bba',
+                pointStrokeColor    : 'rgba(60,141,188,1)',
+                pointHighlightFill  : '#fff',
                 pointHighlightStroke: 'rgba(60,141,188,1)',
-                data: [100, 100, 100, 100, 100, 100, 100, 100, 0, 0, 0, 0]
+                data                : [day7, day6, day5, day4, day3, day2, day1]
             },
             {
-                label: 'Last year',
-                backgroundColor: 'rgba(210, 214, 222, 1)',
-                borderColor: 'rgba(210, 214, 222, 1)',
-                pointRadius: false,
-                pointColor: 'rgba(210, 214, 222, 1)',
-                pointStrokeColor: '#c1c7d1',
-                pointHighlightFill: '#fff',
+                label               : 'Electronics',
+                backgroundColor     : 'rgba(210, 214, 222, 1)',
+                borderColor         : 'rgba(210, 214, 222, 1)',
+                pointRadius         : false,
+                pointColor          : 'rgba(210, 214, 222, 1)',
+                pointStrokeColor    : '#c1c7d1',
+                pointHighlightFill  : '#fff',
                 pointHighlightStroke: 'rgba(220,220,220,1)',
-                data: [6500000.000, 5900000.000, 8000000.000, 8100000.000, 5600000.000, 5500000.000, 4000000.000, 6000000.000, 7000000.000, 9000000.000, 5000000.000, 3000000.000]
+                data                : [0, 0, 0, 0, 0, 0, 0]
             },
         ]
     }
+    var barChartCanvas = $('#barChart').get(0).getContext('2d')
+    var barChartData = $.extend(true, {}, areaChartData)
+    var temp0 = areaChartData.datasets[0]
+    var temp1 = areaChartData.datasets[1]
+    barChartData.datasets[0] = temp1
+    barChartData.datasets[1] = temp0
 
-    var areaChartOptions = {
-        maintainAspectRatio: false,
-        responsive: true,
-        legend: {
-            display: false
-        },
-        scales: {
-            xAxes: [{
-                gridLines: {
-                    display: false,
-                }
-            }],
-            yAxes: [{
-                gridLines: {
-                    display: false,
-                }
-            }]
-        }
+    var barChartOptions = {
+        responsive              : true,
+        maintainAspectRatio     : false,
+        datasetFill             : false
     }
 
-    // This will get the first returned node in the jQuery collection.
-    new Chart(areaChartCanvas1, {
-        type: 'line',
-        data: areaChartData,
-        options: areaChartOptions
+    new Chart(barChartCanvas, {
+        type: 'bar',
+        data: barChartData,
+        options: barChartOptions
     })
 })
 
@@ -152,8 +134,8 @@ $(function () {
     /* jQueryKnob */
 
     $('.knob').knob({
-        /*change : function (value) {
-         //console.log("change : " + value);
+       /* change : function (value) {
+         console.log("change : " + value);
          },
          release : function (value) {
          console.log("release : " + value);

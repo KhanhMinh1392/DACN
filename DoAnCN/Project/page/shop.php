@@ -150,7 +150,12 @@ $totalpage = ceil($total / $item_per_page);
         							<h3>Sản Phẩm Bán Chạy</h3>
         						</div>
                                 <?php
-                                $sort = "SELECT * FROM detailorders INNER JOIN products ON detailorders.IdProducts = products.IdProducts GROUP BY detailorders.IdProducts ORDER BY SUM(detailorders.Quantitydetail) DESC LIMIT 4";
+                                $sort = "SELECT * FROM detailorders
+                                            INNER JOIN products ON detailorders.IdProducts = products.IdProducts 
+                                            INNER JOIN orders ON orders.idOrders = detailorders.idOrders 
+                                            WHERE orders.Status = 'Hoàn thành' 
+                                            GROUP BY detailorders.IdProducts 
+                                            ORDER BY SUM(detailorders.Quantitydetail) DESC LIMIT 4";
                                 $query_sort = mysqli_query($conn,$sort);
 
                                 while ($row_sort = mysqli_fetch_array($query_sort)){

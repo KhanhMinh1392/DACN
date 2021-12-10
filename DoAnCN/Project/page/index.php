@@ -132,7 +132,12 @@
         			</div>
         		</div>
                 <?php
-                $sort = "SELECT * FROM detailorders INNER JOIN products ON detailorders.IdProducts = products.IdProducts GROUP BY detailorders.IdProducts ORDER BY SUM(detailorders.Quantitydetail) DESC LIMIT 7";
+                $sort = "SELECT *, SUM(detailorders.Quantitydetail) as total FROM detailorders
+                            INNER JOIN products ON detailorders.IdProducts = products.IdProducts 
+                            INNER JOIN orders ON orders.idOrders = detailorders.idOrders 
+                            WHERE orders.Status = 'Hoàn thành' 
+                            GROUP BY detailorders.IdProducts 
+                            ORDER BY SUM(detailorders.Quantitydetail) DESC LIMIT 7";
                 $query_sort = mysqli_query($conn,$sort);
                 ?>
         		<div class="cake_feature_inner">

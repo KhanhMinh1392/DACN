@@ -379,12 +379,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <div class="row mb-2">
               <div class="col-sm-6">
                 <a href="statistical.php"> <span>&#60;</span> Báo cáo doanh thu</a>
-                <h1 class="m-0">Lợi nhuận sản phẩm theo tháng <?php echo $date = date('m');?> </h1>
+                <h1 class="m-0">Lợi nhuận theo sản phẩm </h1>
               </div><!-- /.col -->
                 <div class="col-sm-3" style="margin-top: 20px;margin-left: 310px">
                     <select class="form-control" name="click" onchange="location = this.value;">
-                        <option value="revenues.php">Lợi nhuận theo tháng</option>
                         <option value="revenuesalpro.php">Lợi nhuận theo tất cả sản phẩm</option>
+                        <option value="revenues.php">Lợi nhuận theo tháng</option>
                     </select>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -409,7 +409,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   </thead>
                   <tbody>
                   <?php
-                  $sort = "SELECT *, SUM(detailorders.Quantitydetail) as total FROM detailorders INNER JOIN products ON detailorders.IdProducts = products.IdProducts INNER JOIN orders ON orders.idOrders = detailorders.idOrders WHERE orders.Status = 'Hoàn thành' AND month(CURRENT_DATE) = month(Dateorders) GROUP BY detailorders.IdProducts ORDER BY detailorders.IdProducts DESC";
+                  $sort = "SELECT *, SUM(detailorders.Quantitydetail) as total FROM detailorders INNER JOIN products ON detailorders.IdProducts = products.IdProducts INNER JOIN orders ON orders.idOrders = detailorders.idOrders WHERE orders.Status = 'Hoàn thành' GROUP BY detailorders.IdProducts ORDER BY detailorders.IdProducts DESC";
                   $query_sort = mysqli_query($conn, $sort);
                   $total_count = 0;
                   $total_revenues = 0;
@@ -456,13 +456,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <h5 class="nav-link" style="margin-left: 30px;font-weight: bold"">Tổng tiền:</h5>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link" style="margin-left: 275px;font-weight: bold"><?php echo $total_count?></a>
+                    <a href="#" class="nav-link" style="margin-left: 265px;font-weight: bold"><?php echo $total_count?></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link" style="margin-left: 185px;font-weight: bold"><?php echo number_format($total_revenues,0,",",".")?></a>
+                    <a href="#" class="nav-link" style="margin-left: 175px;font-weight: bold"><?php echo number_format($total_revenues,0,",",".")?></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link" style="margin-left: 135px;font-weight: bold"><?php echo number_format($total_material,0,",",".")?></a>
+                    <a href="#" class="nav-link" style="margin-left: 125px;font-weight: bold"><?php echo number_format($total_material,0,",",".")?></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
                     <a href="#" class="nav-link" style="margin-left: 105px;font-weight: bold"><?php echo number_format($total_income,0,",",".")?></a>

@@ -475,9 +475,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <tr>
                       <td><?php echo $row["IdProducts"]?></td>
                       <td><img src="../img/cake-feature/<?php echo $row["Images"]?>" style="width: 50px"></td>
-                      <td><?php
-                          echo $row["Nameproducts"];
-                          ?>
+                      <td><a href="detailProduct.php?Masp=<?php echo $row["IdProducts"]?>">
+                              <?php
+                              echo $row["Nameproducts"];
+                              ?>
+                          </a>
                       </td>
                         <?php if($status["idStatus"] == 1) {?>
                             <td ><span style="background: #E7FBE3;width: 160px; color: #0DB473; border-radius: 20px; padding: 3px;"><?php echo $status["NameStatus"]?></span></td>

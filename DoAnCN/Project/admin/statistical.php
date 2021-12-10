@@ -417,19 +417,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                       </h4>
                                     </p>
                                 </div>
+                                <div class="d-flex">
+                                    <?php
+                                    $sum = "SELECT SUM(Total) FROM orders WHERE Dateorders = DATE(NOW()) AND Status = 'Hoàn thành'";
+                                    $query_sum = mysqli_query($conn,$sum);
+                                    $get_sum = mysqli_fetch_row($query_sum);
+                                    ?>
+                                    <p class="d-flex flex-column">
+                                        <span class="text-bold text-lg">Doanh thu trong ngày</span>
+                                    </p>
+                                    <p class="ml-auto d-flex flex-column text-right">
+                                        <h4 class="text-success">
+                                        <input type="hidden" id="today" value="<?php echo $get_sum["0"]?>">
+                                            <?php echo number_format($get_sum[0],0,",",".")?> VNĐ
+                                        </h4>
+                                    </p>
+                                </div>
+
                                 <div class="card-body">
 <!--                                    <div id="bar-chart" style="height: 300px;"></div>-->
                                     <div class="chart">
-                                        <canvas id="areaChart1" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                        <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
                                     </div>
+
                                 </div>
                                 <div class="d-flex flex-row justify-content-end">
-                            <span class="mr-2">
-                              <i class="fas fa-square text-primary"></i> This year
-                            </span>
-                                    <span>
-                              <i class="fas fa-square text-gray"></i> Last year
-                            </span>
+                                    <span class="mr-2">
+                                      <i class="fas fa-square text-primary"></i> This year
+                                    </span>
+                                            <span>
+                                      <i class="fas fa-square text-gray"></i> Last year
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -551,12 +569,49 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             $query_sort = mysqli_query($conn, $sort);
                             $totalrevenues = mysqli_fetch_row($query_sort);
                             ?>
+                            <?php
+                            $sort = "SELECT *, SUM(detailorders.Quantitydetail) as total 
+                                    FROM detailorders 
+                                    INNER JOIN products ON detailorders.IdProducts  = products.IdProducts  
+                                    INNER JOIN orders ON orders.idOrders = detailorders.idOrders
+                                    WHERE orders.Status = 'Hoàn thành' AND Dateorders <= NOW() - INTERVAL 1 DAY AND Dateorders > NOW() - INTERVAL 8 DAY
+                                    GROUP BY detailorders.IdProducts";
+                            $query_sort = mysqli_query($conn, $sort);
+
+                            $total_income = 0;
+                            while ($row = mysqli_fetch_array($query_sort)){
+                                $query_kho = mysqli_query($conn,"SELECT SUM(Price) FROM material WHERE IdProducts = '".$row["IdProducts"]."' GROUP BY IdProducts");
+                                $kho = mysqli_fetch_row($query_kho);
+
+                                $total_income += ($row["Price"]*$row["total"]) - $kho[0];
+                            }
+
+                            ?>
                             <div class="info-box-content">
                                 <span class="info-box-text">Lợi nhuận 7 ngày qua</span>
-                                <h3 class="info-box-number"><?php echo number_format($totalrevenues[0],0,",",".")?></h3>
-
+                                <h3 class="info-box-number"><?php echo number_format($total_income,0,",",".")?></h3>
                                 <span class="progress-description">
                                   <a href="revenues.php" style="color: white">>> Lợi nhuận theo sản phẩm</a>
+                                </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 col-12">
+                        <div class="info-box" style="background: #6610f2; color: white">
+                            <span class="info-box-icon"><i class="fas fa-money-check"></i></span>
+                            <?php
+                            $total = "SELECT SUM(Total) FROM `orders` WHERE Status = 'Hoàn thành' AND month(Dateorders) = month(current_date)";
+                            $query_total = mysqli_query($conn,$total);
+                            $result_total = mysqli_fetch_row($query_total);
+                            ?>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Doanh thu tháng</span>
+                                <h3 class="info-box-number"><?php echo number_format($result_total[0],0,",",".")?></h3>
+                                <span class="progress-description">
+                                 Doanh thu theo tháng
                                 </span>
                             </div>
                             <!-- /.info-box-content -->
@@ -566,15 +621,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- /.col -->
                 </div>
             </div>
+
             <?php
             $i = 1;
-            for ($i;$i<13;$i++) {
-                $get_total = "SELECT SUM(Total) as total FROM orders WHERE month(Dateorders) = '$i' AND Status = 'Hoàn thành'";
-                $query = mysqli_query($conn, $get_total);
-                $mysql = mysqli_fetch_array($query);
-                ?>
-                <input type="hidden" id="total<?php echo $i?>" value="<?php echo $mysql["total"]?>">
+            for ($i;$i<7;$i++) {
+                $sum = "SELECT SUM(Total) FROM orders WHERE Dateorders = DATE(NOW())-'$i' AND Status = 'Hoàn thành'";
+                $query_sum = mysqli_query($conn,$sum);
+                $get_sum = mysqli_fetch_row($query_sum);
+            ?>
+                <input type="hidden" id="day<?php echo $i?>" value="<?php echo $get_sum[0]?>">
             <?php }?>
+
 
             <?php
             include ('../admin/layoutAdmin/footer.php')

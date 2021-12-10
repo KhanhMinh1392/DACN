@@ -111,6 +111,15 @@
                               <h3 class="card-title">Tổng doanh thu</h3>
                           </div>
                       </div>
+                      <?php
+                      $total = "SELECT SUM(Total) FROM `orders` WHERE Status = 'Hoàn thành'";
+                      $query_total = mysqli_query($conn,$total);
+                      $result_total = mysqli_fetch_row($query_total);
+
+                      $total_course = "SELECT SUM(Total) FROM `order_courses`";
+                      $query_course = mysqli_query($conn,$total_course);
+                      $result_course = mysqli_fetch_row($query_course);
+                      ?>
                       <div class="card-body">
                           <div class="d-flex">
                               <p class="d-flex flex-column">
@@ -127,7 +136,10 @@
                                   $query_curdate = mysqli_query($conn, $curdate);
                                   $curdate_query = mysqli_fetch_row($query_curdate);
 
+
                                   $result =  (($curdate_query[0]*100/$lastmonth[0]));
+
+
                               ?>
                               <p class="ml-auto d-flex flex-column text-right">
                                   <span class="text-success">
@@ -170,7 +182,12 @@
                       <div class="card-body p-0">
                           <ul class="products-list product-list-in-card pl-2 pr-2">
                               <?php
-                              $sort = "SELECT * ,SUM(detailorders.Quantitydetail) as total FROM detailorders INNER JOIN products ON detailorders.IdProducts = products.IdProducts GROUP BY detailorders.IdProducts ORDER BY SUM(detailorders.Quantitydetail) DESC LIMIT 4";
+                              $sort = "SELECT *,SUM(detailorders.Quantitydetail) as total FROM detailorders
+                                        INNER JOIN products ON detailorders.IdProducts = products.IdProducts 
+                                        INNER JOIN orders ON orders.idOrders = detailorders.idOrders 
+                                        WHERE orders.Status = 'Hoàn thành' 
+                                        GROUP BY detailorders.IdProducts 
+                                        ORDER BY SUM(detailorders.Quantitydetail) DESC LIMIT 4";
                               $query_sort = mysqli_query($conn,$sort);
                               while ($row_sort = mysqli_fetch_array($query_sort)){
                                   ?>

@@ -15,9 +15,9 @@
     $db_hiscountpro = mysqli_query($conn,$gethistory);
     $history = mysqli_fetch_array($db_hiscountpro);
 
-    $countpro = "SELECT * FROM detailorders WHERE idOrders = '".$history["idOrders"]."'";
-    $dbhispro = mysqli_query($conn,$countpro);
-    $count_hispro = mysqli_num_rows($dbhispro);
+    $countsp="SELECT * FROM detailorders INNER JOIN orders ON detailorders.idOrders  = orders.idOrders WHERE idAccounts = '".$_GET["idUser"]."' AND Status='Hoàn thành'";
+    $sp=mysqli_query($conn,$countsp);
+    $laysp=mysqli_num_rows($sp)
 
 ?>
     <!-- Content Wrapper. Contains page content -->
@@ -110,7 +110,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="d-flex justify-content-between">
-                                    <h3 class="card-title" style="font-size: 15px">Tổng SL sản phẩm đã mua: <?php echo $count_hispro?></h3>
+                                    <h3 class="card-title" style="font-size: 15px">Tổng SL sản phẩm đã mua: <?php echo $laysp?></h3>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <h3 class="card-title" style="font-size: 15px">Tổng SL sản phẩm hoàn trả: 0</h3>

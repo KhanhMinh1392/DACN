@@ -17,6 +17,7 @@
         });
     });
 </script>
+
 <script src="../admin/assest/js/chart.js"></script>
 <script src="../admin/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -35,6 +36,7 @@
 <script src="../admin/plugins/jquery-knob/jquery.knob.min.js"></script>
 <!-- Sparkline -->
 <script src="../admin/plugins/sparklines/sparkline.js"></script>
+
 </body>
 </html>
 
