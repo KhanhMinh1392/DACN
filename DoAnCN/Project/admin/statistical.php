@@ -414,6 +414,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <p class="ml-auto d-flex flex-column text-right">
                                       <h4 class="text-success">
                                         <?php echo number_format($result_total[0]+$result_course[0],0,",",".")?> VNĐ
+                                        
                                       </h4>
                                     </p>
                                 </div>
@@ -422,6 +423,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     $sum = "SELECT SUM(Total) FROM orders WHERE Dateorders = DATE(NOW()) AND Status = 'Hoàn thành'";
                                     $query_sum = mysqli_query($conn,$sum);
                                     $get_sum = mysqli_fetch_row($query_sum);
+
+                                    $sum_course = "SELECT SUM(Total) FROM order_courses WHERE DateCreate = DATE(NOW())";
+                                    $query_sum_course = mysqli_query($conn,$sum_course);
+                                    $get_sum_course = mysqli_fetch_row($query_sum_course);
                                     ?>
                                     <p class="d-flex flex-column">
                                         <span class="text-bold text-lg">Doanh thu trong ngày</span>
@@ -429,6 +434,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <p class="ml-auto d-flex flex-column text-right">
                                         <h4 class="text-success">
                                         <input type="hidden" id="today" value="<?php echo $get_sum["0"]?>">
+                                        <input type="hidden" id="course_today" value="<?php echo $get_sum_course["0"]?>">
                                             <?php echo number_format($get_sum[0],0,",",".")?> VNĐ
                                         </h4>
                                     </p>
@@ -582,10 +588,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             while ($row = mysqli_fetch_array($query_sort)){
                                 $query_kho = mysqli_query($conn,"SELECT SUM(Price) FROM material WHERE IdProducts = '".$row["IdProducts"]."' GROUP BY IdProducts");
                                 $kho = mysqli_fetch_row($query_kho);
-
-                                $total_income += ($row["Price"]*$row["total"]) - $kho[0];
+                                if($kho) {
+                                  $total_income += ($row["Price"]*$row["total"]) - $kho[0];
+                                } else {
+                                  $total_income += ($row["Price"]*$row["total"]);
+                                }
                             }
-
                             ?>
                             <div class="info-box-content">
                                 <span class="info-box-text">Lợi nhuận 7 ngày qua</span>
@@ -630,6 +638,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 $get_sum = mysqli_fetch_row($query_sum);
             ?>
                 <input type="hidden" id="day<?php echo $i?>" value="<?php echo $get_sum[0]?>">
+            <?php }?>
+
+            <?php
+            $i = 1;
+            for ($i;$i<7;$i++) {
+                $sum_course = "SELECT SUM(Total) FROM order_courses WHERE DateCreate = DATE(NOW())-'$i'";
+                $query_sum_course = mysqli_query($conn,$sum_course);
+                $get_sum_course = mysqli_fetch_row($query_sum_course);
+            ?>
+                <input type="hidden" id="course<?php echo $i?>" value="<?php echo $get_sum_course[0]?>">
             <?php }?>
 
 

@@ -2,7 +2,7 @@
     $dbhost = "localhost";
     $dbuser = "root";
     $dbpass = "";
-    $dbname = "cakeshop2";
+    $dbname = "cakeshop";
     $conn = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname);
     if($conn)
     {

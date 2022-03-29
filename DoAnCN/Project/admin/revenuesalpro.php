@@ -418,10 +418,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   while ($row = mysqli_fetch_array($query_sort)){
                       $query_material = mysqli_query($conn,"SELECT SUM(Price) as price FROM material WHERE IdProducts = '".$row["IdProducts"]."' GROUP BY IdProducts");
                       $material = mysqli_fetch_row($query_material);
-
+                      if($material) {
+                        $total_material += $material[0];
+                        
+                      } else {
+                        $material[0] = 0;
+                      }
                       $total_count += $row["total"];
                       $total_revenues += $row["Price"]*$row["total"];
-                      $total_material += $material[0];
                       $total_income += ($row["Price"]*$row["total"]) - $material[0];
                       ?>
                     <tr>

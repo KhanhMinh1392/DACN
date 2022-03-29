@@ -256,8 +256,8 @@ include ('../layout/header.php')
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'cakebakery1392@gmail.com'; //SMTP username
-            $mail->Password   = 'Minhkhanh1392';
+            $mail->Username   = 'cbakery52@gmail.com'; //SMTP username
+            $mail->Password   = 'minhtue139';
             $mail->SMTPSecure = 'tls';
             $mail->CharSet = 'UTF-8';
             $mail->Port       = 587;

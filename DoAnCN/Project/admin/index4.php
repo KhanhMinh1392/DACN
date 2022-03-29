@@ -128,22 +128,29 @@
                               </p>
                               <?php
                                 //tháng vừa rồi
-                                  $curdate_last = "SELECT SUM(Total) as total FROM orders WHERE month(Dateorders) = month(curdate())-1 AND Status = 'Hoàn thành'";
+                                  $curdate_last = "SELECT SUM(Total) as total FROM orders WHERE month(Dateorders) = month(curdate())-1 AND Status = 'Hoàn thành' AND year(Dateorders) = '2022'";
                                   $query_last = mysqli_query($conn, $curdate_last);
                                   $lastmonth = mysqli_fetch_row($query_last);
                                 // tháng này
-                                  $curdate = "SELECT SUM(Total) FROM orders WHERE month(curdate()) = month(Dateorders) AND Status = 'Hoàn thành'";
+                                  $curdate = "SELECT SUM(Total) FROM orders WHERE month(curdate()) = month(Dateorders) AND Status = 'Hoàn thành' AND year(Dateorders) = '2022'";
                                   $query_curdate = mysqli_query($conn, $curdate);
                                   $curdate_query = mysqli_fetch_row($query_curdate);
 
-
-                                  $result =  (($curdate_query[0]*100/$lastmonth[0]));
-
-
+                                  // $result =  (($curdate_query[0]*100/$lastmonth[0]));
+                                
+                                  $result =  ((($curdate_query[0]-$lastmonth[0])/$lastmonth[0])*100);
                               ?>
                               <p class="ml-auto d-flex flex-column text-right">
                                   <span class="text-success">
-                                    <i class="fas fa-arrow-up"></i> <?php echo number_format((float)$result, 2, '.', '')?>%
+                                    <i class="fas fa-arrow-up"></i> 
+                                    <?php 
+                                    if($result > 0) {
+                                      echo number_format((float)$result, 2, '.', ''); 
+                                    } else {
+                                      echo 0;
+                                    }
+                                     
+                                    ?>%
                                   </span>
                                   <span class="text-muted">Since last month</span>
                               </p>
@@ -223,7 +230,7 @@
         <?php
         $i = 1;
             for ($i;$i<13;$i++) {
-                $get_total = "SELECT SUM(Total) as total FROM orders WHERE month(Dateorders) = '$i' AND Status = 'Hoàn thành'";
+                $get_total = "SELECT SUM(Total) as total FROM orders WHERE month(Dateorders) = '$i' AND YEAR(Dateorders) = '2022' AND Status = 'Hoàn thành'";
                 $query = mysqli_query($conn, $get_total);
                 $mysql = mysqli_fetch_array($query);
         ?>

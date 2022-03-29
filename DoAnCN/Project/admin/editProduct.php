@@ -18,7 +18,7 @@
         $price = $_POST["price"];
         $detail = $_POST["detail"];
         $message = $_POST["message"];
-        $genres = $_POST["genres"];
+        $genres = $_POST["genres"];  
         $getstatus = $_POST["status"];
         $date = $_POST["date"];
         $img = $dbdata["Images"];

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th12 10, 2021 lúc 04:37 PM
--- Phiên bản máy phục vụ: 10.4.21-MariaDB
--- Phiên bản PHP: 7.3.30
+-- Thời gian đã tạo: Th3 29, 2022 lúc 03:08 AM
+-- Phiên bản máy phục vụ: 10.4.22-MariaDB
+-- Phiên bản PHP: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `cakeshop2`
+-- Cơ sở dữ liệu: `cakeshop`
 --
 
 -- --------------------------------------------------------
@@ -231,7 +231,12 @@ INSERT INTO `detailorders` (`idOrders`, `IdProducts`, `Quantitydetail`, `Price`)
 (255, 15, 1, '250000'),
 (256, 45, 5, '750000'),
 (257, 1, 4, '200000'),
-(257, 2, 4, '300000');
+(257, 2, 4, '300000'),
+(258, 40, 1, '800000'),
+(259, 2, 1, '300000'),
+(260, 32, 2, '900000'),
+(261, 44, 1, '800000'),
+(261, 45, 1, '750000');
 
 -- --------------------------------------------------------
 
@@ -254,7 +259,8 @@ INSERT INTO `detailorders_courses` (`idCOrders`, `idCourses`, `Quantity`, `Price
 (20, 1, 1, '5500000'),
 (21, 3, 1, '1500000'),
 (22, 1, 1, '5500000'),
-(23, 1, 2, '11000000');
+(23, 1, 2, '11000000'),
+(24, 1, 1, '5500000');
 
 -- --------------------------------------------------------
 
@@ -336,22 +342,22 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`idOrders`, `idAccounts`, `idStaffs`, `Status`, `Address`, `Districts`, `City`, `Dateorders`, `Datedeliver`, `Phone`, `Notes`, `NameCustomer`, `Total_Product`, `Total`) VALUES
-(229, 10, 5, 'Hoàn thành', '1123', '001', '01', '2021-01-05', '2021-12-05', '0706166088', '', 'Đào Khánh Minh', '4800000', '4850000'),
-(230, 11, 5, 'Hoàn thành', '1123', '040', '04', '2021-02-03', '2021-12-05', '0706166088', 'nhanh', 'Đào Khánh Minh', '4000000', '4015000'),
-(231, 11, 5, 'Hoàn thành', '1123', '001', '01', '2021-03-03', '2021-12-05', '0706166088', '', 'Minh Khánh', '1500000', '1550000'),
-(232, 11, 5, 'Hoàn thành', '1123', '024', '02', '2021-04-03', '2021-12-05', '0706166088', 'nhanh', 'Minh Khánh', '600000', '650000'),
-(233, 14, 5, 'Hoàn thành', '1123', '080', '10', '2021-05-03', '2021-12-06', '0706166088', '12345', 'Nguyễn Văn A', '750000', '750000'),
-(234, 10, 5, 'Hoàn thành', '1123', '001', '01', '2021-06-03', '2021-12-06', '0706166088', '123', 'Đào Khánh Minh', '4000000', '4050000'),
-(236, 10, 5, 'Hoàn thành', '1123', '001', '01', '2021-07-03', '2021-12-03', '0706166088', '', 'Đào Khánh Minh', '1600000', '1650000'),
-(237, 15, 5, 'Hoàn thành', '', '001', '01', '2021-11-04', '2021-12-06', '1234567890', '10', 'Đào Khánh Minh', '530000', '580000'),
+(229, 10, 5, 'Hoàn thành', '1123', '001', '01', '2022-03-28', '2022-03-28', '0706166088', '', 'Đào Khánh Minh', '4800000', '4850000'),
+(230, 11, 5, 'Hoàn thành', '1123', '040', '04', '2022-03-27', '2022-03-27', '0706166088', 'nhanh', 'Đào Khánh Minh', '4000000', '4015000'),
+(231, 11, 5, 'Hoàn thành', '1123', '001', '01', '2022-02-09', '2022-02-09', '0706166088', '', 'Minh Khánh', '1500000', '1550000'),
+(232, 11, 5, 'Hoàn thành', '1123', '024', '02', '2022-03-08', '2022-03-08', '0706166088', 'nhanh', 'Minh Khánh', '600000', '650000'),
+(233, 14, 5, 'Hoàn thành', '1123', '080', '10', '2022-03-07', '2022-03-07', '0706166088', '12345', 'Nguyễn Văn A', '750000', '750000'),
+(234, 10, 5, 'Hoàn thành', '1123', '001', '01', '2022-01-06', '2022-01-06', '0706166088', '123', 'Đào Khánh Minh', '4000000', '4050000'),
+(236, 10, 5, 'Hoàn thành', '1123', '001', '01', '2022-02-28', '2021-02-28', '0706166088', '', 'Đào Khánh Minh', '1600000', '1650000'),
+(237, 15, 5, 'Hoàn thành', '', '001', '01', '2022-03-12', '2022-03-12', '1234567890', '10', 'Đào Khánh Minh', '530000', '580000'),
 (238, 15, 5, 'Hoàn thành', '', '001', '01', '2021-11-04', '2021-12-06', '1234567890', '', 'test', '3230000', '3280000'),
 (240, 15, 5, 'Hoàn thành', '1123', '001', '01', '2021-11-30', '2021-12-06', '1234567890', '', 'Đào Khánh Minh', '4800000', '4850000'),
-(241, 15, 5, 'Hoàn thành', '', '001', '01', '2021-10-04', '2021-12-06', '1234567890', '', 'Đào Khánh Minh', '2200000', '2250000'),
-(242, 15, 5, 'Hoàn thành', '1123', '001', '01', '2021-04-04', '2021-12-05', '1234567890', '', 'Đào Khánh Minh', '2400000', '2450000'),
-(243, 15, 5, 'Hoàn thành', '1123', '001', '01', '2021-11-27', '2021-12-06', '', '', 'Đào Khánh Minh', '5600000', '5650000'),
-(244, 15, 5, 'Hoàn thành', '1123', '123', '01', '2021-11-28', '2021-12-06', '1234567890', '', 'Đào Khánh Minh', '1600000', '5650000'),
-(245, 15, 5, 'Hoàn thành', '1123', '001', '01', '2021-11-29', '2021-12-05', '1234567890', '', 'Đào Khánh Minh', '1800000', '1850000'),
-(246, 15, 5, 'Hoàn thành', '1123', '001', '01', '2021-09-04', '2021-12-06', '1234567890', '', 'Cake', '3200000', '3250000'),
+(241, 15, 5, 'Hoàn thành', '', '001', '01', '2022-03-26', '2022-03-26', '1234567890', '', 'Đào Khánh Minh', '2200000', '2250000'),
+(242, 15, 5, 'Hoàn thành', '1123', '001', '01', '2022-03-25', '2022-03-25', '1234567890', '', 'Đào Khánh Minh', '2400000', '2450000'),
+(243, 15, 5, 'Hoàn thành', '1123', '001', '01', '2022-03-24', '2022-03-24', '', '', 'Đào Khánh Minh', '5600000', '5650000'),
+(244, 15, 5, 'Hoàn thành', '1123', '123', '01', '2022-03-23', '2022-03-23', '1234567890', '', 'Đào Khánh Minh', '1600000', '5650000'),
+(245, 15, 5, 'Hoàn thành', '1123', '001', '01', '2022-03-21', '2022-03-21', '1234567890', '', 'Đào Khánh Minh', '1800000', '1850000'),
+(246, 15, 5, 'Hoàn thành', '1123', '001', '01', '2022-03-22', '2022-03-22', '1234567890', '', 'Cake', '3200000', '3250000'),
 (247, 14, 5, 'Hoàn thành', '13', '001', '01', '2021-08-05', '2021-12-06', '0706166088', '', 'Nguyễn Văn A', '2400000', '2450000'),
 (248, 15, 5, 'Đã tiếp nhận', '', '001', '01', '2021-12-06', '2021-12-06', '12314555', '12345', 'test', '5600000', '5650000'),
 (249, 10, 5, 'Hoàn thành', '', '001', '01', '2021-09-03', '2021-12-06', '0706166088', '', 'Đào Khánh Minh', '800000', '850000'),
@@ -362,7 +368,11 @@ INSERT INTO `orders` (`idOrders`, `idAccounts`, `idStaffs`, `Status`, `Address`,
 (254, 15, 5, 'Đã tiếp nhận', '', '001', '01', '2021-12-07', '2021-12-07', '12314555', '', 'test', '1250000', '1300000'),
 (255, 15, 5, 'Đang giao', '', '001', '01', '2021-12-07', '2021-12-07', '12314555', '', 'test', '880000', '930000'),
 (256, 14, 5, 'Hoàn thành', '55', '020', '01', '2021-12-08', '2021-12-08', '0706166088', '', 'Nguyễn Văn A', '3750000', '3800000'),
-(257, 14, 5, 'Hoàn thành', '', '026', '02', '2021-12-10', '2021-12-10', '0706166088', '', 'Nguyễn Văn A', '2000000', '2050000');
+(257, 14, 5, 'Hoàn thành', '', '026', '02', '2021-12-10', '2021-12-10', '0706166088', '', 'Nguyễn Văn A', '2000000', '2050000'),
+(258, 10, 5, 'Hoàn thành', '1123', '003', '01', '2022-03-13', '2022-03-13', '0706166088', 'qwe', 'Đào Khánh Minh', '800000', '850000'),
+(259, 10, 5, 'Hoàn thành', '1123', '001', '01', '2022-03-13', '2022-03-13', '0706166088', '123', 'Đào Khánh Minh', '300000', '350000'),
+(260, 10, 5, 'Đang giao', '1123', '001', '01', '2022-03-13', '0000-00-00', '0706166088', 'nhanh', 'Đào Khánh Minh', '1800000', '1850000'),
+(261, 11, 5, 'Hoàn thành', '1123', '007', '01', '2022-03-19', '2022-03-19', '0706166088', 'nhanh', 'Minh Khánh', '1550000', '1600000');
 
 -- --------------------------------------------------------
 
@@ -385,10 +395,11 @@ CREATE TABLE `order_courses` (
 --
 
 INSERT INTO `order_courses` (`idCOrders`, `idAccounts`, `idStaffs`, `NameCustomer`, `Phone`, `DateCreate`, `Total`) VALUES
-(20, 11, 5, 'Đào Khánh Minh', '0706166088', '2021-12-01', '5500000'),
-(21, 10, 5, 'Đào Khánh Minh', '0706166088', '2021-12-03', '1500000'),
-(22, 10, 5, 'Đào Khánh Minh', '0706166088', '2021-12-03', '5500000'),
-(23, 15, 5, 'test', '12314555', '2021-12-05', '11000000');
+(20, 11, 5, 'Đào Khánh Minh', '0706166088', '2022-03-23', '5500000'),
+(21, 10, 5, 'Đào Khánh Minh', '0706166088', '2022-03-25', '1500000'),
+(22, 10, 5, 'Đào Khánh Minh', '0706166088', '2022-03-26', '5500000'),
+(23, 15, 5, 'test', '12314555', '2022-03-27', '11000000'),
+(24, 10, 5, 'Đào Khánh Minh', '0706166088', '2022-03-28', '5500000');
 
 -- --------------------------------------------------------
 
@@ -415,7 +426,7 @@ CREATE TABLE `products` (
 
 INSERT INTO `products` (`IdProducts`, `idStatus`, `Nameproducts`, `Quantity`, `Images`, `Price`, `Info`, `Detailinfo`, `DateCreate`, `idType`) VALUES
 (1, 1, 'Donut', 381, 'arivals-1.jpg', '200000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Tất cả những nguyên liệu này sẽ được bọc ngoài bởi lớp glaze rượu rum anh đào, nhờ đó bánh có màu hồng rất bắt mắt. Bánh co kích thước khá nhỏ, được sử dụng làm món tráng miệng trong các bữa tiệc lớn hoặc dùng kem khi thưởng thức trà.', '2021-11-12', 1),
-(2, 1, 'CupCake Chocolate', 293, 'arivals-2.jpg', '300000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Tất cả những nguyên liệu này sẽ được bọc ngoài bởi lớp glaze rượu rum anh đào, nhờ đó bánh có màu hồng rất bắt mắt. Bánh co kích thước khá nhỏ, được sử dụng làm món tráng miệng trong các bữa tiệc lớn hoặc dùng kem khi thưởng thức trà.', '2021-11-19', 2),
+(2, 1, 'CupCake Chocolate', 292, 'arivals-2.jpg', '300000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Tất cả những nguyên liệu này sẽ được bọc ngoài bởi lớp glaze rượu rum anh đào, nhờ đó bánh có màu hồng rất bắt mắt. Bánh co kích thước khá nhỏ, được sử dụng làm món tráng miệng trong các bữa tiệc lớn hoặc dùng kem khi thưởng thức trà.', '2021-11-19', 2),
 (3, 1, 'CupCake Matcha', 100, 'c-feature-2.jpg', '320000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Tất cả những nguyên liệu này sẽ được bọc ngoài bởi lớp glaze rượu rum anh đào, nhờ đó bánh có màu hồng rất bắt mắt. Bánh co kích thước khá nhỏ, được sử dụng làm món tráng miệng trong các bữa tiệc lớn hoặc dùng kem khi thưởng thức trà.', '2021-11-19', 2),
 (6, 1, 'Bánh Pavlova', 396, 'c-feature-7.jpg', '300000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Tất cả những nguyên liệu này sẽ được bọc ngoài bởi lớp glaze rượu rum anh đào, nhờ đó bánh có màu hồng rất bắt mắt. Bánh co kích thước khá nhỏ, được sử dụng làm món tráng miệng trong các bữa tiệc lớn hoặc dùng kem khi thưởng thức trà.', '2020-09-14', 1),
 (7, 1, 'Bánh Lamington', 400, 'c-feature-3.jpg', '30000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Tất cả những nguyên liệu này sẽ được bọc ngoài bởi lớp glaze rượu rum anh đào, nhờ đó bánh có màu hồng rất bắt mắt. Bánh co kích thước khá nhỏ, được sử dụng làm món tráng miệng trong các bữa tiệc lớn hoặc dùng kem khi thưởng thức trà.', '2020-09-14', 3),
@@ -424,11 +435,11 @@ INSERT INTO `products` (`IdProducts`, `idStatus`, `Nameproducts`, `Quantity`, `I
 (15, 1, 'Love CupCake', 390, 'c-feature-1.jpg', '250000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này.', '2020-09-14', 3),
 (18, 1, 'Coconut Cake', 378, 'IMG_9582-1.png', '500000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Tất cả những nguyên liệu này sẽ được bọc ngoài bởi lớp glaze rượu rum anh đào, nhờ đó bánh có màu hồng rất bắt mắt. Bánh co kích thước khá nhỏ, được sử dụng làm món tráng miệng trong các bữa tiệc lớn hoặc dùng kem khi thưởng thức trà.', '2020-09-15', 4),
 (19, 1, 'Black & White Cake', 342, 'cake1.png', '800000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Tất cả những nguyên liệu này sẽ được bọc ngoài bởi lớp glaze rượu rum anh đào, nhờ đó bánh có màu hồng rất bắt mắt. Bánh co kích thước khá nhỏ, được sử dụng làm món tráng miệng trong các bữa tiệc lớn hoặc dùng kem khi thưởng thức trà.', '2021-11-16', 4),
-(32, 1, 'Berry Shortcake', 266, 'IMG_9523-1.png', '900000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', '2021-11-18', 4),
+(32, 1, 'Berry Shortcake', 264, 'IMG_9523-1.png', '900000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', '2021-11-18', 4),
 (33, 1, 'Custom Mousse Cake', 285, 'IMG_9366-1.png', '800000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Tất cả những nguyên liệu này sẽ được bọc ngoài bởi lớp glaze rượu rum anh đào, nhờ đó bánh có màu hồng rất bắt mắt. Bánh co kích thước khá nhỏ, được sử dụng làm món tráng miệng trong các bữa tiệc lớn hoặc dùng kem khi thưởng thức trà.', '2021-11-19', 4),
-(40, 1, 'Icebox Cake', 282, 'IMG_9731-1.png', '800000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Tất cả những nguyên liệu này sẽ được bọc ngoài bởi lớp glaze rượu rum anh đào, nhờ đó bánh có màu hồng rất bắt mắt. Bánh co kích thước khá nhỏ, được sử dụng làm món tráng miệng trong các bữa tiệc lớn hoặc dùng kem khi thưởng thức trà.', '2021-12-13', 4),
-(44, 1, 'Chocolate Mousse Cake', 288, 'IMG_9455-1.png', '800000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia ', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', '2021-12-02', 4),
-(45, 1, 'Carrot Cake', 95, 'IMG_9552-1.png', '750000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này.', '2021-12-08', 4);
+(40, 1, 'Icebox Cake', 281, 'IMG_9731-1.png', '800000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Tất cả những nguyên liệu này sẽ được bọc ngoài bởi lớp glaze rượu rum anh đào, nhờ đó bánh có màu hồng rất bắt mắt. Bánh co kích thước khá nhỏ, được sử dụng làm món tráng miệng trong các bữa tiệc lớn hoặc dùng kem khi thưởng thức trà.', '2021-12-13', 4),
+(44, 1, 'Chocolate Mousse Cake', 287, 'IMG_9455-1.png', '800000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia ', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', '2021-12-02', 4),
+(45, 1, 'Carrot Cake', 100, 'IMG_9552-1.png', '750000', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Theo tương truyền, vào thời điểm ra đời món bánh này, Franz Sacher khi đó chỉ mới vừa bước sang tuổi 16, khi đó vì bếp trưởng ốm không thể phục vụ món tráng miệng cho hoàng tử Wenzel von Metternich và những vị khách quan trọng khác trong buổi tiệc hoàng gia. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này. ', 'Donut là chiếc bánh ngọt đặc trưng của vùng Vienna, được sáng tạo bởi đầu bếp Franz Sacher vào năm 1832. Franz Sacher đã tự tay sáng tạo và làm nên món bánh ngọt tráng miệng hấp dẫn này.', '2021-12-08', 4);
 
 -- --------------------------------------------------------
 
@@ -1185,8 +1196,8 @@ INSERT INTO `pvs_tinhthanhpho` (`matp`, `name_city`, `type`, `ship`) VALUES
 ('04', 'Tỉnh Cao Bằng', 'Tỉnh', '15000'),
 ('06', 'Tỉnh Bắc Kạn', 'Tỉnh', '35000'),
 ('08', 'Tỉnh Tuyên Quang', 'Tỉnh', '40000'),
-('10', 'Tỉnh Lào Cai', 'Tỉnh', '0'),
-('11', 'Tỉnh Điện Biên', 'Tỉnh', '0'),
+('10', 'Tỉnh Lào Cai', 'Tỉnh', '20000'),
+('11', 'Tỉnh Điện Biên', 'Tỉnh', '100000'),
 ('12', 'Tỉnh Lai Châu', 'Tỉnh', '0'),
 ('14', 'Tỉnh Sơn La', 'Tỉnh', '0'),
 ('15', 'Tỉnh Yên Bái', 'Tỉnh', '0'),
@@ -12459,7 +12470,8 @@ INSERT INTO `reviews` (`idStar`, `IdProducts`, `idAccounts`, `Star`) VALUES
 (8, 1, 11, '5'),
 (9, 33, 10, '3'),
 (10, 40, 10, '5'),
-(11, 33, 14, '5');
+(11, 33, 14, '5'),
+(12, 45, 10, '5');
 
 -- --------------------------------------------------------
 
@@ -12504,7 +12516,8 @@ CREATE TABLE `staffs` (
 INSERT INTO `staffs` (`idStaffs`, `NameStaff`, `Username`, `Password`, `Birthday`, `Phone`, `idRole`, `idStatus`) VALUES
 (5, 'Admin', 'minhdao933@gmail.com', '12345', '2000-09-13', '0706166088', 1, 1),
 (6, 'Khánh Minh', 'khanhminh@gmail.com', '12345', '2000-11-15', '123456789', 2, 1),
-(7, 'Nguyễn Văn B', 'bvannguyen@gmail.com', '12345', '2021-11-30', '1234567890', 2, 2);
+(7, 'Nguyễn Văn B', 'bvannguyen@gmail.com', '12345', '2021-11-30', '1234567890', 2, 2),
+(8, 'Nguyễn Đức Thịnh', 'ducthinhnguyen', '12345', '2000-03-15', '', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -12749,13 +12762,13 @@ ALTER TABLE `material`
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `idOrders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=258;
+  MODIFY `idOrders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=262;
 
 --
 -- AUTO_INCREMENT cho bảng `order_courses`
 --
 ALTER TABLE `order_courses`
-  MODIFY `idCOrders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idCOrders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
@@ -12767,7 +12780,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT cho bảng `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `idStar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idStar` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT cho bảng `roles`
@@ -12779,7 +12792,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT cho bảng `staffs`
 --
 ALTER TABLE `staffs`
-  MODIFY `idStaffs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idStaffs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT cho bảng `status_product`

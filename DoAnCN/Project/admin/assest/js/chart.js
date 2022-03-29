@@ -83,11 +83,19 @@ $(function () {
     var day6 = document.getElementById('day5').value;
     var day7 = document.getElementById('day6').value;
 
+    var course1 = document.getElementById('course_today').value;
+    var course2 = document.getElementById('course1').value;
+    var course3 = document.getElementById('course2').value;
+    var course4 = document.getElementById('course3').value;
+    var course5 = document.getElementById('course4').value;
+    var course6 = document.getElementById('course5').value;
+    var course7 = document.getElementById('course6').value;
+
     var areaChartData = {
         labels  : [d.getDate()-6+"/"+c, d.getDate()-5+"/"+c, d.getDate()-4+"/"+c, d.getDate()-3+"/"+c, d.getDate()-2+"/"+c, d.getDate()-1+"/"+c,d.getDate()+"/"+c],
         datasets: [
             {
-                label               : 'Digital Goods',
+                label               : 'Sản phẩm',
                 backgroundColor     : '#007bff',
                 borderColor         : 'rgba(60,141,188,0.8)',
                 pointRadius          : false,
@@ -98,7 +106,7 @@ $(function () {
                 data                : [day7, day6, day5, day4, day3, day2, day1]
             },
             {
-                label               : 'Electronics',
+                label               : 'Khóa học',
                 backgroundColor     : 'rgba(210, 214, 222, 1)',
                 borderColor         : 'rgba(210, 214, 222, 1)',
                 pointRadius         : false,
@@ -106,7 +114,7 @@ $(function () {
                 pointStrokeColor    : '#c1c7d1',
                 pointHighlightFill  : '#fff',
                 pointHighlightStroke: 'rgba(220,220,220,1)',
-                data                : [0, 0, 0, 0, 0, 0, 0]
+                data                : [course7, course6, course5, course4, course3, course2, course1]
             },
         ]
     }
