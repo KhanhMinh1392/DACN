@@ -90,7 +90,7 @@ $(function () {
     var course5 = document.getElementById('course4').value;
     var course6 = document.getElementById('course5').value;
     var course7 = document.getElementById('course6').value;
-
+    
     var areaChartData = {
         labels  : [d.getDate()-6+"/"+c, d.getDate()-5+"/"+c, d.getDate()-4+"/"+c, d.getDate()-3+"/"+c, d.getDate()-2+"/"+c, d.getDate()-1+"/"+c,d.getDate()+"/"+c],
         datasets: [
